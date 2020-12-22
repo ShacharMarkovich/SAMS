@@ -1,16 +1,35 @@
-﻿using System;
+﻿using SQLite;
+using System;
+using System.Collections.Generic;
+
 namespace BE
 {
+    [Table("Order")]
     public class Order
     {
-        public string OrderId { get; set; }
-        public DateTime _orderDate { get; set; }
-        public Product[] _productsList { get; set; }
-
-        public int GetOrderPrice()
+        public Order(int orderId, DateTime orderDate)
         {
-            return -1;
+            OrderId = orderId;
+            OrderDate = orderDate;
+            ItemList = new LinkedList<Item>();
         }
-
+        public Order(int orderId, DateTime orderDate, LinkedList<Item> list)
+        {
+            OrderId = orderId;
+            OrderDate = orderDate;
+            ItemList = list;
+        }
+        public Order()
+        {
+        }
+        public void AddItem(Item item)
+        {
+            ItemList.AddLast(item);
+        }
+        [PrimaryKey, AutoIncrement]
+        public int OrderId { get; set; }
+        public DateTime OrderDate { get; set; }
+        [Ignore]
+        public LinkedList<Item> ItemList { get; set; }
     }
 }
