@@ -8,9 +8,29 @@
         Title="MainWindow" Height="450" Width="800"
             xmlns:ui="http://schemas.modernwpf.com/2019"
     ui:WindowHelper.UseModernWindowStyle="True">
-    
-    <ui:NavigationView>
+    <DockPanel
+            Grid.Row="1"
+            Background="{DynamicResource NavigationViewExpandedPaneBackground}">
+        <ui:AutoSuggestBox
+                x:Name="controlsSearchBox"
+                DockPanel.Dock="Top"
+                Margin="12"
+                PlaceholderText="Search"
+                QueryIcon="Find"
+                QuerySubmitted="OnControlsSearchBoxQuerySubmitted"
+                TextChanged="OnControlsSearchBoxTextChanged" />
 
-    </ui:NavigationView>
+        <ui:ListView
+                x:Name="PagesList"
+                DockPanel.Dock="Top"
+                DisplayMemberPath="Title"
+                SelectedValuePath="PageType"
+                SelectedIndex="0"
+                SelectionChanged="PagesList_SelectionChanged">
+            <ui:ListView.ItemsSource>
+                <local:ControlPagesData/>
+            </ui:ListView.ItemsSource>
+        </ui:ListView>
+    </DockPanel>
 
 </Window>
