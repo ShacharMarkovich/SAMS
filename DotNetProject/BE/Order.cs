@@ -1,35 +1,22 @@
-﻿using SQLite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace BE
 {
-    [Table("Order")]
     public class Order
     {
-        public Order(int orderId, DateTime orderDate)
-        {
-            OrderId = orderId;
-            OrderDate = orderDate;
-            ItemList = new LinkedList<Item>();
-        }
-        public Order(int orderId, DateTime orderDate, LinkedList<Item> list)
-        {
-            OrderId = orderId;
-            OrderDate = orderDate;
-            ItemList = list;
-        }
         public Order()
         {
+
         }
-        public void AddItem(Item item)
+        public Order(ICollection<Item> itemList, int orderId, DateTime orderDate)
         {
-            ItemList.AddLast(item);
+            ItemList = itemList;
+            OrderId = orderId;
+            OrderDate = orderDate;
         }
-        [PrimaryKey, AutoIncrement]
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
-        [Ignore]
-        public LinkedList<Item> ItemList { get; set; }
+        public ICollection<Item> ItemList { get; set; }
     }
 }

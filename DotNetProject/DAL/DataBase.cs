@@ -1,34 +1,16 @@
-﻿using BE;
-using SQLite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System;
+using System.Data.Entity;
+using BE;
 namespace DAL
 {
-    public class DataBase
+    public class Database : DbContext
     {
-        private string databasePath;
-        private SQLiteConnection db;
-        public DataBase()
+        public Database () : base("db")
         {
-            databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MyData.db");
-            db = new SQLiteConnection(databasePath);
-            db.CreateTable<Item>();
-            db.CreateTable<Order>();
+           
         }
-        public void OrderInsert(Order o)
-        {
-            try
-            {
-                db.Insert(o);
-                Console.WriteLine("Success");
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Item> Itmes { get; set; }
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
     }
 }
