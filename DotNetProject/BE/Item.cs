@@ -28,6 +28,6 @@ namespace BE
         public string ManufactureCountry { get; set; }
         public int Quantity { get; set; }
         public int ItemPrice { get; set; }
-    //  public Image ItemPic { get; set; }
+        public string ItemPicLocation { get; set; }
     }
 }
