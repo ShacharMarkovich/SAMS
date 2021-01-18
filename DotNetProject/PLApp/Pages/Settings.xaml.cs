@@ -20,8 +20,11 @@ namespace PLApp.Pages
     /// </summary>
     public partial class Settings : UserControl
     {
+        public String Title { get; set; }
+
         public Settings()
         {
+            Title = "Settings";
             InitializeComponent();
         }
     }

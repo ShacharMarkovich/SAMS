@@ -20,8 +20,10 @@ namespace PLApp.Pages
     /// </summary>
     public partial class ShoppingRecommends : UserControl
     {
+        public String Title { get; set; }
         public ShoppingRecommends()
         {
+            Title = "Shopping Recommends";
             InitializeComponent();
         }
     }

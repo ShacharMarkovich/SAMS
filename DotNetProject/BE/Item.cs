@@ -10,15 +10,15 @@ namespace BE
 
         }
 
-        public Item(int id, string itemName, string manufacturerName, string unitQty, string manufactureCountry, int quantity, int itemPrice)
+        public Item(int id, string itemName, string manufacturerName, string unitQty, string manufactureCountry, int itemPrice, string itemPicLocation)
         {
             Id = id;
             ItemName = itemName;
             ManufacturerName = manufacturerName;
             UnitQty = unitQty;
             ManufactureCountry = manufactureCountry;
-            Quantity = quantity;
             ItemPrice = itemPrice;
+            ItemPicLocation = itemPicLocation;
         }
 
         public int Id { get; set; }

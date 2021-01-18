@@ -20,8 +20,11 @@ namespace PLApp.Pages
     /// </summary>
     public partial class FillData : UserControl
     {
+        public String Title { get; set; }
+
         public FillData()
         {
+            Title = "Fill Data";
             InitializeComponent();
         }
     }

@@ -20,8 +20,11 @@ namespace PLApp.Pages
     /// </summary>
     public partial class TestItemsList : UserControl
     {
+        public String Title { get; set; }
+
         public TestItemsList()
         {
+            Title = "Test Items";
             InitializeComponent();
         }
     }

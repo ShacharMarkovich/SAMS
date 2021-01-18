@@ -20,8 +20,10 @@ namespace PLApp.Pages
     /// </summary>
     public partial class ShoppingAnalysis : UserControl
     {
+        public String Title { get; set; }
         public ShoppingAnalysis()
         {
+            Title = "Shopping Analysis";
             InitializeComponent();
         }
     }

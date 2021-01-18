@@ -15,7 +15,7 @@ namespace TEST
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("en-US");
             using (var ctx = new Database())
             {
-                Item i = new Item(3,"Name", "manufacturer", "unitQty", "Country", 1, 10);
+                Item i = new Item(3,"Name", "manufacturer", "unitQty", "Country", 10,"");
                 ctx.Items.Add(i);
                 ctx.SaveChanges();
                 Console.WriteLine("Saved");

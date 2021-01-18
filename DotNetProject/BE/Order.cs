@@ -9,7 +9,7 @@ namespace BE
         {
 
         }
-        public Order(ICollection<Item> itemList, int orderId, DateTime orderDate)
+        public Order(List<Item> itemList, int orderId, DateTime orderDate)
         {
             ItemList = itemList;
             OrderId = orderId;
@@ -17,6 +17,10 @@ namespace BE
         }
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
-        public ICollection<Item> ItemList { get; set; }
+        public List<Item> ItemList { get; set; }
+        public override String ToString()
+        {
+            return Convert.ToString(OrderId)+ " " + OrderDate.ToString();
+        }
     }
 }
