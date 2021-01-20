@@ -40,6 +40,12 @@
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.4.0\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="FluentWPF, Version=0.8.0.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentWPF.0.8.0\lib\net45\FluentWPF.dll</HintPath>
     </Reference>
@@ -176,11 +182,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SplashScreen Include="spla.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">
       <Project>{3B887804-BCD1-49DD-BC5C-108CED08B432}</Project>
       <Name>BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{30127971-cd20-4c46-ae0e-d495c8db9461}</Project>
+      <Name>BL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

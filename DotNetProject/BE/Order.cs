@@ -9,15 +9,20 @@ namespace BE
         {
 
         }
-        public Order(List<Item> itemList, int orderId, DateTime orderDate)
+
+        public Order(string storeName, int orderId, DateTime orderDate, List<Item> itemList)
         {
-            ItemList = itemList;
+            StoreName = storeName;
             OrderId = orderId;
             OrderDate = orderDate;
+            ItemList = itemList;
         }
+
+        public string StoreName { get; set; }
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
         public List<Item> ItemList { get; set; }
+
         public override String ToString()
         {
             return Convert.ToString(OrderId)+ " " + OrderDate.ToString();

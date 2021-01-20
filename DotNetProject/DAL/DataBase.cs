@@ -10,8 +10,8 @@ namespace DAL
         {
            
         }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Item> Items { get; set; }
+        private DbSet<Order> Orders { get; set; }
+        private DbSet<Item> Items { get; set; }
         
         public void AddItem(Item item)
         {
@@ -24,6 +24,21 @@ namespace DAL
         public Item FindItem(Item item)
         {
             return Items.Find(item);
+        }
+
+        public Order FindOrder(Order order)
+        {
+            return Orders.Find(order);
+        }
+
+        public void RemoveOrder(Order order)
+        {
+            Orders.Remove(order);
+        }
+
+        public void AddOrder(Order order)
+        {
+            Orders.Add(order);
         }
     }
 }

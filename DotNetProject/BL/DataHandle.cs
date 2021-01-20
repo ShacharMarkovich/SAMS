@@ -7,10 +7,10 @@ namespace BL
 {
     public class DataHandle
     {
-        Database db;
+        private Database db;
         public DataHandle()
         {
-            Database db = new Database();
+            db = new Database();
         }
         #region Item
         public void InsertItem(Item item)
@@ -40,21 +40,31 @@ namespace BL
         }
         #endregion
         # region Order
-        public void GetOrders()
+        public ICollection<Order> GetOrders()
         {
-           
+            return db.Set<Order>().ToList();
         }
         public void InsertOrder(Order order)
         {
-
+            db.AddOrder(order);
         }
         public void RemoveOrder(Order order)
         {
+            db.RemoveOrder(order);
 
         }
         public void UpdateOrder(Order order)
         {
-
+            var entity = db.FindOrder(order);
+            if (entity == null)
+            {
+                //TODO: create NOTFOUNDEXCEPTION 
+                throw new Exception("Order Not Found");
+            }
+            else
+            {
+                db.Entry(entity).CurrentValues.SetValues(order);
+            }
         }
         #endregion
     }

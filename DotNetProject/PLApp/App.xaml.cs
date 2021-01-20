@@ -13,5 +13,14 @@ namespace PLApp
     /// </summary>
     public partial class App : Application
     {
-    }
+        public static BL.DataHandle db;
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            SplashScreen sp = new SplashScreen("spla.png");
+            sp.Show(false);
+            db = new BL.DataHandle();
+            sp.Close(new TimeSpan(100));
+        }
+}
 }

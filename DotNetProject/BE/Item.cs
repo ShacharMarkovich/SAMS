@@ -10,23 +10,20 @@ namespace BE
 
         }
 
-        public Item(int id, string itemName, string manufacturerName, string unitQty, string manufactureCountry, int itemPrice, string itemPicLocation)
+        public Item(int quantity, int barcodeNumber, int id, string itemName, int itemPrice, string itemPicLocation)
         {
+            Quantity = quantity;
+            BarcodeNumber = barcodeNumber;
             Id = id;
             ItemName = itemName;
-            ManufacturerName = manufacturerName;
-            UnitQty = unitQty;
-            ManufactureCountry = manufactureCountry;
             ItemPrice = itemPrice;
             ItemPicLocation = itemPicLocation;
         }
 
+        public int Quantity { get; set; }
+        public int BarcodeNumber { get; set; }
         public int Id { get; set; }
         public string ItemName { get; set; }
-        public string ManufacturerName { get; set; }
-        public string UnitQty { get; set; }
-        public string ManufactureCountry { get; set; }
-        public int Quantity { get; set; }
         public int ItemPrice { get; set; }
         public string ItemPicLocation { get; set; }
     }

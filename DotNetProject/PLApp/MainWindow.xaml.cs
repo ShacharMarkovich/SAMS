@@ -1,4 +1,5 @@
-﻿using PLApp.Pages;
+﻿using MahApps.Metro.Controls;
+using PLApp.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,19 @@ namespace PLApp
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : MetroWindow
     {
         public MainWindow()
         {
             InitializeComponent();
         }
-
         private void Button_FillData_Click(object sender, RoutedEventArgs e)
         {
             if (!(MainUserControl.Content is FillData))
             {
                 MainUserControl.Content = new FillData();
             }
+            OpenCloseDrawer();
         }
         private void Button_ShoppingAnalysis_Click(object sender, RoutedEventArgs e)
         {
@@ -39,6 +40,8 @@ namespace PLApp
             {
                 MainUserControl.Content = new ShoppingAnalysis();
             }
+            OpenCloseDrawer();
+
         }
         private void Button_ShoppingRecommends_Click(object sender, RoutedEventArgs e)
         {
@@ -46,6 +49,8 @@ namespace PLApp
             {
                 MainUserControl.Content = new ShoppingRecommends();
             }
+            OpenCloseDrawer();
+
         }
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
@@ -53,12 +58,48 @@ namespace PLApp
             {
                 MainUserControl.Content = new Settings();
             }
+            OpenCloseDrawer();
+
         }
         private void Button_About_Click(object sender, RoutedEventArgs e)
         {
             if (!(MainUserControl.Content is About))
             {
                 MainUserControl.Content = new About();
+            }
+            OpenCloseDrawer();
+
+        }
+
+        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MainFlayout.IsOpen = true;
+        }
+
+        private void MainFlayout_IsOpenChanged(object sender, RoutedEventArgs e)
+        {
+            if (MainFlayout.IsOpen)
+            {
+                MainStackPanel.MouseLeftButtonUp += new MouseButtonEventHandler(SetMainFlayoutIsOpenToFalse);
+            }
+            else
+            {
+                MainStackPanel.MouseLeftButtonUp -= SetMainFlayoutIsOpenToFalse;
+            }
+        }
+        private void SetMainFlayoutIsOpenToFalse(object s, EventArgs e)
+        {
+            MainFlayout.IsOpen = false;
+        }
+        public void OpenCloseDrawer()
+        {
+            if (MainFlayout.IsOpen)
+            {
+                MainFlayout.IsOpen = false;
+            }
+            else
+            {
+                MainFlayout.IsOpen = true;
             }
         }
     }

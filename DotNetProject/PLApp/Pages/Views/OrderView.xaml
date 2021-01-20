@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PLApp.Pages.Views"
-             xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLApp.Pages.Views.OrderView"
+             xmlns:BE="clr-namespace:BE;assembly=BE" x:Name="userControl" x:Class="PLApp.Pages.Views.OrderView"
              mc:Ignorable="d" 
              xmlns:converters="clr-namespace:PLApp.Converters"
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded_1">
@@ -12,81 +12,53 @@
         <converters:PathToImageConverter x:Key="ImageConverter"/>
     </UserControl.Resources>
     <StackPanel>
-        <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Left" Margin="58,40,0,0" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Top"  Width="120"/>
-        <ListView x:Name="itemListListView" ItemsSource="{Binding}" VerticalAlignment="Bottom"  SelectionMode="Single">
-            <ListView.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn x:Name="idColumn" Header="Id" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="6,-1,-6,-1" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="itemNameColumn" Header="Item Name" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="itemPicLocationColumn" Header="Item Pic Location" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ItemPicLocation, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="itemPriceColumn" Header="Item Price" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ItemPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="manufactureCountryColumn" Header="Manufacture Country" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ManufactureCountry, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="manufacturerNameColumn" Header="Manufacturer Name" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ManufacturerName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="quantityColumn" Header="Quantity" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding Quantity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="unitQtyColumn" Header="Unit Qty" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding UnitQty, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="Image" Header="Image" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding ItemPicLocation, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Left" Margin="58,40,0,0" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Top"   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+        <DataGrid RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" x:Name="itemListListView" ItemsSource="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrderView}}}" CanUserAddRows="false">
+            <DataGrid.Resources>
+                <DataTemplate x:Key="ImageDataTemplate">
+                    <Image Source="{Binding ItemPicLocation, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Width="60" Height="60">
+                        <Image.Style>
+                            <Style>
+                                <Setter Property="ToolTipService.InitialShowDelay" Value="1"/>
+                            </Style>
+                        </Image.Style>
+                        <Image.ToolTip>
+                            <ToolTip DataContext="{Binding PlacementTarget, 
+                                    RelativeSource={RelativeSource Self}}">
+                                <Border BorderBrush="Black" BorderThickness="1" Margin="5,7,5,5">
+                                    <Image Source="{Binding Source}" Stretch="None" />
+                                </Border>
+                            </ToolTip>
+                        </Image.ToolTip>
+                    </Image>
+                        
+                </DataTemplate>
+                <DataTemplate x:Key="btnDataTemplate">
+                        <Button Click="Button_Click" Background="Transparent" Width="48" Height="48" Canvas.ZIndex="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Canvas Width="24" Height="24">
+                                <Path Fill="Black" Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                            </Canvas>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id"  Binding="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" CanUserReorder="False" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding ItemPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridTextColumn Header="BarcodeNumber" Binding="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridTextColumn Header="Quantity"  Binding="{Binding Quantity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridTemplateColumn CellTemplate= "{StaticResource ImageDataTemplate}" Width="1*">
+                    <DataGridTemplateColumn.CellStyle>
+                        <Style>
+                            <Setter Property="Panel.ZIndex" Value="0"/>
+                        </Style>
+                    </DataGridTemplateColumn.CellStyle>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CellTemplate="{StaticResource btnDataTemplate}"/>
+            </DataGrid.Columns>
+         
+        </DataGrid>
     </StackPanel>
 </UserControl>

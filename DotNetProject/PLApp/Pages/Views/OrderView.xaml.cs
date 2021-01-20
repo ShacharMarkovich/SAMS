@@ -50,6 +50,18 @@ namespace PLApp.Pages.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             itemListListView.ItemsSource = (OrdersComboBox.SelectedValue as Order).ItemList;
+
+        }
+
+        private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            e.Row.Item.ToString();
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

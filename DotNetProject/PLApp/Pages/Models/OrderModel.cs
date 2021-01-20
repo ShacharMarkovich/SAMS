@@ -11,12 +11,14 @@ namespace PLApp.Pages.Models
 {
     class OrderModel : INotifyPropertyChanged
     {
-        public List<Order> Orders { get; set; }
+        public List<Order> Orders
+        {get;set;
+        }
         public OrderModel()
         {
             Orders = new List<Order>();
             // goto bl & dal to get data .... 
-            List<Item> Items = new List<Item>() { new Item(1,"מוצר 1","","","",50, @"Images\1.jpg"), new Item(1, "מוצר 2", "", "", "", 50, ""), new Item(1, "מוצר 3", "", "", "", 50, "") };
+            List<Item> Items = new List<Item>() { new Item(1,1,3,"מוצר 1",10, @"Images\1.jpg"), new Item(1, 3, 4, "מוצר 2", 10, @"Images\1.jpg"), new Item(2, 17, 5, "מוצר 3", 10, @"Images\1.jpg") };
             Orders.Add(new Order { OrderId = 1, OrderDate = DateTime.Now,ItemList= Items });
             Orders.Add(new Order { OrderId = 2, OrderDate = DateTime.Now});
             Orders.Add(new Order { OrderId = 3, OrderDate = DateTime.Now, ItemList = Items});
