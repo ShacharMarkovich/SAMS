@@ -5,10 +5,7 @@ namespace BE
 {
     public class Order
     {
-        public Order()
-        {
-
-        }
+        public Order() { }
 
         public Order(string storeName, int orderId, DateTime orderDate, List<Item> itemList)
         {
@@ -19,13 +16,13 @@ namespace BE
         }
 
         public string StoreName { get; set; }
+        
         public int OrderId { get; set; }
+        
         public DateTime OrderDate { get; set; }
+        
         public List<Item> ItemList { get; set; }
 
-        public override String ToString()
-        {
-            return Convert.ToString(OrderId)+ " " + OrderDate.ToString();
-        }
+        public override String ToString() => Convert.ToString(OrderId) + " " + OrderDate.ToString();
     }
 }
