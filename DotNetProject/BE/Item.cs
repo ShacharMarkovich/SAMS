@@ -6,27 +6,29 @@ namespace BE
     {
         public Item() { }
 
-        public Item(int quantity, int barcodeNumber, int id, string itemName, int itemPrice, string itemPicLocation)
+        public Item(int id, int barcodeNumber, int quantity, string itemName, int itemPrice, string itemPicLocation)
         {
-            Quantity = quantity;
-            BarcodeNumber = barcodeNumber;
             Id = id;
+            BarcodeNumber = barcodeNumber;
+            Quantity = quantity;
             ItemName = itemName;
             ItemPrice = itemPrice;
             ItemPicLocation = itemPicLocation;
         }
 
-       
-        public int Quantity { get; set; }
-       
-        public int BarcodeNumber { get; set; }
-       
+        [System.ComponentModel.DataAnnotations.Key] // make it the table key
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // make the DB generate it value by itself
         public int Id { get; set; }
-       
+
+        public int BarcodeNumber { get; set; }
+
+        public int Quantity { get; set; }
+
         public string ItemName { get; set; }
-       
+
         public int ItemPrice { get; set; }
-       
+
         public string ItemPicLocation { get; set; }
+
     }
 }

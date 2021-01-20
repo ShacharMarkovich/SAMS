@@ -14,13 +14,13 @@
         <converters:VisibilityConverter x:Key="VisibilityConverter"/>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel Margin="0,0,0,-31">
         <StackPanel Orientation="Horizontal">
             <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Center" Margin="10,0,10,10" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Center"   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-            <Button Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="Button_Click_2">
+            <Button Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="NewOrderBtnClick">
                 <Path Fill="Green" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
             </Button>
-            <Grid x:Name="grid1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="302" >
+            <Grid x:Name="AddOrderGrid"  HorizontalAlignment="Left"  VerticalAlignment="Top" Width="302" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -94,7 +94,7 @@
 
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button  Width="48" Height="48" VerticalAlignment="Bottom" Click="Button_Click_1" Margin="5">
+            <Button  Width="48" Height="48" VerticalAlignment="Bottom" Click="AddItemBtnClick" Margin="5">
                 <Canvas Background="Transparent" Width="24" Height="24">
                     <Path Fill="Black" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
                 </Canvas>

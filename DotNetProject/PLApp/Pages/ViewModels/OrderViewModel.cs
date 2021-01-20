@@ -18,16 +18,12 @@ namespace PLApp.Pages.ViewModels
     public class OrderViewModel
     {
         private OrderModel OModel;
-        public ObservableCollection<Order> Orders
-        {
-            get;
-            set;
-        }
+        public ObservableCollection<Order> Orders { get; set; }
 
         public OrderViewModel()
         {
-           OModel = new OrderModel();
-           Orders = new ObservableCollection<Order>(OModel.Orders);
+            OModel = new OrderModel();
+            Orders = new ObservableCollection<Order>(OModel.Orders);
             Orders.CollectionChanged += Orders_CollectionChanged;
         }
         private void Orders_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

@@ -41,9 +41,11 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     <Rectangle Grid.Row="4" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
                     <Button Grid.Row="5" Content="Shopping Recommends"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_ShoppingRecommends_Click"/>
+                    
                     <Rectangle Grid.Row="6" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
                     <Button Grid.Row="7" Content="Settings"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_Settings_Click"/>
+                    
                     <Rectangle Grid.Row="8" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
                     <Button Grid.Row="9" Content="About" Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_About_Click"/>

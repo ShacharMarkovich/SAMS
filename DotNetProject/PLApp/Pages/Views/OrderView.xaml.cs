@@ -26,6 +26,7 @@ namespace PLApp.Pages.Views
        public OrderView()
         {
             InitializeComponent();
+            AddOrderGrid.Visibility = Visibility.Hidden;
             CurrentVM = new OrderViewModel();
             this.DataContext = CurrentVM;
         }
@@ -50,13 +51,11 @@ namespace PLApp.Pages.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             itemListListView.ItemsSource = (OrdersComboBox.SelectedValue as Order).ItemList;
-
         }
 
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             e.Row.Item.ToString();
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,8 +63,11 @@ namespace PLApp.Pages.Views
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void AddItemBtnClick(object sender, RoutedEventArgs e)
         {
+            if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
+                App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+            // else - TODO: show fit msg
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -73,14 +75,25 @@ namespace PLApp.Pages.Views
 
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void NewOrderBtnClick(object sender, RoutedEventArgs e)
         {
-            grid1.Visibility = Visibility.Visible;
+            switch (AddOrderGrid.Visibility)
+            {
+                case Visibility.Hidden:
+                    AddOrderGrid.Visibility = Visibility.Visible;
+                    break;
+                case Visibility.Visible:
+                default:
+                    AddOrderGrid.Visibility = Visibility.Hidden;
+                    break;
+            }
         }
 
         private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
         {
-            App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+            if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
+                App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+            // else - TODO: show fit msg
         }
     }
 }

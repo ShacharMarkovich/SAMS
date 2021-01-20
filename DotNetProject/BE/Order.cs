@@ -23,8 +23,8 @@ namespace BE
         }
 
         public string StoreName { get; set; }
-        [System.ComponentModel.DataAnnotations.Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [System.ComponentModel.DataAnnotations.Key] // make it the table key
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // make the DB generate it value by itself
         public int OrderId { get; set; }
         
         public DateTime OrderDate { get; set; }
