@@ -19,7 +19,7 @@ namespace PLApp
         {
             SplashScreen sp = new SplashScreen("spla.png");
             sp.Show(false);
-            db = new BL.DataHandle.Instance;
+            db = new BL.DataHandle();
             sp.Close(new TimeSpan(100));
         }
 }

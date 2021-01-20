@@ -6,12 +6,13 @@ namespace DAL
 {
     public class Database : DbContext
     {
+        private int asdf;
         public Database () : base("db")
         {
-           
+            asdf = 8;
         }
-        private DbSet<Order> Orders { get; set; }
-        private DbSet<Item> Items { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Item> Items { get; set; }
         
         public void AddItem(Item item)
         {
@@ -39,6 +40,7 @@ namespace DAL
         public void AddOrder(Order order)
         {
             Orders.Add(order);
+            SaveChanges();
         }
     }
 }

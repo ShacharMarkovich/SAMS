@@ -6,18 +6,45 @@
              xmlns:local="clr-namespace:PLApp.Pages.Views"
              xmlns:BE="clr-namespace:BE;assembly=BE" x:Name="userControl" x:Class="PLApp.Pages.Views.OrderView"
              mc:Ignorable="d" 
-             xmlns:converters="clr-namespace:PLApp.Converters"
+                 xmlns:converters="clr-namespace:PLApp.Converters"
+
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded_1">
     <UserControl.Resources>
         <converters:PathToImageConverter x:Key="ImageConverter"/>
-
+        <converters:VisibilityConverter x:Key="VisibilityConverter"/>
+        <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
     </UserControl.Resources>
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Left" Margin="58,40,10,10" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Bottom"   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-            <Canvas Background="Transparent" Width="24" Height="24" VerticalAlignment="Bottom" Margin="0,0,0,10">
+            <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Center" Margin="10,0,10,10" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Center"   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+            <Button Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="Button_Click_2">
                 <Path Fill="Green" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
-            </Canvas>
+            </Button>
+            <Grid x:Name="grid1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="302" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Content="Order Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                <DatePicker x:Name="orderDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="0" SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                <Label Content="Order Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                    <TextBox x:Name="orderIdTextBox"  HorizontalAlignment="Left" Height="23" Margin="3"  Text="{Binding OrderId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    <Button x:Name="Apply" HorizontalAlignment="Right" Content="Apply" Visibility="{Binding SelectedItem, Converter={StaticResource VisibilityConverter}, ElementName=OrdersComboBox}"/>
+                </StackPanel>
+
+                <Label Content="Store Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                    <TextBox x:Name="storeNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding StoreName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    <Button x:Name="AddOrderBtn" HorizontalAlignment="Right" Content="Add" Click="AddOrderBtn_Click"/>
+                </StackPanel>
+            </Grid>
+
         </StackPanel>
         <DataGrid Height="320" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" x:Name="itemListListView" ItemsSource="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrderView}}}" CanUserAddRows="false">
             <DataGrid.Resources>
@@ -37,10 +64,10 @@
                             </ToolTip>
                         </Image.ToolTip>
                     </Image>
-                        
+
                 </DataTemplate>
                 <DataTemplate x:Key="btnDataTemplate">
-                        <Button Click="Button_Click" Background="Transparent" Width="48" Height="48" Canvas.ZIndex="1">
+                    <Button Click="Button_Click" Background="Transparent" Width="48" Height="48" Canvas.ZIndex="1">
                         <StackPanel Orientation="Horizontal">
                             <Canvas Width="24" Height="24">
                                 <Path Fill="Black" Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
@@ -64,7 +91,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn CellTemplate="{StaticResource btnDataTemplate}"/>
             </DataGrid.Columns>
-         
+
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button  Width="48" Height="48" VerticalAlignment="Bottom" Click="Button_Click_1" Margin="5">
@@ -80,5 +107,5 @@
         </StackPanel>
 
     </StackPanel>
-    
+
 </UserControl>

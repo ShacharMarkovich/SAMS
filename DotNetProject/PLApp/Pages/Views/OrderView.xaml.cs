@@ -67,5 +67,20 @@ namespace PLApp.Pages.Views
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
         }
+
+        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            grid1.Visibility = Visibility.Visible;
+        }
+
+        private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
+        {
+            App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+        }
     }
 }
