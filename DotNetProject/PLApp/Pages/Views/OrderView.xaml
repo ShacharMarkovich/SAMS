@@ -10,10 +10,16 @@
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded_1">
     <UserControl.Resources>
         <converters:PathToImageConverter x:Key="ImageConverter"/>
+
     </UserControl.Resources>
     <StackPanel>
-        <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Left" Margin="58,40,0,0" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Top"   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-        <DataGrid RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" x:Name="itemListListView" ItemsSource="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrderView}}}" CanUserAddRows="false">
+        <StackPanel Orientation="Horizontal">
+            <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Left" Margin="58,40,10,10" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Bottom"   ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+            <Canvas Background="Transparent" Width="24" Height="24" VerticalAlignment="Bottom" Margin="0,0,0,10">
+                <Path Fill="Green" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
+            </Canvas>
+        </StackPanel>
+        <DataGrid Height="320" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" x:Name="itemListListView" ItemsSource="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrderView}}}" CanUserAddRows="false">
             <DataGrid.Resources>
                 <DataTemplate x:Key="ImageDataTemplate">
                     <Image Source="{Binding ItemPicLocation, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Width="60" Height="60">
@@ -60,5 +66,19 @@
             </DataGrid.Columns>
          
         </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button  Width="48" Height="48" VerticalAlignment="Bottom" Click="Button_Click_1" Margin="5">
+                <Canvas Background="Transparent" Width="24" Height="24">
+                    <Path Fill="Black" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
+                </Canvas>
+            </Button>
+            <Button Width="48" Height="48">
+                <Canvas Width="24" Height="24">
+                    <Path Fill="Black" Data="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z" />
+                </Canvas>
+            </Button>
+        </StackPanel>
+
     </StackPanel>
+    
 </UserControl>
