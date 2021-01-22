@@ -49,7 +49,7 @@
         <DataGrid Height="320" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" x:Name="itemListListView" ItemsSource="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrderView}}}" CanUserAddRows="false">
             <DataGrid.Resources>
                 <DataTemplate x:Key="ImageDataTemplate">
-                    <Image Source="{Binding ItemPicLocation, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Width="60" Height="60">
+                    <Image Source="{Binding ItemPic, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Width="60" Height="60">
                         <Image.Style>
                             <Style>
                                 <Setter Property="ToolTipService.InitialShowDelay" Value="1"/>

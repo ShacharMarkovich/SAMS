@@ -6,14 +6,14 @@ namespace BE
     {
         public Item() { }
 
-        public Item(int id, int barcodeNumber, int quantity, string itemName, int itemPrice, string itemPicLocation)
+        public Item(int id, int barcodeNumber, int quantity, string itemName, int itemPrice, string itemPic)
         {
             Id = id;
             BarcodeNumber = barcodeNumber;
             Quantity = quantity;
             ItemName = itemName;
             ItemPrice = itemPrice;
-            ItemPicLocation = itemPicLocation;
+            ItemPic = itemPic;
         }
 
         [System.ComponentModel.DataAnnotations.Key] // make it the table key
@@ -28,7 +28,7 @@ namespace BE
 
         public int ItemPrice { get; set; }
 
-        public string ItemPicLocation { get; set; }
+        public string ItemPic { get; set; }
 
     }
 }

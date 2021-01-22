@@ -15,21 +15,13 @@ using System.Windows.Shapes;
 namespace PLApp.Pages.Views
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for AddItem.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class AddItem : Window
     {
-        public Window1()
+        public AddItem()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource itemViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("itemViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // itemViewSource.Source = [generic data source]
         }
     }
 }

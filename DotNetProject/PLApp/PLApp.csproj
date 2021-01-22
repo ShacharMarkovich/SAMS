@@ -125,11 +125,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Views\OrderView.xaml">
+    <Page Include="Pages\Views\AddItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Views\Window1.xaml">
+    <Page Include="Pages\Views\OrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,11 +155,11 @@
       <DependentUpon>TestItemsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ViewModels\OrderViewModel.cs" />
+    <Compile Include="Pages\Views\AddItem.xaml.cs">
+      <DependentUpon>AddItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Views\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Views\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

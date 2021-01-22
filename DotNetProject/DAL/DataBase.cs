@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using BE;
 namespace DAL
 {
@@ -41,6 +42,32 @@ namespace DAL
         {
             Orders.Add(order);
             SaveChanges();
+        }
+
+        public void UpdateItem(Item item)
+        {
+            Items.AddOrUpdate(item);
+            SaveChanges();
+        }
+
+        public void AddItemToOrder(Order order, Item item)
+        {
+
+        }
+
+        public void DelItemFromOrder(Order order, Item item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteOrder(Order order)
+        {
+            throw new NotImplementedException();
         }
     }
 }

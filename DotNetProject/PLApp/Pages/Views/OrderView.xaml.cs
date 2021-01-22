@@ -22,13 +22,13 @@ namespace PLApp.Pages.Views
     /// </summary>
     public partial class OrderView : UserControl
     {
-       public OrderViewModel CurrentVM;
-       public OrderView()
+        public OrderViewModel CurrentVM;
+        public OrderView()
         {
             InitializeComponent();
             AddOrderGrid.Visibility = Visibility.Hidden;
             CurrentVM = new OrderViewModel();
-            this.DataContext = CurrentVM;
+            DataContext = CurrentVM;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -65,9 +65,11 @@ namespace PLApp.Pages.Views
 
         private void AddItemBtnClick(object sender, RoutedEventArgs e)
         {
-            if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
-            // else - TODO: show fit msg
+            if (OrdersComboBox.SelectedItem == null)
+            {
+                // TODO: show a fit msg
+            }
+            else new AddItem().ShowDialog();
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
