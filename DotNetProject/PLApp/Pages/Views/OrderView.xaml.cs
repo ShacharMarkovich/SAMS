@@ -50,7 +50,7 @@ namespace PLApp.Pages.Views
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            itemListListView.ItemsSource = (OrdersComboBox.SelectedValue as Order).ItemList;
+            itemListListView.ItemsSource = (OrdersComboBox.SelectedValue as Order).Items;
         }
 
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -66,7 +66,7 @@ namespace PLApp.Pages.Views
         private void AddItemBtnClick(object sender, RoutedEventArgs e)
         {
             if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+                App.db.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
             // else - TODO: show fit msg
         }
 
@@ -92,7 +92,7 @@ namespace PLApp.Pages.Views
         private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                App.db.InsertOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+                App.db.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
             // else - TODO: show fit msg
         }
     }
