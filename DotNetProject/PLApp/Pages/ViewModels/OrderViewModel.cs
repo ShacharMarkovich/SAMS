@@ -26,7 +26,7 @@ namespace PLApp.Pages.ViewModels
             Orders = new ObservableCollection<Order>(OModel.Orders);
             Orders.CollectionChanged += Orders_CollectionChanged;
         }
-        private void Orders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Orders_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var newData = e.NewItems[0] as Order;
 
