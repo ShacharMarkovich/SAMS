@@ -32,7 +32,27 @@ namespace PLApp.Pages.ViewModels
 
             if (e.Action == NotifyCollectionChangedAction.Add)
                 OModel.Orders.Add(newData);
+        }
 
+        public void AddOrder(Order o)
+        {
+            Orders.Add(o);
+            App.db.AddOrder(o);
+        }
+        public void RemoveOrder(Order o)
+        {
+            Orders.Remove(o);
+            App.db.RemoveOrder(o);
+
+        }
+        public void UpdateOrder(Order o)
+        {
+            int i = Orders.IndexOf(o);
+            if (i > 0)
+            {
+                Orders[i] = o;
+                App.db.UpdateOrder(o);
+            }
         }
     }
 }

@@ -168,6 +168,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     VerticalAlignment="Center"/>
             </StackPanel>
         </materialDesign:DrawerHost> -->
+        <ProgressBar x:Name="LoadingBar" Minimum="0" Maximum="100" IsIndeterminate="True" Visibility="Collapsed"/>
         <UserControl  Name="MainUserControl" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         </UserControl>
     </StackPanel>

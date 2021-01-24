@@ -65,8 +65,6 @@ namespace PLApp.Pages.Views
 
         private void AddItemBtnClick(object sender, RoutedEventArgs e)
         {
-            if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                App.db.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
             // else - TODO: show fit msg
         }
 
@@ -92,7 +90,8 @@ namespace PLApp.Pages.Views
         private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                App.db.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+                CurrentVM.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+            // App.db.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
             // else - TODO: show fit msg
         }
     }

@@ -17,11 +17,11 @@ namespace PLApp.Converters
         {
             if (value is null)
             {
-                return Visibility.Hidden;
+                return Visibility.Collapsed;
             }
             else
             {
-                return Visibility.Collapsed;
+                return Visibility.Visible;
             }
         }
 

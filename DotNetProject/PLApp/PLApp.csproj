@@ -125,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Views\AddItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Views\OrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +141,7 @@
     <Compile Include="Pages\FillData.xaml.cs">
       <DependentUpon>FillData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Models\AddItemModel.cs" />
     <Compile Include="Pages\Models\OrderModel.cs" />
     <Compile Include="Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -150,7 +155,11 @@
     <Compile Include="Pages\TestItemsList.xaml.cs">
       <DependentUpon>TestItemsList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ViewModels\AdditemViewModel.cs" />
     <Compile Include="Pages\ViewModels\OrderViewModel.cs" />
+    <Compile Include="Pages\Views\AddItemView.xaml.cs">
+      <DependentUpon>AddItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Views\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>

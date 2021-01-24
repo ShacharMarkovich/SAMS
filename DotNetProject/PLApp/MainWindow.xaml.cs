@@ -22,15 +22,19 @@ namespace PLApp
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        private FillData FillDataUC;
         public MainWindow()
         {
             InitializeComponent();
         }
         private void Button_FillData_Click(object sender, RoutedEventArgs e)
         {
-            if (!(MainUserControl.Content is FillData))
-                MainUserControl.Content = new FillData();
             OpenCloseDrawer();
+            if (!(MainUserControl.Content is FillData))
+            {
+                FillDataUC = new FillData();
+            }
+            MainUserControl.Content = FillDataUC;
         }
         private void Button_ShoppingAnalysis_Click(object sender, RoutedEventArgs e)
         {

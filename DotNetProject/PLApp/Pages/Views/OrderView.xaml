@@ -20,7 +20,7 @@
             <Button Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="NewOrderBtnClick">
                 <Path Fill="Green" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
             </Button>
-            <Grid x:Name="AddOrderGrid"  HorizontalAlignment="Left"  VerticalAlignment="Top" Width="302" >
+            <Grid x:Name="AddOrderGrid"  HorizontalAlignment="Left" DataContext="{Binding ElementName=OrdersComboBox, Path=SelectedItem}"  VerticalAlignment="Top" Width="302" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -41,7 +41,7 @@
                 <Label Content="Store Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
                     <TextBox x:Name="storeNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding StoreName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                    <Button x:Name="AddOrderBtn" HorizontalAlignment="Right" Content="Add" Click="AddOrderBtn_Click"/>
+                    <Button x:Name="AddOrderBtn" HorizontalAlignment="Right" Content="Add" Click="AddOrderBtn_Click" />
                 </StackPanel>
             </Grid>
 
