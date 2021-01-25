@@ -16,7 +16,7 @@ namespace PLApp.Converters
         {
             try
             {
-                string filePath = Path.Combine(Environment.CurrentDirectory, (string)value);
+                string filePath = Path.Combine(Environment.CurrentDirectory,"Images", (string)value);
                 return new BitmapImage(new Uri(filePath));
             }
             catch

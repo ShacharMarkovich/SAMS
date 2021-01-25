@@ -26,6 +26,16 @@ namespace BE
         //public List<Item> Items { get; set; }
         public virtual ICollection<Item> Items { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Order order &&
+                   OrderId == order.OrderId;
+        }
+
+        public override int GetHashCode()
+        {
+            return 755918762 + OrderId.GetHashCode();
+        }
 
         public override string ToString() => $"{OrderId} {StoreName} {OrderDate}\n{Items}";
     }

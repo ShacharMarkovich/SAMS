@@ -30,7 +30,7 @@ namespace BE
         public int ItemPrice { get; set; }
 
         public string ItemPic { get; set; }
-        
+        [NotMapped]
         public int? Quantity { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
 

@@ -44,10 +44,6 @@ namespace BL
             db.AddItemToOrder(newItem, order);
         }
 
-        public void AddItemToOrderById(int OrderId, Item item)
-        {
-            db.AddItemToOrderById(item, OrderId);
-        }
         //public void RemoveItemFromOrder(Item item, Order order)
         //{
         //    List<Item> items = order.Items.FindAll(it => it.BarcodeNumber == item.BarcodeNumber);

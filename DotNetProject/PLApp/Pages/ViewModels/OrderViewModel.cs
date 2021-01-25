@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace PLApp.Pages.ViewModels
 {
-    public class OrderViewModel
+    public class OrderViewModel 
     {
         private OrderModel OModel;
         public ObservableCollection<Order> Orders { get; set; }
@@ -29,7 +29,6 @@ namespace PLApp.Pages.ViewModels
         private void Orders_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var newData = e.NewItems[0] as Order;
-
             if (e.Action == NotifyCollectionChangedAction.Add)
                 OModel.Orders.Add(newData);
         }
@@ -45,13 +44,14 @@ namespace PLApp.Pages.ViewModels
             App.db.RemoveOrder(o);
 
         }
-        public void UpdateOrder(Order o)
+        public void UpdateOrder(Order o, Item item)
         {
             int i = Orders.IndexOf(o);
-            if (i > 0)
+            if (i >= 0)
             {
-                Orders[i] = o;
+                o.Items.Add(item);
                 App.db.UpdateOrder(o);
+                Orders[i] = o;
             }
         }
     }

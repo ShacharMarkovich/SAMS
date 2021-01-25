@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace PLApp.Pages.Models
 {
-    class OrderModel : INotifyPropertyChanged
+    public class OrderModel : INotifyPropertyChanged
     {
-        public List<Order> Orders { get; set;  }
+        public List<Order> Orders {
+            get;set;
+        }
 
         public OrderModel()
         {
@@ -29,22 +31,6 @@ namespace PLApp.Pages.Models
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public void AddOrder(Order o)
-        {
-            Orders.Add(o);
-            App.db.AddOrder(o);
-            OnPropertyChanged("Orders");
-        }
-        public void RemoveOrder(Order o)
-        {
-            Orders.Remove(o);
-            App.db.RemoveOrder(o);
-            OnPropertyChanged("Orders");
-        }
-        public void UpdateOrder(Order o)
-        {
-            
         }
     }
 }

@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using PLApp.Pages.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,8 @@ namespace PLApp.Pages.Views
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            itemListListView.ItemsSource = CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items;
+            if(OrdersComboBox.SelectedIndex>-1)
+            itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
         }
 
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -66,9 +68,11 @@ namespace PLApp.Pages.Views
 
         private void AddItemBtnClick(object sender, RoutedEventArgs e)
         {
-            AddItemView addItem = new AddItemView((OrdersComboBox.SelectedItem as Order).OrderId);
+            AddItemView addItem = new AddItemView();
             addItem.ShowDialog();
-            CurrentVM.UpdateOrder(OrdersComboBox.SelectedValue as Order);
+            int prevIndex = OrdersComboBox.SelectedIndex;
+            CurrentVM.UpdateOrder((Order)OrdersComboBox.SelectedItem,addItem.VM.itemViewSource);
+            OrdersComboBox.SelectedIndex = prevIndex;
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

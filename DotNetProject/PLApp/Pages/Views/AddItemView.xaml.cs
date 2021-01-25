@@ -1,4 +1,5 @@
-﻿using PLApp.Pages.ViewModels;
+﻿using BE;
+using PLApp.Pages.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace PLApp.Pages.Views
     public partial class AddItemView : Window
     {
         public AdditemViewModel VM;
-        public AddItemView(int OrderId)
+        public AddItemView()
         {
             InitializeComponent();
-            VM = new AdditemViewModel(OrderId);
+            VM = new AdditemViewModel();
             this.DataContext = VM;
             this.grid1.DataContext = VM.itemViewSource;
         }
