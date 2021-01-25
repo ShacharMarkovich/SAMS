@@ -6,7 +6,7 @@ namespace BE
 {
     public class Order
     {
-        public Order() => Items = new List<Item>();
+        public Order() => Items = new HashSet<Item>();
         public Order(string storeName, DateTime orderDate)
         {
             Items = new List<Item>();
@@ -23,7 +23,9 @@ namespace BE
 
         public DateTime OrderDate { get; set; }
 
-        public List<Item> Items { get; set; }
+        //public List<Item> Items { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
+
 
         public override string ToString() => $"{OrderId} {StoreName} {OrderDate}\n{Items}";
     }

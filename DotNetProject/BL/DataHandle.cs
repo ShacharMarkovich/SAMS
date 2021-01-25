@@ -44,25 +44,29 @@ namespace BL
             db.AddItemToOrder(newItem, order);
         }
 
-        public void RemoveItemFromOrder(Item item, Order order)
+        public void AddItemToOrderById(int OrderId, Item item)
         {
-            List<Item> items = order.Items.FindAll(it => it.BarcodeNumber == item.BarcodeNumber);
-            order.Items.RemoveAll(it => it.BarcodeNumber == item.BarcodeNumber);
-            foreach (Item entity in items)
-                db.RemoveItem(entity);
+            db.AddItemToOrderById(item, OrderId);
         }
+        //public void RemoveItemFromOrder(Item item, Order order)
+        //{
+        //    List<Item> items = order.Items.FindAll(it => it.BarcodeNumber == item.BarcodeNumber);
+        //    order.Items.RemoveAll(it => it.BarcodeNumber == item.BarcodeNumber);
+        //    foreach (Item entity in items)
+        //        db.RemoveItem(entity);
+        //}
 
         public List<Item> GetItemsInOrder(Order order) => db.GetItemsInOrder(order);
 
-        public Order DeleteOrder(Order order)
-        {
-            List<Item> items = order.Items.FindAll(_ => true);
-            order.Items.Clear();
-            foreach (Item entity in items)
-                db.RemoveItem(entity);
+        //public Order DeleteOrder(Order order)
+        //{
+        //    List<Item> items = order.Items.FindAll(_ => true);
+        //    order.Items.Clear();
+        //    foreach (Item entity in items)
+        //        db.RemoveItem(entity);
 
-            return db.RemoveOrder(order);
-        }
+        //    return db.RemoveOrder(order);
+        //}
 
         #endregion
     }

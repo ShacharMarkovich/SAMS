@@ -11,6 +11,8 @@ namespace DAL
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet OrderItems { get; set; }
+
 
         public void ClearAllData()
         {
@@ -52,6 +54,7 @@ namespace DAL
         public Order AddOrder(Order order)
         {
             var entity = Orders.Add(order);
+
             SaveChanges();
             return entity;
         }
@@ -72,11 +75,20 @@ namespace DAL
         public Order FindOrder(Order order) => Orders.Find(order.OrderId);
         #endregion
         
-        public List<Item> GetItemsInOrder(Order order) => order.Items;
+        public List<Item> GetItemsInOrder(Order order) => (List<Item>)order.Items;
 
         public void AddItemToOrder(Item item, Order order)
         {
             order.Items.Add(item);
+            UpdateOrder(order);
+            SaveChanges();
+            string query = String.Format("Select * from OrderItems where Order_OrderId={0} and Item_ItemId = {1}", order.OrderId, item.ItemId);
+            OrderItems.SqlQuery(query);
+
+        }
+        public void AddItemToOrderById(Item item, int OrderId)
+        {
+            Orders.Find(OrderId).Items.Add(item);
             SaveChanges();
         }
     }

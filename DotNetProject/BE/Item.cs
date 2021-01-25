@@ -1,18 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+
 namespace BE
 {
     public class Item
     {
         public Item(Item other)
         {
+            Orders=new HashSet<Order>();
             BarcodeNumber = other.BarcodeNumber;
             ItemName = other.ItemName;
             ItemPrice = other.ItemPrice;
             ItemPic = other.ItemPic;
             Quantity = null;
         }
-        public Item() { }
+        public Item() {
+            Orders = new HashSet<Order>();
+        }
 
         [Key] // make it the table key
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // make the DB generate it value by itself
@@ -25,8 +30,9 @@ namespace BE
         public int ItemPrice { get; set; }
 
         public string ItemPic { get; set; }
-
+        
         public int? Quantity { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {ItemPic} {Quantity}";
     }
