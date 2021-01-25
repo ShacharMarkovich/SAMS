@@ -9,7 +9,7 @@ namespace BE
         public Order() => Items = new HashSet<Item>();
         public Order(string storeName, DateTime orderDate)
         {
-            Items = new List<Item>();
+            Items = new HashSet<Item>();
             StoreName = storeName;
             OrderDate = orderDate;
         }
