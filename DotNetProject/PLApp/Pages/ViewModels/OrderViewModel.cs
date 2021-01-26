@@ -33,25 +33,45 @@ namespace PLApp.Pages.ViewModels
                 OModel.Orders.Add(newData);
         }
 
-        public void AddOrder(Order o)
+        public Order AddOrder(Order order)
         {
-            Orders.Add(o);
-            App.db.AddOrder(o);
+            Orders.Add(order);
+            return App.db.AddOrder(order);
         }
-        public void RemoveOrder(Order o)
+        public void RemoveOrder(Order order)
         {
-            Orders.Remove(o);
-            App.db.RemoveOrder(o);
+            Orders.Remove(order);
+            App.db.RemoveOrder(order);
 
         }
-        public void UpdateOrder(Order o, Item item)
+        public void UpdateOrder(Order order)
         {
-            int i = Orders.IndexOf(o);
+            int i = Orders.IndexOf(order);
             if (i >= 0)
             {
-                o.Items.Add(item);
-                App.db.UpdateOrder(o);
-                Orders[i] = o;
+                App.db.UpdateOrder(order);
+                Orders[i] = order;
+            }
+        }
+        public void AddItemToOrder(Order order, Item item)
+        {
+            int i = Orders.IndexOf(order);
+            if (i >= 0)
+            {
+                order.Items.Add(item);
+                App.db.UpdateOrder(order);
+                Orders[i] = order;
+            }
+        }
+
+        internal void RemoveItemFromOrder(Order order, Item item)
+        {
+            int i = Orders.IndexOf(order);
+            if (i >= 0)
+            {
+                order.Items.Remove(item);
+                App.db.UpdateOrder(order);
+                Orders[i] = order;
             }
         }
     }

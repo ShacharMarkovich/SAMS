@@ -8,14 +8,15 @@ namespace BE
     {
         public Item(Item other)
         {
-            Orders=new HashSet<Order>();
+            Orders = new HashSet<Order>();
             BarcodeNumber = other.BarcodeNumber;
             ItemName = other.ItemName;
             ItemPrice = other.ItemPrice;
             ItemPic = other.ItemPic;
             Quantity = null;
         }
-        public Item() {
+        public Item()
+        {
             Orders = new HashSet<Order>();
         }
 
@@ -27,7 +28,7 @@ namespace BE
 
         public string ItemName { get; set; }
 
-        public int ItemPrice { get; set; }
+        public double ItemPrice { get; set; }
 
         public string ItemPic { get; set; }
         [NotMapped]

@@ -49,14 +49,14 @@ namespace TEST
             bl.AddItemToOrder(item3, order1, 3);
             bl.AddItemToOrder(item2, order2, 4);
 
-            bl.RemoveItemFromOrder(item3, order1);
+            //bl.RemoveItemFromOrder(item3, order1);
 
             List<Item> itemsInOrder = bl.GetItemsInOrder(order1);
             foreach (var item in itemsInOrder)
                 Console.WriteLine(item);
             Console.ReadLine();
             
-            bl.DeleteOrder(order1);
+            //bl.DeleteOrder(order1);
             Console.ReadLine();
         }
     }

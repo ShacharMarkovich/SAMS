@@ -24,36 +24,24 @@ namespace PLApp.Pages.Views
     /// </summary>
     public partial class OrderView : UserControl
     {
-       public OrderViewModel CurrentVM;
-       public OrderView()
+        public OrderViewModel CurrentVM;
+        private Order _currOrder;
+        public OrderView()
         {
             InitializeComponent();
+            storeNameTextBox.Text = "Store Name";
             AddOrderGrid.Visibility = Visibility.Hidden;
             CurrentVM = new OrderViewModel();
             this.DataContext = CurrentVM;
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
-        {
-
-            // Do not load your data at design time.
-            // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            // {
-            // 	//Load your data here and assign the result to the CollectionViewSource.
-            // 	System.Windows.Data.CollectionViewSource myCollectionViewSource = (System.Windows.Data.CollectionViewSource)this.Resources["Resource Key for CollectionViewSource"];
-            // 	myCollectionViewSource.Source = your data
-            // }
-        }
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(OrdersComboBox.SelectedIndex>-1)
-            itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
+            if (OrdersComboBox.SelectedIndex > -1)
+            {
+                _currOrder = CurrentVM.Orders[OrdersComboBox.SelectedIndex];
+                itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
+            }
         }
 
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
@@ -61,23 +49,17 @@ namespace PLApp.Pages.Views
             e.Row.Item.ToString();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void AddItemBtnClick(object sender, RoutedEventArgs e)
         {
-            AddItemView addItem = new AddItemView();
-            addItem.ShowDialog();
-            int prevIndex = OrdersComboBox.SelectedIndex;
-            CurrentVM.UpdateOrder((Order)OrdersComboBox.SelectedItem,addItem.VM.itemViewSource);
-            OrdersComboBox.SelectedIndex = prevIndex;
-        }
-
-        private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-
+            if (OrdersComboBox.SelectedIndex > -1)
+            {
+                AddItemView addItem = new AddItemView();
+                addItem.ShowDialog();
+                int prevIndex = OrdersComboBox.SelectedIndex;
+                CurrentVM.AddItemToOrder((Order)OrdersComboBox.SelectedItem, addItem.VM.itemViewSource);
+                OrdersComboBox.SelectedIndex = prevIndex;
+            }
+            else MessageBox.Show("Please Select an Order first!", "Please notice", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void NewOrderBtnClick(object sender, RoutedEventArgs e)
@@ -97,9 +79,42 @@ namespace PLApp.Pages.Views
         private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                CurrentVM.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
-            // App.db.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
-            // else - TODO: show fit msg
+            {
+                _currOrder = CurrentVM.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
+                OrdersComboBox.SelectedItem = _currOrder;
+                itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
+            }
+            else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            if (OrdersComboBox.SelectedIndex != -1)
+            {
+                if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
+                {
+                    _currOrder.OrderDate = (DateTime)orderDateDatePicker.SelectedDate;
+                    _currOrder.StoreName = storeNameTextBox.Text;
+                    CurrentVM.UpdateOrder(_currOrder);
+                    OrdersComboBox.SelectedItem = _currOrder;
+                }
+                else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else MessageBox.Show("Please Select an existing order first!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
+
+        }
+
+        private void RemoveItemFromOrder_BtnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Are you Sure That you want to delete this item?", "Pay attention",
+                                                      MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                Item item = itemListListView.SelectedItem as Item;
+                CurrentVM.RemoveItemFromOrder(_currOrder, item);
+                OrdersComboBox.SelectedItem = _currOrder;
+            }
         }
     }
 }
+4
