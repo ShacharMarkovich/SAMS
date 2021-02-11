@@ -83,6 +83,7 @@ namespace PLApp.Pages.Views
                 _currOrder = CurrentVM.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
                 OrdersComboBox.SelectedItem = _currOrder;
                 itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
+                AddOrderGrid.Visibility = Visibility.Hidden;
             }
             else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -117,4 +118,3 @@ namespace PLApp.Pages.Views
         }
     }
 }
-4
