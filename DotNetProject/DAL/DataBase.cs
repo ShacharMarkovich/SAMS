@@ -8,6 +8,7 @@ namespace DAL
 {
     public class Database : DbContext
     {
+
         public Database() : base("SAMS DB") { }
 
         public DbSet<Order> Orders { get; set; }

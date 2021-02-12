@@ -27,6 +27,8 @@ namespace BE
         public int BarcodeNumber { get; set; }
 
         public string ItemName { get; set; }
+        
+        public string StoreName { get; set; }
 
         public double ItemPrice { get; set; }
 
@@ -35,6 +37,6 @@ namespace BE
         public int? Quantity { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
 
-        public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {ItemPic} {Quantity}";
+        public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {StoreName} {ItemPrice} {ItemPic} {Quantity}";
     }
 }
