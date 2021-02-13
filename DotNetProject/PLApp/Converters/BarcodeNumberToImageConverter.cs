@@ -23,7 +23,8 @@ namespace PLApp.Converters
             }
             catch
             {
-                return Resources.defaultItemPic;
+                
+                return new BitmapImage(new Uri("pack://application:,,,/PLApp;component/Properties/default.jpg"));
             }
         }
 

@@ -17,41 +17,41 @@ namespace DAL
     /// </summary>
     public class GoogleDriveAPI
     {
-        void ExtractJsonFromFile(string QRcodeFileName)
-        {
-            try
-            {
-                // https://bytescout.com/articles/barcode-reader-sdk-c-decode-qr-code-with-json
-                // https://bytescout.com/products/developer/barcodereadersdk/bytescoutbarcodereadersdk.html
-                // https://nugetmusthaves.com/Package/Bytescout.BarCode.Reader
-                // Create and activate Bytescout.BarCodeReader.Reader instance
-                using (Reader reader = new Reader("demo", "demo"))
-                {
-                    // Set barcode type to find
-                    reader.BarcodeTypesToFind.QRCode = true;
+        //void ExtractJsonFromFile(string QRcodeFileName)
+        //{
+        //    try
+        //    {
+        //        // https://bytescout.com/articles/barcode-reader-sdk-c-decode-qr-code-with-json
+        //        // https://bytescout.com/products/developer/barcodereadersdk/bytescoutbarcodereadersdk.html
+        //        // https://nugetmusthaves.com/Package/Bytescout.BarCode.Reader
+        //        // Create and activate Bytescout.BarCodeReader.Reader instance
+        //        using (Reader reader = new Reader("demo", "demo"))
+        //        {
+        //            // Set barcode type to find
+        //            reader.BarcodeTypesToFind.QRCode = true;
 
-                    /* -----------------------------------------------------------------------
-                    NOTE: We can read barcodes from specific page to increase performance.
-                    For sample please refer to "Decoding barcodes from PDF by pages" program.
-                    ----------------------------------------------------------------------- */
+        //            /* -----------------------------------------------------------------------
+        //            NOTE: We can read barcodes from specific page to increase performance.
+        //            For sample please refer to "Decoding barcodes from PDF by pages" program.
+        //            ----------------------------------------------------------------------- */
 
-                    // Read barcodes
-                    Bitmap bitmapImage;
-                    FoundBarcode[] barcodes = reader.ReadFrom(QRcodeFileName,);
+        //            // Read barcodes
+        //            Bitmap bitmapImage;
+        //            FoundBarcode[] barcodes = reader.ReadFrom(QRcodeFileName,);
 
-                    foreach (FoundBarcode code in barcodes)
-                        Console.WriteLine("Found barcode with type '{0}' and value '{1}'", code.Type, code.Value);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+        //            foreach (FoundBarcode code in barcodes)
+        //                Console.WriteLine("Found barcode with type '{0}' and value '{1}'", code.Type, code.Value);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
 
-            Console.WriteLine();
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadLine();
-        }
+        //    Console.WriteLine();
+        //    Console.WriteLine("Press any key to exit...");
+        //    Console.ReadLine();
+        //}
 
 
         private const string QRCodesDirectoryID = "1dffosvvP2Vk5JD3TvOfzXBt0J63SO9Il";

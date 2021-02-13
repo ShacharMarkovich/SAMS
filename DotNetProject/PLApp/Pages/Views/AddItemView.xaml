@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLApp.Pages.Views"
         xmlns:BE="clr-namespace:BE;assembly=BE" xmlns:Converters="clr-namespace:PLApp.Converters" x:Name="window" x:Class="PLApp.Pages.Views.AddItemView"
+        xmlns:providers="clr-namespace:PLApp.Providers"
+        xmlns:acb="http://wpfcontrols.com/"
+	    xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
         mc:Ignorable="d"
         Title="AddItemView" Height="245.045" Width="699.866" Loaded="Window_Loaded" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <Converters:BarcodeNumberToImageConverter x:Key="BarcodeNumberToImageConverter"/>
         <Converters:PathToImageConverter x:Key="PathToImageConverter"/>
+        <providers:ItemSuggestionProvider x:Key="ItemSuggestionProvider"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Item}, CreateList=True}"/>
     </Window.Resources>
     <StackPanel Orientation="Horizontal">
@@ -26,7 +30,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Label VerticalAlignment="Center" Grid.Row="0" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Barcode Number:"/>
-            <TextBox x:Name="barcodeNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
+            <acb:AutoCompleteTextBox x:Name="barcodeNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="0" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1" Provider="{StaticResource ResourceKey=ItemSuggestionProvider}"/>
             <Label VerticalAlignment="Center" Grid.Row="1" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Item Name:"/>
             <TextBox x:Name="itemNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="1" Margin="3" Height="23" HorizontalAlignment="Left" Grid.Column="1"/>
             <Label VerticalAlignment="Center" Grid.Row="2" Margin="3" HorizontalAlignment="Left" Grid.Column="0" Content="Item Pic:"/>

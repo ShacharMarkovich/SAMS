@@ -3,9 +3,11 @@ using Microsoft.Win32;
 using PLApp.Commands;
 using PLApp.Pages.Models;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,6 +15,7 @@ namespace PLApp.Pages.ViewModels
 {
     public class AdditemViewModel : INotifyPropertyChanged
     {
+        public List<Item> ItemsList { get; set; }
         private AddItemModel additemM;
         private Item _itemViewSource;
         public Item itemViewSource
@@ -40,6 +43,7 @@ namespace PLApp.Pages.ViewModels
         public AdditemViewModel()
         {
             itemViewSource = new BE.Item() { BarcodeNumber = 123465 };
+            ItemsList = App.db.GetAllItems().ToList();
             additemM = new AddItemModel();
             DriveItems = new ObservableCollection<BE.Item>(additemM.Items);
             LoadImageCommand = new RelayCommand(new Action<object>(OpenFileDialog));
