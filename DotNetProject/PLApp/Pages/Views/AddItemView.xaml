@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="AddItemView" Height="245.045" Width="699.866" Loaded="Window_Loaded" SizeToContent="WidthAndHeight">
     <Window.Resources>
+        <Converters:BarcodeNumberToImageConverter x:Key="BarcodeNumberToImageConverter"/>
         <Converters:PathToImageConverter x:Key="PathToImageConverter"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Item}, CreateList=True}"/>
     </Window.Resources>
@@ -39,6 +40,6 @@
             <ListBox HorizontalAlignment="Center" VerticalAlignment="Top" Height="150"  Width="240" Margin="0,0,0,-67"/>
             <Button Content="Add" Width="75" Command="{Binding AddButtonCommand}" VerticalAlignment="Bottom"  Height="20"/>
         </Grid>
-        <Image HorizontalAlignment="Right" Height="192" Source="{Binding imagepath}" VerticalAlignment="Top" Width="216"/>
+        <Image HorizontalAlignment="Right" Height="192"  VerticalAlignment="Top" Width="216" Source="{Binding Text, Converter={StaticResource BarcodeNumberToImageConverter}, ElementName=barcodeNumberTextBox}"/>
     </StackPanel>
 </Window>

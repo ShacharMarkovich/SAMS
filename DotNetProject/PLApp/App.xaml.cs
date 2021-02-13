@@ -12,7 +12,7 @@ namespace PLApp
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            SplashScreen sp = new SplashScreen("spla.png");
+            SplashScreen sp = new SplashScreen("SplashScreen1.png");
             sp.Show(false);
             db = new BL.DataHandle();
             sp.Close(new TimeSpan(100));

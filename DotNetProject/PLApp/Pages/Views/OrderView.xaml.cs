@@ -41,9 +41,26 @@ namespace PLApp.Pages.Views
             {
                 _currOrder = CurrentVM.Orders[OrdersComboBox.SelectedIndex];
                 itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
+                AddOrderbtn.Visibility = Visibility.Hidden;
+                AddOrderGrid.Visibility = Visibility.Visible;
+                AddItemToOrderBtn.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                _currOrder = null;
+                itemListListView.ItemsSource = null;
+                AddOrderGrid.Visibility = Visibility.Hidden;
+                AddOrderbtn.Visibility = Visibility.Visible;
+                AddItemToOrderBtn.Visibility = Visibility.Hidden;
+
             }
         }
 
+        private void OrdersComboBox_OnDropDownOpened(object sender, EventArgs e)
+        {
+            OrdersComboBox.SelectedIndex = -1;
+        }
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             e.Row.Item.ToString();
@@ -55,9 +72,12 @@ namespace PLApp.Pages.Views
             {
                 AddItemView addItem = new AddItemView();
                 addItem.ShowDialog();
-                int prevIndex = OrdersComboBox.SelectedIndex;
-                CurrentVM.AddItemToOrder((Order)OrdersComboBox.SelectedItem, addItem.VM.itemViewSource);
-                OrdersComboBox.SelectedIndex = prevIndex;
+                if (addItem.VM.isValid)
+                {
+                    int prevIndex = OrdersComboBox.SelectedIndex;
+                    CurrentVM.AddItemToOrder((Order)OrdersComboBox.SelectedItem, addItem.VM.itemViewSource);
+                    OrdersComboBox.SelectedIndex = prevIndex;
+                }
             }
             else MessageBox.Show("Please Select an Order first!", "Please notice", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -98,6 +118,7 @@ namespace PLApp.Pages.Views
                     _currOrder.StoreName = storeNameTextBox.Text;
                     CurrentVM.UpdateOrder(_currOrder);
                     OrdersComboBox.SelectedItem = _currOrder;
+                    AddOrderGrid.Visibility = Visibility.Hidden;
                 }
                 else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -111,9 +132,10 @@ namespace PLApp.Pages.Views
                                                       MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
+                int index = OrdersComboBox.SelectedIndex;
                 Item item = itemListListView.SelectedItem as Item;
                 CurrentVM.RemoveItemFromOrder(_currOrder, item);
-                OrdersComboBox.SelectedItem = _currOrder;
+                OrdersComboBox.SelectedIndex = index;
             }
         }
     }

@@ -14,8 +14,18 @@ namespace PLApp.Pages.ViewModels
     public class AdditemViewModel : INotifyPropertyChanged
     {
         private AddItemModel additemM;
-        public Item itemViewSource;
+        private Item _itemViewSource;
+        public Item itemViewSource
+        {
+            get => _itemViewSource;
+            set
+            {
+                _itemViewSource = value;
+                OnPropertyChanged("itemViewSource");
+            }
+        }
         private string _imagepath;
+        public bool isValid = false;
         public string Imagepath
         {
             get => _imagepath;
@@ -58,8 +68,9 @@ namespace PLApp.Pages.ViewModels
             {
                 string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", GenerateUniqName() + Path.GetExtension(openFileDialog.FileName));
                 File.Copy(openFileDialog.FileName, newImagePath);
-                itemViewSource.ItemPic = newImagePath;
+                itemViewSource.ItemPic = GenerateUniqName() + Path.GetExtension(openFileDialog.FileName);
                 Imagepath = newImagePath;
+                OnPropertyChanged("itemViewSource");
             }
         }
         
@@ -68,6 +79,7 @@ namespace PLApp.Pages.ViewModels
             if (itemViewSource.BarcodeNumber > 0 && itemViewSource.ItemName != "" && itemViewSource.ItemPic != "" && itemViewSource.ItemPrice > 0
                 && itemViewSource.Quantity != null && itemViewSource.Quantity > 0)
             {
+                isValid = true;
                 foreach (Window item in Application.Current.Windows)
                     if (item.DataContext == this) item.Close();
             }

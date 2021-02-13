@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using BE;
+
 namespace DAL
 {
     public class Database : DbContext

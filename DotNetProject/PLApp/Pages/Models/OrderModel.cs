@@ -11,7 +11,16 @@ namespace PLApp.Pages.Models
 {
     public class OrderModel : INotifyPropertyChanged
     {
-        public List<Order> Orders { get; set; }
+        public List<Order> Orders
+        {
+            get => _Orders;
+            set { _Orders = value;
+                OnPropertyChanged("Orders");
+            }
+        }
+        public List<Order> _Orders {
+            get;set;
+        }
 
         public OrderModel()
         {

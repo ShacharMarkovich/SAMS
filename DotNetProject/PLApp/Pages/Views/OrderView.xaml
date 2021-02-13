@@ -17,8 +17,8 @@
 
     <StackPanel Margin="0,0,0,-31">
         <StackPanel Orientation="Horizontal">
-            <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Center" Margin="10,0,10,10" SelectionChanged="ComboBox_SelectionChanged" VerticalAlignment="Center"   ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="138"/>
-            <Button Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="NewOrderBtnClick">
+            <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Center" Margin="10,0,10,10" DropDownOpened="OrdersComboBox_OnDropDownOpened" SelectionChanged="ComboBox_SelectionChanged"  VerticalAlignment="Center"   ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="138"/>
+            <Button x:Name="AddOrderbtn" Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="NewOrderBtnClick">
                 <Path Fill="Green" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
             </Button>
             <Grid x:Name="AddOrderGrid"  HorizontalAlignment="Left" DataContext="{Binding ElementName=OrdersComboBox, Path=SelectedItem}"  VerticalAlignment="Top" Width="350" >
@@ -31,12 +31,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label Content="Order Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="26" Width="71"/>
-                <DatePicker x:Name="orderDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Height="26" Width="108"/>
-                <Button x:Name="Apply" Grid.Column="2" Grid.Row="0" Content="Apply" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="35,2,36,2" VerticalAlignment="Center" MinHeight="0" HorizontalAlignment="Center" Height="28" Width="42" Click="Apply_Click"/>
-                <Label Content="Store Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="75"/>
+                <Label Content="Order Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="26"/>
+                <DatePicker x:Name="orderDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Height="26" Width="120"/>
+                <Button x:Name="Apply" Grid.Column="2" Grid.Row="0" Content="Apply" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="35,2,36,2" VerticalAlignment="Center" MinHeight="0" HorizontalAlignment="Center" Height="28" Width="50" Click="Apply_Click"/>
+                <Label Content="Store Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" Height="26"/>
                 <TextBox x:Name="storeNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="3,3,0,3" Grid.Row="1" Text="{Binding StoreName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                <Button x:Name="AddOrderBtn" HorizontalAlignment="Center" Content="Add" Click="AddOrderBtn_Click" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Height="28" Margin="39,2,40,2" Width="34"/>
+                <Button x:Name="AddOrderBtn" HorizontalAlignment="Center" Content="Add" Click="AddOrderBtn_Click" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Height="28" Margin="39,2,40,2" Width="50"/>
             </Grid>
         </StackPanel>
 
@@ -88,7 +88,7 @@
 
         </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button  Width="48" Height="48" VerticalAlignment="Bottom" Click="AddItemBtnClick" Margin="5">
+            <Button x:Name="AddItemToOrderBtn" Width="48" Height="48" VerticalAlignment="Bottom" Click="AddItemBtnClick" Margin="5">
                 <Canvas Background="Transparent" Width="24" Height="24">
                     <Path Fill="Black" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
                 </Canvas>

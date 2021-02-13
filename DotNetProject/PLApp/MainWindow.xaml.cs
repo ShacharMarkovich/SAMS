@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using PLApp.Pages;
+using PLApp.Pages.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace PLApp
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        private FillData FillDataUC;
+        private OrderView FillDataUC;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,9 +31,9 @@ namespace PLApp
         private void Button_FillData_Click(object sender, RoutedEventArgs e)
         {
             OpenCloseDrawer();
-            if (!(MainUserControl.Content is FillData))
+            if (!(MainUserControl.Content is OrderView))
             {
-                FillDataUC = new FillData();
+                FillDataUC = new OrderView();
             }
             MainUserControl.Content = FillDataUC;
         }
