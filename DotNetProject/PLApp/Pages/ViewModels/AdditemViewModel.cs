@@ -51,7 +51,6 @@ namespace PLApp.Pages.ViewModels
             AddButtonCommand = new RelayCommand(new Action<object>(AddButton_Click));
             SearchSelectionChanged = new RelayCommand(new Action<object>(Search_SelectionChanged));
             DriveList = new ObservableCollection<Item>(additemM.Items);
-
         }
 
         public ICommand AddButtonCommand { get; set; }
@@ -77,7 +76,6 @@ namespace PLApp.Pages.ViewModels
             {
                 string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", GenerateUniqName() + Path.GetExtension(openFileDialog.FileName));
                 File.Copy(openFileDialog.FileName, newImagePath);
-                itemViewSource.ItemPic = GenerateUniqName() + Path.GetExtension(openFileDialog.FileName);
                 Imagepath = newImagePath;
                 OnPropertyChanged("itemViewSource");
             }
@@ -85,7 +83,7 @@ namespace PLApp.Pages.ViewModels
         
         private void AddButton_Click(object sender)
         {
-            if (itemViewSource.BarcodeNumber > 0 && itemViewSource.ItemName != "" && itemViewSource.ItemPic != "" && itemViewSource.ItemPrice > 0
+            if (itemViewSource.BarcodeNumber > 0 && itemViewSource.ItemName != "" && itemViewSource.ItemPrice > 0
                 && itemViewSource.Quantity != null && itemViewSource.Quantity > 0)
             {
                 isValid = true;

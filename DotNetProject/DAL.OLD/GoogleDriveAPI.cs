@@ -8,8 +8,6 @@ using System.IO;
 using System.Threading;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
-using static System.Net.Mime.MediaTypeNames;
-using System.Drawing.Imaging;
 using System.Drawing;
 
 namespace DAL
@@ -29,18 +27,30 @@ namespace DAL
         const string credentials = @"..\..\..\DAL\credentials.json";
 
 
+        static byte[] ImageToByteArray(Image img)
+        {
+            using (var stream = new MemoryStream())
+            {
+                img.Save(stream, ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
         public static void myDecodeQRCode(string ImageFileName)
         {
+            BarcodeReader Reader = new BarcodeReader();
+
 
             QRCodeDecoder decoder = new QRCodeDecoder();
             FileStream f = new FileStream(ImageFileName, FileMode.OpenOrCreate); 
             QRCodeBitmapImage b = new QRCodeBitmapImage(new Bitmap(f));
-            string result = decoder.Decode(b);
+            string result = decoder.Decode(new QRCodeBitmapImage((Bitmap)img));
 
         }
         public static void Foo()
         {
-
+            BarcodeReader Reader = new BarcodeReader();
+            Console.WriteLine("Hello");
+            Reader = new BarcodeReader();
         }
 
         public static void GetAllData()

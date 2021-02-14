@@ -15,9 +15,9 @@ namespace PLApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null)
+            if (value is null || (bool)value==false)
             {
-                return Visibility.Collapsed;
+                return Visibility.Hidden;
             }
             else
             {

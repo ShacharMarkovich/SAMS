@@ -12,7 +12,6 @@ namespace BE
             BarcodeNumber = other.BarcodeNumber;
             ItemName = other.ItemName;
             ItemPrice = other.ItemPrice;
-            ItemPic = other.ItemPic;
             Quantity = null;
         }
         public Item()
@@ -28,14 +27,12 @@ namespace BE
 
         public string ItemName { get; set; }
         
-
         public double ItemPrice { get; set; }
 
-        public string ItemPic { get; set; }
         [NotMapped]
         public int? Quantity { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
 
-        public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {ItemPic} {Quantity}";
+        //public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {Quantity}";
     }
 }

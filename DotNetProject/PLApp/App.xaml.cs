@@ -15,6 +15,9 @@ namespace PLApp
             SplashScreen sp = new SplashScreen("SplashScreen1.png");
             sp.Show(false);
             db = new BL.DataHandle();
+            //load QR from Drive to Items DB, Item without quantity, image.
+            //db.loadQRfromDrive();
+
             sp.Close(new TimeSpan(100));
         }
 }

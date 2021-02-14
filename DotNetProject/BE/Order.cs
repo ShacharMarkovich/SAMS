@@ -13,7 +13,6 @@ namespace BE
             StoreName = storeName;
             OrderDate = orderDate;
         }
-
         [System.ComponentModel.DataAnnotations.Key] // make it the table key
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // make the DB generate it value by itself
         public int OrderId { get; set; }

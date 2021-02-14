@@ -1,4 +1,5 @@
 ﻿using BE;
+using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 using PLApp.Pages.ViewModels;
 using System;
@@ -136,6 +137,23 @@ namespace PLApp.Pages.Views
                 Item item = itemListListView.SelectedItem as Item;
                 CurrentVM.RemoveItemFromOrder(_currOrder, item);
                 OrdersComboBox.SelectedIndex = index;
+            }
+        }
+
+        private void ListMode_Toggled(object sender, RoutedEventArgs e)
+        {
+            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
+            if (toggleSwitch != null)
+            {
+                if (toggleSwitch.IsOn == true)
+                {
+                    itemListListView.ItemsSource = null;
+
+                }
+                else
+                {
+                    itemListListView.ItemsSource = App.db.GetAllItems();
+                }
             }
         }
     }
