@@ -17,6 +17,7 @@ namespace PLApp.Pages.ViewModels
     {
         public List<Item> ItemsList { get; set; }
         private AddItemModel additemM;
+        public ObservableCollection<Item> DriveList { get; set; }
         private Item _itemViewSource;
         public Item itemViewSource
         {
@@ -48,10 +49,14 @@ namespace PLApp.Pages.ViewModels
             DriveItems = new ObservableCollection<BE.Item>(additemM.Items);
             LoadImageCommand = new RelayCommand(new Action<object>(OpenFileDialog));
             AddButtonCommand = new RelayCommand(new Action<object>(AddButton_Click));
+            SearchSelectionChanged = new RelayCommand(new Action<object>(Search_SelectionChanged));
+            DriveList = new ObservableCollection<Item>(additemM.Items);
+
         }
 
         public ICommand AddButtonCommand { get; set; }
         public ICommand LoadImageCommand { get; set; }
+        public ICommand SearchSelectionChanged { get; set; }
 
         private string GenerateUniqName()
         {
@@ -89,7 +94,10 @@ namespace PLApp.Pages.ViewModels
             }
             else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
+        private void Search_SelectionChanged(object sender)
+        {
+            MessageBox.Show("Test");
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
