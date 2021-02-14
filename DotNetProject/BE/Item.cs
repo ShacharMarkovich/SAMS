@@ -11,7 +11,6 @@ namespace BE
             Orders = new HashSet<Order>();
             BarcodeNumber = other.BarcodeNumber;
             ItemName = other.ItemName;
-            StoreName = other.StoreName;
             ItemPrice = other.ItemPrice;
             ItemPic = other.ItemPic;
             Quantity = null;
