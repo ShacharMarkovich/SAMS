@@ -15,7 +15,11 @@ namespace PLApp.Pages.Models
         public AddItemModel()
         {
             //TODO: load DRIVE qrcodes, parse
-            Items = new List<BE.Item>();
+            Items = new List<BE.Item>() {
+                new BE.Item(){ BarcodeNumber=1,ItemName="1"},
+                new BE.Item(){BarcodeNumber=2,ItemName="2"},
+                new BE.Item(){BarcodeNumber=3,ItemName="3"},
+                new BE.Item(){BarcodeNumber=4,ItemName="4"}};
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
