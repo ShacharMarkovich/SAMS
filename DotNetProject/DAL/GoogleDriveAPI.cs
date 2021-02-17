@@ -8,9 +8,9 @@ using System.IO;
 using System.Threading;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
-using static System.Net.Mime.MediaTypeNames;
-using System.Drawing.Imaging;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
+using BE;
 
 namespace DAL
 {
@@ -28,38 +28,39 @@ namespace DAL
         /// </summary>
         const string credentials = @"..\..\..\DAL\credentials.json";
 
-
-        public static void myDecodeQRCode(string ImageFileName)
+        #region Convert data in QR Code to Object
+        static Item Convert(string data)
         {
-
-            QRCodeDecoder decoder = new QRCodeDecoder();
-            FileStream f = new FileStream(ImageFileName, FileMode.OpenOrCreate); 
-            QRCodeBitmapImage b = new QRCodeBitmapImage(new Bitmap(f));
-            string result = decoder.Decode(b);
-
+            JObject jObject = JObject.Parse(data); /* {"BarcodeNumber": 123447, "ItemName": "56' TV", "StoreName": "Tiv TaAm", "ItemPrice": 1222.9 } */
+            return new Item() { 
+                BarcodeNumber = (int)jObject["BarcodeNumber"], 
+                ItemName = (string)jObject["ItemName"], 
+                ItemPrice = (int)jObject["ItemPrice"]
+            };
         }
-        public static void Foo()
-        {
+        #endregion
 
+        #region Decode data from QR Code
+        public static void DecodeQRCode(string imageFileName)
+        {
+            QRCodeDecoder decoder = new QRCodeDecoder();
+            FileStream file = new FileStream(imageFileName, FileMode.OpenOrCreate);
+            QRCodeBitmapImage qrCodeBitmapImage = new QRCodeBitmapImage(new Bitmap(file));
+            string data = decoder.Decode(qrCodeBitmapImage);
+            Convert(data);
         }
 
         public static void GetAllData()
         {
             string[] names = Directory.GetFiles(saveDirectory);
-
             foreach (string name in names)
-            {
-                Console.WriteLine(name);
-                Foo();
-                myDecodeQRCode(name);
-            }
+                DecodeQRCode(name);
         }
+        #endregion
 
-       
+        #region download QR Codde images from google drive functions
         /// <summary>
         /// This method requests Authentcation from a user using Oauth2.  
-        /// Credentials are stored in System.Environment.SpecialFolder.Personal
-        /// Documentation https://developers.google.com/accounts/docs/OAuth2
         /// </summary>
         /// <returns>DriveService used to make requests against the Drive API</returns>
         static DriveService AuthenticateOauth()
@@ -106,8 +107,9 @@ namespace DAL
             // TODO: download only new QR codes that not in the project directory
             DriveService service = AuthenticateOauth();
             IList<Google.Apis.Drive.v3.Data.File> files = GetDriveData(service);
-            foreach (var file in files)
-                DownloadFile(service, file, saveDirectory + file.Name);
+            if (files != null)
+                foreach (var file in files)
+                    DownloadFileAsync(service, file, saveDirectory + file.Name);
         }
         /// <summary>
         /// Download all QR codes from the `QRCodes` directory in Google Drive
@@ -134,7 +136,7 @@ namespace DAL
         /// <param name="service">Google drive API service</param>
         /// <param name="file">google drive api file</param>
         /// <param name="saveTo">directory to save the files</param>
-        static void DownloadFile(DriveService service, Google.Apis.Drive.v3.Data.File file, string saveTo)
+        static async System.Threading.Tasks.Task DownloadFileAsync(DriveService service, Google.Apis.Drive.v3.Data.File file, string saveTo)
         {
 
             var request = service.Files.Get(file.Id);
@@ -152,6 +154,7 @@ namespace DAL
                         break;
                     case Google.Apis.Download.DownloadStatus.Completed:
                         Console.WriteLine("Download complete.");
+                        Thread.Sleep(1000);
                         SaveStream(stream, saveTo);
                         break;
                     case Google.Apis.Download.DownloadStatus.Failed:
@@ -167,5 +170,6 @@ namespace DAL
         /// <param name="stream">the stream</param>
         /// <param name="saveTo">directory to save the files</param>
         static void SaveStream(MemoryStream stream, string saveTo) => stream.WriteTo(new FileStream(saveTo, FileMode.Create, FileAccess.Write));
+        #endregion 
     }
 }

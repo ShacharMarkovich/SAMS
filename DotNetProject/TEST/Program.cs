@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
+using System.Threading;
+using DAL;
 
 namespace DriveQuickstart
 {
@@ -8,8 +8,9 @@ namespace DriveQuickstart
     {
         public static void Main()
         {
-            //DAL.GoogleDriveAPI.DownloadGoogleDriveAPI();
-            DAL.GoogleDriveAPI.GetAllData();
+            GoogleDriveAPI.DownloadGoogleDriveAPI();
+            Thread.Sleep(1000);
+            GoogleDriveAPI.GetAllData();
             Console.ReadLine();
         }
     }

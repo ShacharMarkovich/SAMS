@@ -78,13 +78,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="QRCodes\56inc TV.png" />
-    <Content Include="QRCodes\Bread.png" />
-    <Content Include="QRCodes\chicken.png" />
-    <Content Include="QRCodes\milk.png" />
-    <Content Include="QRCodes\yogurt.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="credentials.json" />
     <None Include="packages.config" />
@@ -94,6 +87,9 @@
       <Project>{3b887804-bcd1-49dd-bc5c-108ced08b432}</Project>
       <Name>BE</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="QRCodes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
