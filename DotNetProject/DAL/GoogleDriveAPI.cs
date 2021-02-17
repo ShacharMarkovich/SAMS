@@ -28,37 +28,27 @@ namespace DAL
         /// </summary>
         const string credentials = @"..\..\..\DAL\credentials.json";
 
-        #region Convert data in QR Code to Object
-        static Item Convert(string data)
-        {
-            JObject jObject = JObject.Parse(data); /* {"BarcodeNumber": 123447, "ItemName": "56' TV", "StoreName": "Tiv TaAm", "ItemPrice": 1222.9 } */
-            return new Item() { 
-                BarcodeNumber = (int)jObject["BarcodeNumber"], 
-                ItemName = (string)jObject["ItemName"], 
-                ItemPrice = (int)jObject["ItemPrice"]
-            };
-        }
-        #endregion
 
-        #region Decode data from QR Code
-        public static void DecodeQRCode(string imageFileName)
+        /// <summary>
+        /// Download QR Codes from google drive.
+        /// The QR codes images will save at @projectDirectory\QRCodes
+        /// </summary>
+        /// <returns>list of new items</returns>
+        public static ICollection<Item> DownloadGoogleDriveAPI()
         {
-            QRCodeDecoder decoder = new QRCodeDecoder();
-            FileStream file = new FileStream(imageFileName, FileMode.OpenOrCreate);
-            QRCodeBitmapImage qrCodeBitmapImage = new QRCodeBitmapImage(new Bitmap(file));
-            string data = decoder.Decode(qrCodeBitmapImage);
-            Convert(data);
+            // TODO: download only new QR codes that not in the project directory
+            ICollection<Item> items = new List<Item>();
+            DriveService service = AuthenticateOauth();
+            IList<Google.Apis.Drive.v3.Data.File> files = GetDriveData(service);
+            if (files != null)
+                foreach (var file in files)
+                    using (FileStream fileStream = DownloadFromDrive(service, file))
+                        items.Add(DecodeQRCode(fileStream));
+
+            return items;
         }
 
-        public static void GetAllData()
-        {
-            string[] names = Directory.GetFiles(saveDirectory);
-            foreach (string name in names)
-                DecodeQRCode(name);
-        }
-        #endregion
 
-        #region download QR Codde images from google drive functions
         /// <summary>
         /// This method requests Authentcation from a user using Oauth2.  
         /// </summary>
@@ -98,19 +88,7 @@ namespace DAL
                 throw new Exception("CreateServiceAccountDriveFailed", ex);
             }
         }
-        /// <summary>
-        /// Download QR Codes from google drive.
-        /// The QR codes images will save at @projectDirectory\QRCodes
-        /// </summary>
-        public static void DownloadGoogleDriveAPI()
-        {
-            // TODO: download only new QR codes that not in the project directory
-            DriveService service = AuthenticateOauth();
-            IList<Google.Apis.Drive.v3.Data.File> files = GetDriveData(service);
-            if (files != null)
-                foreach (var file in files)
-                    DownloadFileAsync(service, file, saveDirectory + file.Name);
-        }
+
         /// <summary>
         /// Download all QR codes from the `QRCodes` directory in Google Drive
         /// </summary>
@@ -130,46 +108,46 @@ namespace DAL
                 return null;
             return files;
         }
+
         /// <summary>
-        /// download the given file, save it in saveTo directory
+        /// Download a given file from google drive
         /// </summary>
-        /// <param name="service">Google drive API service</param>
-        /// <param name="file">google drive api file</param>
-        /// <param name="saveTo">directory to save the files</param>
-        static async System.Threading.Tasks.Task DownloadFileAsync(DriveService service, Google.Apis.Drive.v3.Data.File file, string saveTo)
+        /// <param name="service"> Google drive API service</param>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        static FileStream DownloadFromDrive(DriveService service, Google.Apis.Drive.v3.Data.File file)
         {
-
-            var request = service.Files.Get(file.Id);
-            var stream = new MemoryStream();
-
-            // Add a handler which will be notified on progress changes.
-            // It will notify on each chunk download and when the
-            // download is completed or failed.
-            request.MediaDownloader.ProgressChanged += (Google.Apis.Download.IDownloadProgress progress) =>
-            {
-                switch (progress.Status)
-                {
-                    case Google.Apis.Download.DownloadStatus.Downloading:
-                        Console.WriteLine(progress.BytesDownloaded);
-                        break;
-                    case Google.Apis.Download.DownloadStatus.Completed:
-                        Console.WriteLine("Download complete.");
-                        Thread.Sleep(1000);
-                        SaveStream(stream, saveTo);
-                        break;
-                    case Google.Apis.Download.DownloadStatus.Failed:
-                        Console.WriteLine("Download failed.");
-                        break;
-                }
-            };
-            request.Download(stream);
+            FileStream s = new FileStream(saveDirectory + file.Name, FileMode.OpenOrCreate);
+            service.Files.Get(file.Id).Download(s);
+            return s;
         }
+
         /// <summary>
-        /// save the MemoryStream to the given directory
+        /// Decode all data from downloaded QRCode images.
         /// </summary>
-        /// <param name="stream">the stream</param>
-        /// <param name="saveTo">directory to save the files</param>
-        static void SaveStream(MemoryStream stream, string saveTo) => stream.WriteTo(new FileStream(saveTo, FileMode.Create, FileAccess.Write));
-        #endregion 
+        /// <param name="fileStream"> The image file stream</param>
+        public static Item DecodeQRCode(FileStream fileStream)
+        {
+            QRCodeDecoder decoder = new QRCodeDecoder();
+            QRCodeBitmapImage qrCodeBitmapImage = new QRCodeBitmapImage(new Bitmap(fileStream));
+            string data = decoder.Decode(qrCodeBitmapImage);
+            return Convert(data);
+        }
+
+        /// <summary>
+        /// Convert Json string to Item
+        /// </summary>
+        /// <param name="data">JSON data string</param>
+        /// <returns></returns>
+        static Item Convert(string data)
+        {
+            JObject jObject = JObject.Parse(data); /* {"BarcodeNumber": 123447, "ItemName": "56' TV", "StoreName": "Tiv TaAm", "ItemPrice": 1222.9 } */
+            return new Item()
+            {
+                BarcodeNumber = (int)jObject["BarcodeNumber"],
+                ItemName = (string)jObject["ItemName"],
+                ItemPrice = (int)jObject["ItemPrice"]
+            };
+        }
     }
 }
