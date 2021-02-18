@@ -81,7 +81,7 @@ namespace BL
             string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
             string[] Files = Directory.GetFiles(fullPath + @"\QRCodes\");
-            List < Bitmap > b = new List<Bitmap>();
+            List<Bitmap> b = new List<Bitmap>();
             foreach (string f in Files)
             {
                 Bitmap tmp = new Bitmap(f);

@@ -12,6 +12,7 @@ namespace BE
             BarcodeNumber = other.BarcodeNumber;
             ItemName = other.ItemName;
             ItemPrice = other.ItemPrice;
+            Category = other.Category;
             Quantity = null;
         }
         public Item()
@@ -26,9 +27,9 @@ namespace BE
         public int BarcodeNumber { get; set; }
 
         public string ItemName { get; set; }
-        
+        public Category Category { get; set; }
         public double ItemPrice { get; set; }
-        
+
         [NotMapped]
         public int? Quantity { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
