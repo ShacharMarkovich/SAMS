@@ -126,7 +126,11 @@ namespace PLApp.Pages.Views
             else MessageBox.Show("Please Select an existing order first!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
 
         }
-
+        private void UpdateImageByBarcode_BtnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentVM.LoadImageByBarcode(((Item)itemListListView.SelectedValue).BarcodeNumber);
+            itemListListView.Items.Refresh();
+        }
         private void RemoveItemFromOrder_BtnClick(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you Sure That you want to delete this item?", "Pay attention",

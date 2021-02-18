@@ -78,9 +78,9 @@ namespace BL
 
         public static List<Bitmap> loadQRBitmaps()
         {
-            string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)+ @"\QRCodes\";
 
-            string[] Files = Directory.GetFiles(fullPath + @"\QRCodes\");
+            string[] Files = Directory.GetFiles(fullPath);
             List<Bitmap> b = new List<Bitmap>();
             foreach (string f in Files)
             {
@@ -108,6 +108,7 @@ namespace BL
                 QRCode qR = JsonConvert.DeserializeObject<QRCode>(result);
                 qR.date = DateTime.Parse(qr.Tag.ToString()).Date;
                 itemList.Add(qR);
+                qr.Dispose();
             }
             foreach (QRCode i in itemList)
             {
@@ -118,6 +119,16 @@ namespace BL
                     orderList.Add(new Order() { OrderDate = i.date, StoreName = i.Store, Items = new List<Item>() { i.item } });
             }
             return orderList;
+        }
+        public static void clearQRcodesDir()
+        {
+            string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
+            string[] Files = Directory.GetFiles(fullPath);
+
+            foreach (string f in Files)
+            {
+                File.Delete(f);
+            }
         }
         public static void GenerateQRcodes()
         {

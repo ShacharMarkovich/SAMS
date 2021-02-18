@@ -1,7 +1,10 @@
 ﻿using BE;
+using Microsoft.Win32;
 using PLApp.Pages.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 
 namespace PLApp.Pages.ViewModels
 {
@@ -60,6 +63,23 @@ namespace PLApp.Pages.ViewModels
                 order.Items.Remove(item);
                 App.db.UpdateOrder(order);
                 Orders[i] = order;
+            }
+        }
+
+        internal void LoadImageByBarcode(int barcodeNumber)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", barcodeNumber.ToString() + ".jpg");
+                    File.Copy(openFileDialog.FileName, newImagePath);
+                }
+            }
+            catch(Exception e)
+            {
+                //Exception
             }
         }
     }
