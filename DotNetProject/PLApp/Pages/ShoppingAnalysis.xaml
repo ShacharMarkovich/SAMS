@@ -25,16 +25,16 @@
                         <RowDefinition Height="8*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <RadioButton x:Name="MonthButton" Width="100" IsChecked="True">Month</RadioButton>
-                        <RadioButton x:Name="WeekButton" Width="100">Week</RadioButton>
-                        <RadioButton x:Name="DayButton" Width="100">Day</RadioButton>
+                        <RadioButton x:Name="MonthCutButton" Checked="AggregationCutChangeChecked" Width="100">Month</RadioButton>
+                        <RadioButton x:Name="WeekCutButton" Checked="AggregationCutChangeChecked"  Width="100">Week</RadioButton>
+                        <RadioButton x:Name="DayCutButton" Checked="AggregationCutChangeChecked" Width="100" IsChecked="True">Day</RadioButton>
                     </StackPanel>
                     <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
                         <CheckBox></CheckBox>
                     </StackPanel>
-                        <lvc:CartesianChart Grid.Row="2" Series="{Binding SeriesCollection}" LegendLocation="Left" MinHeight="400">
+                    <lvc:CartesianChart Grid.Row="2" Series="{Binding StoresAmountCollection}" LegendLocation="Left" MinHeight="400">
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="Shop" Labels="{Binding Labels}"></lvc:Axis>
+                            <lvc:Axis Title="Shop" Labels="{Binding Xaxis}"></lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Average Order Cost" LabelFormatter="{Binding Formatter}"></lvc:Axis>

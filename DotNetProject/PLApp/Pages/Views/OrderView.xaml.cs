@@ -146,14 +146,9 @@ namespace PLApp.Pages.Views
             if (toggleSwitch != null)
             {
                 if (toggleSwitch.IsOn == true)
-                {
                     itemListListView.ItemsSource = null;
-
-                }
                 else
-                {
                     itemListListView.ItemsSource = App.db.GetAllItems();
-                }
             }
         }
     }
