@@ -46,6 +46,7 @@ namespace BL
 
         #region Items in Orders functions
 
+        public void UpdateItemInOrder(Item item, Order order) => AddItemToOrder(item, order, 0);
         public void AddItemToOrder(Item item, Order order) => AddItemToOrder(item, order, 0);
         public void AddItemToOrder(Item item, Order order, int quantity)
         {

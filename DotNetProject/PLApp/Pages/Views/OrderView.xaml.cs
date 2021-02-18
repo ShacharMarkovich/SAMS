@@ -64,6 +64,11 @@ namespace PLApp.Pages.Views
         }
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
+            var v = (itemListListView.SelectedItem as Item);
+            Order order = OrdersComboBox.SelectedItem as Order;
+            MessageBox.Show("do it!");
+            App.db.AddItemToOrder(v, order);
+            App.db.UpdateOrder(order);
             e.Row.Item.ToString();
         }
 
