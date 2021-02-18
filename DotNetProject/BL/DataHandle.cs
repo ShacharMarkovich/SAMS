@@ -74,6 +74,7 @@ namespace BL
 
         //    return db.RemoveOrder(order);
         //}
+        public List<int> GetOrdersYear() => GetOrders().Select(order => order.OrderDate.Year).Distinct().ToList();
 
         #endregion
 

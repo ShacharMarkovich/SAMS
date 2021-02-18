@@ -205,9 +205,6 @@
     <Resource Include="default.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Debug\Images\default.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AutoCompleteTextBox">
       <Version>1.1.1</Version>
     </PackageReference>
@@ -235,6 +232,9 @@
     <PackageReference Include="WPFTextBoxAutoComplete">
       <Version>1.0.5</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bin\Debug\Images\default.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
