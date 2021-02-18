@@ -22,7 +22,7 @@ namespace PLApp
             var bl = BL.DataHandle.loadQRBitmaps();
             if (bl.Count!=0)
             {
-                MessageBox.Show("Detected QRs, Adding Orders");
+                //MessageBox.Show("Detected QRs, Adding Orders");
                 var Orders = BL.DataHandle.parseBitmapList(bl);
                 foreach (var o in Orders)
                 {
