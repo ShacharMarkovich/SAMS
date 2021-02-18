@@ -79,6 +79,8 @@ namespace BL
 
         public static List<Bitmap> loadQRBitmaps()
         {
+            //GenerateQRcodes();
+
             string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)+ @"\QRCodes\";
 
             string[] Files = Directory.GetFiles(fullPath);

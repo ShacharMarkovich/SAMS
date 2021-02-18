@@ -19,6 +19,7 @@ namespace PLApp
             //db.loadQRfromDrive();
             //if QR exsits, auto add order, by qr struct, then
             //db.autoAddOrder();
+
             var bl = BL.DataHandle.loadQRBitmaps();
             if (bl.Count!=0)
             {

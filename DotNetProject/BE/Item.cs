@@ -29,11 +29,24 @@ namespace BE
         public string ItemName { get; set; }
         public Category Category { get; set; }
         public double ItemPrice { get; set; }
-
-        [NotMapped]
         public int? Quantity { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
 
         public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {Quantity}";
+
+        public override bool Equals(object obj)
+        {
+            return obj is Item item &&
+                   ItemId == item.ItemId &&
+                   BarcodeNumber == item.BarcodeNumber;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1130531465;
+            hashCode = hashCode * -1521134295 + ItemId.GetHashCode();
+            hashCode = hashCode * -1521134295 + BarcodeNumber.GetHashCode();
+            return hashCode;
+        }
     }
 }

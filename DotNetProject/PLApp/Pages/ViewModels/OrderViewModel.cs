@@ -82,5 +82,10 @@ namespace PLApp.Pages.ViewModels
                 //Exception
             }
         }
+
+        internal void UpdateItem(Item item)
+        {
+            App.db.UpdateItem(item);
+        }
     }
 }
