@@ -25,9 +25,9 @@
                         <RowDefinition Height="8*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <RadioButton Width="100" IsChecked="True">Month</RadioButton>
-                        <RadioButton Width="100">Week</RadioButton>
-                        <RadioButton Width="100">Day</RadioButton>
+                        <RadioButton x:Name="MonthButton" Width="100" IsChecked="True">Month</RadioButton>
+                        <RadioButton x:Name="WeekButton" Width="100">Week</RadioButton>
+                        <RadioButton x:Name="DayButton" Width="100">Day</RadioButton>
                     </StackPanel>
                     <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
                         <CheckBox></CheckBox>
