@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">
-      <Project>{3b887804-bcd1-49dd-bc5c-108ced08b432}</Project>
+      <Project>{f1f9ccf8-e7a7-41e6-8713-439b1ad7c101}</Project>
       <Name>BE</Name>
     </ProjectReference>
   </ItemGroup>

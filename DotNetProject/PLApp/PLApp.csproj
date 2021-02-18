@@ -184,11 +184,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE.csproj">
-      <Project>{3B887804-BCD1-49DD-BC5C-108CED08B432}</Project>
+      <Project>{f1f9ccf8-e7a7-41e6-8713-439b1ad7c101}</Project>
       <Name>BE</Name>
     </ProjectReference>
     <ProjectReference Include="..\BL\BL.csproj">
-      <Project>{30127971-cd20-4c46-ae0e-d495c8db9461}</Project>
+      <Project>{e08c08a3-3c04-46d8-a2d7-6fee1516cd2e}</Project>
       <Name>BL</Name>
     </ProjectReference>
   </ItemGroup>

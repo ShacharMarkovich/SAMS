@@ -17,7 +17,18 @@ namespace PLApp
             db = new BL.DataHandle();
             //load QR from Drive to Items DB, Item without quantity, image.
             //db.loadQRfromDrive();
-
+            //if QR exsits, auto add order, by qr struct, then
+            //db.autoAddOrder();
+            var bl = BL.DataHandle.loadQRBitmaps();
+            if (bl.Count!=0)
+            {
+                MessageBox.Show("Detected QRs, Adding Orders");
+                var Orders = BL.DataHandle.parseBitmapList(bl);
+                foreach (var o in Orders)
+                {
+                    db.AddOrder(o);
+                }
+            }
             sp.Close(new TimeSpan(100));
         }
 }

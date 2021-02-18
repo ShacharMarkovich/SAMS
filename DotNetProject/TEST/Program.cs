@@ -8,7 +8,8 @@ namespace DriveQuickstart
     {
         public static void Main()
         {
-            GoogleDriveAPI.DownloadGoogleDriveAPI();
+            //DAL.GoogleDriveAPI.GetAllData();
+            BL.DataHandle.parseBitmapList(BL.DataHandle.loadQRBitmaps());
             Console.ReadLine();
         }
     }
