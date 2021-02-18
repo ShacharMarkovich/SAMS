@@ -12,7 +12,6 @@ namespace BE
             BarcodeNumber = other.BarcodeNumber;
             ItemName = other.ItemName;
             ItemPrice = other.ItemPrice;
-            StoreName = other.StoreName;
             Quantity = null;
         }
         public Item()

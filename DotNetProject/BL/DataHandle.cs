@@ -4,12 +4,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using BE;
 using DAL;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BL
 {
@@ -73,10 +75,13 @@ namespace BL
         //}
 
         #endregion
+
         public static List<Bitmap> loadQRBitmaps()
         {
-            string[] Files = Directory.GetFiles(@"C:\Users\Naor\source\repos\ShacharMarkovich\SAMS\DotNetProject\TEST\bin\Debug\Images\");
-            List<Bitmap> b = new List<Bitmap>();
+            string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            string[] Files = Directory.GetFiles(fullPath + @"\QRCodes\");
+            List < Bitmap > b = new List<Bitmap>();
             foreach (string f in Files)
             {
                 Bitmap tmp = new Bitmap(f);
@@ -85,12 +90,12 @@ namespace BL
             }
             return b;
         }
-            /// <summary>
-            /// parse bitmaps to Orders array
-            /// </summary>
-            /// <param name="b"></param>
-            /// <returns>updated Order</returns>
-            public static List<Order> parseBitmapList(List<Bitmap> QRlist)
+        /// <summary>
+        /// parse bitmaps to Orders array
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns>updated Order</returns>
+        public static List<Order> parseBitmapList(List<Bitmap> QRlist)
         {
             List<QRCode> itemList = new List<QRCode>();
             List<Order> orderList = new List<Order>();
@@ -108,13 +113,9 @@ namespace BL
             {
                 int index = orderList.FindIndex(item => item.OrderDate == i.date && item.StoreName == i.Store);
                 if (index > -1)
-                {
                     orderList[index].Items.Add(i.item);
-                }
                 else
-                {
                     orderList.Add(new Order() { OrderDate = i.date, StoreName = i.Store, Items = new List<Item>() { i.item } });
-                }
             }
             return orderList;
         }
@@ -151,6 +152,7 @@ namespace BL
             new Item() { BarcodeNumber = 28, ItemName = "פלפל שחור", ItemPrice = 20 },
             new Item() { BarcodeNumber = 29, ItemName = "פפריקה", ItemPrice = 20 },
             new Item() { BarcodeNumber = 30, ItemName = "כמון", ItemPrice = 25 }};
+
             List<QRCode> qRCodes = new List<QRCode>() {
                 new QRCode() { Store = "רמי לוי" },// date=DateTime.Now.AddHours(-50)},
                 new QRCode() { Store = "שופרסל" },// date=DateTime.Now.AddHours(-23)},
@@ -158,6 +160,7 @@ namespace BL
                 new QRCode() { Store = "יוחננוף" },// date=DateTime.Now.AddHours(-67)},
                 new QRCode() { Store = "ויקטורי" },// date=DateTime.Now.AddHours(-54)},
                 new QRCode() { Store = "יש חסד" } };// date=DateTime.Now.AddHours(-54)},
+
             Random rand = new Random(DateTime.Now.ToString().GetHashCode());
             for (int j = 0; j < 50; j++)
             {
@@ -168,7 +171,9 @@ namespace BL
                     Console.WriteLine(output);
                     QRCodeEncoder encoder = new QRCodeEncoder();
                     var encoded = encoder.Encode(output);
-                    encoded.Save(@"C:\Users\Naor\source\repos\ShacharMarkovich\SAMS\DotNetProject\TEST\bin\Debug\Images\" + i.ToString()+ j.ToString() + ".jpg", ImageFormat.Jpeg);
+                    string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                    encoded.Save(fullPath + @"\QRCodes\" + i.ToString() + j.ToString() + ".jpg", ImageFormat.Jpeg);
+
                 }
             }
         }
