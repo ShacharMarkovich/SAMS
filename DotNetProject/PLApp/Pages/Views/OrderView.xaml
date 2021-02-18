@@ -58,7 +58,7 @@
                         <Image.ToolTip>
                             <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}">
                                 <Border BorderBrush="Black" BorderThickness="1" Margin="5,7,5,5">
-                                    <Image Source="{Binding Source}" Stretch="None" />
+                                    <Image Source="{Binding Source}" Stretch="Uniform" MaxHeight="300" MaxWidth="300" />
                                 </Border>
                             </ToolTip>
                         </Image.ToolTip>
@@ -70,6 +70,15 @@
                         <StackPanel Orientation="Horizontal">
                             <Canvas Width="24" Height="24">
                                 <Path Fill="Black" Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
+                            </Canvas>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+                <DataTemplate x:Key="ImageUpdateDataTemplate">
+                    <Button Click="UpdateImageByBarcode_BtnClick" Background="Transparent" Width="48" Height="48" Panel.ZIndex="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Canvas Width="24" Height="24">
+                                <Path Fill="Black" Data="M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H14.09C14.03,20.67 14,20.34 14,20C14,19.32 14.12,18.64 14.35,18H5L8.5,13.5L11,16.5L14.5,12L16.73,14.97C17.7,14.34 18.84,14 20,14C20.34,14 20.67,14.03 21,14.09V5C21,3.89 20.1,3 19,3H5M19,16V19H16V21H19V24H21V21H24V19H21V16H19Z" />
                             </Canvas>
                         </StackPanel>
                     </Button>
@@ -88,6 +97,8 @@
                     </DataGridTemplateColumn.CellStyle>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn CellTemplate="{StaticResource btnDataTemplate}"/>
+                <DataGridTemplateColumn CellTemplate="{StaticResource ImageUpdateDataTemplate}"/>
+
             </DataGrid.Columns>
 
         </DataGrid>
