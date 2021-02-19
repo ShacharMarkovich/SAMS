@@ -67,7 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Pages\Views\ItemDataListView.xaml.cs">
+    <Compile Include="Pages\FillData\ItemDataList\ItemDataListView.xaml.cs">
       <DependentUpon>ItemDataListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Providers\ItemSuggestionProvider.cs" />
@@ -92,7 +92,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\FillData.xaml">
+    <Page Include="Pages\FillData\FillData\FillData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -100,11 +100,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ShoppingAnalysis.xaml">
+    <Page Include="Pages\Analysis\ShoppingAnalysis\ShoppingAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ShoppingRecommends.xaml">
+    <Page Include="Pages\Recommends\ShoppingRecommends\ShoppingRecommends.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,15 +112,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Views\AddItemView.xaml">
+    <Page Include="Pages\FillData\AddItem\AddItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Views\ItemDataListView.xaml">
+    <Page Include="Pages\FillData\ItemDataList\ItemDataListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Views\OrderView.xaml">
+    <Page Include="Pages\FillData\Order\OrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,29 +129,29 @@
     <Compile Include="Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FillData.xaml.cs">
+    <Compile Include="Pages\FillData\FillData\FillData.xaml.cs">
       <DependentUpon>FillData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Models\AddItemModel.cs" />
-    <Compile Include="Pages\Models\OrderModel.cs" />
+    <Compile Include="Pages\FillData\AddItem\AddItemModel.cs" />
+    <Compile Include="Pages\FillData\Order\OrderModel.cs" />
     <Compile Include="Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ShoppingAnalysis.xaml.cs">
+    <Compile Include="Pages\Analysis\ShoppingAnalysis\ShoppingAnalysis.xaml.cs">
       <DependentUpon>ShoppingAnalysis.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ShoppingRecommends.xaml.cs">
+    <Compile Include="Pages\Recommends\ShoppingRecommends\ShoppingRecommends.xaml.cs">
       <DependentUpon>ShoppingRecommends.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TestItemsList.xaml.cs">
       <DependentUpon>TestItemsList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ViewModels\AdditemViewModel.cs" />
-    <Compile Include="Pages\ViewModels\OrderViewModel.cs" />
-    <Compile Include="Pages\Views\AddItemView.xaml.cs">
+    <Compile Include="Pages\FillData\AddItem\AdditemViewModel.cs" />
+    <Compile Include="Pages\FillData\Order\OrderViewModel.cs" />
+    <Compile Include="Pages\FillData\AddItem\AddItemView.xaml.cs">
       <DependentUpon>AddItemView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Views\OrderView.xaml.cs">
+    <Compile Include="Pages\FillData\Order\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -199,10 +199,7 @@
     <None Include="Resources\defult.png" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="SplashScreen1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="default.jpg" />
+    <SplashScreen Include="Resources\SplashScreen1.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoCompleteTextBox">

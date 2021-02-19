@@ -12,7 +12,7 @@ namespace PLApp
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            SplashScreen sp = new SplashScreen("SplashScreen1.png");
+            SplashScreen sp = new SplashScreen(@"Resources\SplashScreen1.png");
             sp.Show(false);
             db = new BL.DataHandle();
             //load QR from Drive to Items DB, Item without quantity, image.
