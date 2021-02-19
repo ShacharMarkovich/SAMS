@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PLApp.Pages.ShoppingAnalysis"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,50 +7,16 @@
              xmlns:local="clr-namespace:PLApp.Pages"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
+             xmlns:AverageOrderCostBarChart="clr-namespace:PLApp.Pages.AverageOrderCostBarChart" x:Class="PLApp.Pages.ShoppingAnalysis"
+
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <mah:MetroAnimatedTabControl>
-            <mah:MetroTabItem Header="Shopping Statistics">
-
-            </mah:MetroTabItem>
-            <mah:MetroTabItem Header="Products Statistics" Margin="10,0,-10,0">
-
-            </mah:MetroTabItem>
+            <mah:MetroTabItem Header="Shopping Statistics"/>
+            <mah:MetroTabItem Header="Products Statistics" Margin="10,0,-10,0"/>
             <mah:MetroTabItem Header="Shops Statistics" Margin="20,0,-20,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="8*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <RadioButton x:Name="YearCutButton" Width="100" Content="Year"   Checked="AggregationCutChangeChecked"/>
-                        <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked"/>
-                        <RadioButton x:Name="DayCutButton" Width="100" Content="day"     Checked="AggregationCutChangeChecked"/>
-                    </StackPanel>
-                    <StackPanel x:Name="selectMonthYearPanel" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
-                        <StackPanel x:Name="monthStackPanel" Visibility="Collapsed" Orientation="Horizontal">
-                            <Label FontWeight="Bold">Month:</Label>
-                            <ComboBox x:Name="monthComboBox" Width="131"/>
-                        </StackPanel>
-                        <StackPanel x:Name="yearStackPanel" Visibility="Collapsed" Orientation="Horizontal">
-                            <Label FontWeight="Bold">Year:</Label>
-                            <ComboBox x:Name="yearComboBox" Width="131"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel x:Name="StackPanelCheckBoxesStoresName" Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-                    </StackPanel>
-                    <lvc:CartesianChart Grid.Row="3" Series="{Binding StoresAmountCollection}" LegendLocation="Left" MinHeight="400">
-                        <lvc:CartesianChart.AxisX>
-                            <lvc:Axis x:Name="Axis" Labels="{Binding Xaxis}"></lvc:Axis>
-                        </lvc:CartesianChart.AxisX>
-                        <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Average Order Cost" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-                        </lvc:CartesianChart.AxisY>
-                    </lvc:CartesianChart>
-                </Grid>
+                <AverageOrderCostBarChart:AverageOrderCostBarChart/>
             </mah:MetroTabItem>
         </mah:MetroAnimatedTabControl>
     </Grid>

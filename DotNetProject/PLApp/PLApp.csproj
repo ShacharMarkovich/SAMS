@@ -67,6 +67,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChart.xaml.cs">
+      <DependentUpon>AverageOrderCostBarChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChartModel.cs" />
+    <Compile Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChartViewModel.cs" />
     <Compile Include="Pages\FillData\ItemDataList\ItemDataListView.xaml.cs">
       <DependentUpon>ItemDataListView.xaml</DependentUpon>
     </Compile>
@@ -89,6 +94,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,5 +242,6 @@
   <ItemGroup>
     <Resource Include="bin\Debug\Images\default.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
