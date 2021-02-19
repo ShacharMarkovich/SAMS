@@ -2,6 +2,8 @@
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,96 +13,130 @@ namespace PLApp.Pages
     /// <summary>
     /// Interaction logic for ShoppingAnalysis.xaml
     /// </summary>
-    public partial class ShoppingAnalysis : UserControl
+    public partial class ShoppingAnalysis : UserControl, INotifyPropertyChanged
     {
         readonly string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-        readonly string[] weeks = { "1-8", "9-16", "16-24", "24-31" };
-        readonly int[] days = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
-        private int? selectMonth;
-        private int? selectYear;
 
-        public SeriesCollection StoresAmountCollection { get; set; }
-        public string[] Xaxis { get; set; }
-        public Func<double, string> Formatter { get; set; }
+        int selectMonth; // property of showing orders which is in the user selected month
+
+        int selectYear; // property of showing orders which is in the user selected year
+
+        string[] xaxis; // property that hold the X axis labales. Implements INotifyPropertyChanged
+        public string[] Xaxis
+        {
+            get => xaxis;
+            set
+            {
+                xaxis = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("Xaxis"));
+            }
+        }
+
+        public SeriesCollection StoresAmountCollection { get; set; } // hold the Stores Graph collection
+
+        public Func<double, string> Formatter { get; set; } // the grapf Formatter
 
         public string Title { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// C'tor. Initialize Components.
+        /// </summary>
         public ShoppingAnalysis()
         {
             Title = "Shopping Analysis";
             InitializeComponent();
-
             selectYear = DateTime.Today.Year;
             selectMonth = DateTime.Today.Month;
+            StoresAmountCollection = new SeriesCollection();
+            StoresAmountCollection.Clear();
+            Formatter = value => value.ToString("N");
 
             monthComboBox.ItemsSource = months;
             yearComboBox.ItemsSource = App.db.GetOrdersYear();
 
-            StoresAmountCollection = new SeriesCollection();
-            Formatter = value => value.ToString("N");
+            monthComboBox.SelectedItem = months[DateTime.Today.Month - 1];
+            yearComboBox.SelectedItem = selectYear;
+
+            monthComboBox.SelectionChanged += monthComboBox_SelectionChanged;
+            yearComboBox.SelectionChanged += yearComboBox_SelectionChanged;
 
             DataContext = this;
-            //BuildShopCart();
         }
 
         /// <summary>
-        /// in the Shops Statistics we show the Average Order Cost in each store, depending on time of year/month/week/day
+        /// Build the Shops Average Order Total Cost graph.
+        /// thr Graph is depending on time that the user select (year/month/day)
+        /// Show in the "Shops Statistics" tab
         /// </summary>
         public void BuildShopCart()
         {
             // {"storename":[$-1,$-2,...,$-31]}, where $i = average cost of order in day i of this month
 
-            // only order in this month and year:
             List<BE.Order> orders = App.db.GetOrders().ToList();
 
-            if (selectYear == null && selectMonth == null) // year is null - so X axis values are the years
-                Xaxis = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
-
-            else if (selectMonth != null)
+            // check if user want to see the average order cost per year
+            if (yearStackPanel.Visibility == Visibility.Collapsed && monthStackPanel.Visibility == Visibility.Collapsed)
             {
-                orders = orders.Where(order => order.OrderDate.Month == selectMonth).ToList();
-                Xaxis = orders.Select(order => order.OrderDate.Month).Select(i => months[i]).Distinct().ToArray();
+                Xaxis = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
+                Axis.Title = "Year";
             }
-            else
+            // check if user want to see the average order cost per months in given year
+            else if (yearStackPanel.Visibility == Visibility.Visible && monthStackPanel.Visibility == Visibility.Collapsed)
+            {
+                orders = orders.Where(order => order.OrderDate.Year == selectYear).ToList(); // get order in given year
+                Xaxis = orders.Select(order => order.OrderDate.Month).Select(i => months[i - 1]).Distinct().ToArray(); // get months of those orders
+                Axis.Title = "Month";
+            }
+            else // check if user want to see the average order cost per day in given months and year
             {
                 orders = orders.Where(order => order.OrderDate.Month == selectMonth && order.OrderDate.Year == selectYear).ToList();
-                Xaxis = null;
+                Xaxis = null; // the X axis labales will update in the end...
+                Axis.Title = "Day in Month";
             }
-            // get all stores name:
-            List<string> TitleStoresNames = orders.Select(order => order.StoreName).Distinct().ToList();
-            /*foreach (var storeName in TitleStoresNames)
+
+            List<string> StoresNames = orders.Select(order => order.StoreName).Distinct().ToList(); // get all stores name
+
+            // create checkboxes to choose which stores to show:
+            StackPanelCheckBoxesStoresName.Children.Clear(); // remove previous stores
+            foreach (var storeName in StoresNames)
             {
-                CheckBox checkBox = new CheckBox();
-                checkBox.= storeName;
-                checkBox.SelectionChanged;
-            }*/
-
+                CheckBox storeCheckBox = new CheckBox { IsChecked = true, Content = storeName };
+                storeCheckBox.Click += storeCheckBoxClick;
+                StackPanelCheckBoxesStoresName.Children.Add(storeCheckBox);
+            }
+            // in order to show in graph only days which the user by on them, we create this checked list of days in week to see in which day the user made an order.
+            List<bool> boolDays = Enumerable.Repeat(false, 31).ToList();
             StoresAmountCollection.Clear();
-            List<bool> boolDays = Enumerable.Repeat(0, 31).Select(i => i == 0).ToList();
-
-            foreach (var storeName in TitleStoresNames)
+            foreach (var storeName in StoresNames)
             {
                 // get all orders in `storeName` store:
                 List<BE.Order> ordersInCurrStore = orders.Where(order => order.StoreName == storeName).ToList();
 
                 // create a list of zerose. for each day of the week.
-                List<List<double>> days = Enumerable.Repeat(0, 31).Select(i => new List<double> { i }).ToList();
+                // it is list of list because we maybe have more than 1 order in same day
+                List<List<double>> days = Enumerable.Repeat(new List<double>(), 31).ToList();
 
                 // for each order in that store, culculate the sums of items price that the user buy at a spesific day
                 foreach (var order in ordersInCurrStore)
                 {
                     double? cost = order.Items.Sum(item => item.Quantity * item.ItemPrice); // get the total cost of this order
-                    if (cost != null)
+                    if (cost != null && cost > 0)
                     {
-                        boolDays[order.OrderDate.Day] = true;
-                        days[order.OrderDate.Day].Add((double)cost);
+                        boolDays[order.OrderDate.Day - 1] = true;
+                        days[order.OrderDate.Day - 1].Add((double)cost);
                     }
                 }
-                List<double> avgPriceindays = days.Select(costList => costList.Average()).ToList();
+                // calc the average cost in the store in specific day:
+                var avgPriceindays = days.Select(costList => costList.Average()).Where(totalPrice => totalPrice > 0);
                 StoresAmountCollection.Add(new ColumnSeries { Title = storeName, Values = new ChartValues<double>(avgPriceindays) });
             }
-            if (Xaxis == null)
+
+            if (Xaxis == null) // if the user chose to see the average order cost per day in given months and year:
             {
+                // create list of days in them the user buy:
                 List<string> lst = new List<string>();
                 for (int i = 0; i < boolDays.Count; i++)
                     if (boolDays[i])
@@ -108,48 +144,61 @@ namespace PLApp.Pages
                 Xaxis = lst.ToArray();
             }
         }
+
+        /// <summary>
+        /// event handler of when the user change the cut aggregation
+        /// </summary>
         private void AggregationCutChangeChecked(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
             switch (radioButton.Content as string)
             {
-                case "Year":
-                    yearComboBox.Visibility = Visibility.Collapsed;
-                    monthComboBox.Visibility = Visibility.Collapsed;
-                    selectYear = null;
-                    selectMonth = null;
+                case "Year": // user chose to see per year:
+                    yearStackPanel.Visibility = Visibility.Collapsed;
+                    monthStackPanel.Visibility = Visibility.Collapsed;
                     break;
 
-                case "Month":
-                    yearComboBox.Visibility = Visibility.Visible;
-                    monthComboBox.Visibility = Visibility.Collapsed;
-                    selectMonth = null;
+                case "Month": // user chose to see per month:
+                    yearStackPanel.Visibility = Visibility.Visible;
+                    monthStackPanel.Visibility = Visibility.Collapsed;
                     break;
 
-                case "Day":
-                    yearComboBox.Visibility = Visibility.Visible;
-                    monthComboBox.Visibility = Visibility.Visible;
+                case "Day": // user chose to see per day in month:
+                    yearStackPanel.Visibility = Visibility.Visible;
+                    monthStackPanel.Visibility = Visibility.Visible;
                     break;
 
-                default:
-                    yearComboBox.Visibility = Visibility.Visible;
-                    monthComboBox.Visibility = Visibility.Visible;
+                default: // for errors
+                    yearStackPanel.Visibility = Visibility.Visible;
+                    monthStackPanel.Visibility = Visibility.Visible;
                     break;
             }
-            BuildShopCart();
-        }
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            //var s = sender as CheckBox;
-            //if (s.IsChecked == true) ;
+            BuildShopCart(); // update the graph
         }
 
+        /// <summary>
+        /// event handler for which stores to show in the graph
+        /// </summary>
+        private void storeCheckBoxClick(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            foreach (ColumnSeries item in StoresAmountCollection)
+                if (item.Title == checkBox.Content as string)
+                    item.Visibility = checkBox.IsChecked == true ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// event handler for user change which month to show in graph
+        /// </summary>
         private void monthComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectMonth = monthComboBox.SelectedIndex + 1;
-            BuildShopCart();
+            BuildShopCart(); // update the graph
         }
 
+        /// <summary>
+        /// event handler for user change which year to show in graph
+        /// </summary>
         private void yearComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectYear = (int)yearComboBox.SelectedItem;

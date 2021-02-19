@@ -26,26 +26,25 @@
                         <RowDefinition Height="8*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <RadioButton x:Name="YearCutButton" Checked="AggregationCutChangeChecked" Width="100" Content="Year"/>
-                        <RadioButton x:Name="MonthCutButton" Checked="AggregationCutChangeChecked"  Width="100" Content="Month"/>
-                        <RadioButton x:Name="DayCutButton" Checked="AggregationCutChangeChecked" Width="100" Content="day"/>
+                        <RadioButton x:Name="YearCutButton" Width="100" Content="Year"   Checked="AggregationCutChangeChecked"/>
+                        <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked"/>
+                        <RadioButton x:Name="DayCutButton" Width="100" Content="day"     Checked="AggregationCutChangeChecked"/>
                     </StackPanel>
                     <StackPanel x:Name="selectMonthYearPanel" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
-                        <StackPanel x:Name="monthStackPanel" Orientation="Horizontal">
+                        <StackPanel x:Name="monthStackPanel" Visibility="Collapsed" Orientation="Horizontal">
                             <Label FontWeight="Bold">Month:</Label>
-                            <ComboBox x:Name="monthComboBox" Width="131" SelectionChanged="monthComboBox_SelectionChanged"/>
+                            <ComboBox x:Name="monthComboBox" Width="131"/>
                         </StackPanel>
-                        <StackPanel x:Name="yearStackPanel" Orientation="Horizontal">
+                        <StackPanel x:Name="yearStackPanel" Visibility="Collapsed" Orientation="Horizontal">
                             <Label FontWeight="Bold">Year:</Label>
-                            <ComboBox x:Name="yearComboBox" Width="131" SelectionChanged="yearComboBox_SelectionChanged"/>
+                            <ComboBox x:Name="yearComboBox" Width="131"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel x:Name="StackPanelCheckBoxesStoresName" Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal">
-                        <CheckBox Click="CheckBox_Checked">Hello</CheckBox>
                     </StackPanel>
                     <lvc:CartesianChart Grid.Row="3" Series="{Binding StoresAmountCollection}" LegendLocation="Left" MinHeight="400">
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="Shop" Labels="{Binding Xaxis}"></lvc:Axis>
+                            <lvc:Axis x:Name="Axis" Labels="{Binding Xaxis}"></lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                         <lvc:CartesianChart.AxisY>
                             <lvc:Axis Title="Average Order Cost" LabelFormatter="{Binding Formatter}"></lvc:Axis>
