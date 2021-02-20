@@ -48,9 +48,6 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
         public AverageOrderCostBarChartModel AverageOrderCostModel;
 
         public ICommand StoreCheckBoxCommand { get; set; }
-        public ICommand AggregationCutChange { get; set; }
-        public ICommand MonthComboBoxCommand { get; set; }
-        public ICommand YearComboBoxCommand { get; set; }
 
         public AverageOrderCostBarChartViewModel()
         {
@@ -60,11 +57,7 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
             AverageOrderCostModel = new AverageOrderCostBarChartModel();
 
             StoreCheckBoxCommand = new RelayCommand(new Action<object>(StoreCheckBoxClick));
-            //AggregationCutChange = new RelayCommand(new Action<object>(AggregationCutChangeChecked));
-            //MonthComboBoxCommand = new RelayCommand(new Action<object>(MonthComboBox_SelectionChanged));
-            //YearComboBoxCommand = new RelayCommand(new Action<object>(YearComboBox_SelectionChanged));
         }
-
 
 
         /// <summary>
@@ -106,6 +99,7 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
             {
                 CheckBox storeCheckBox = new CheckBox { IsChecked = true, Content = storeName };
                 storeCheckBox.Command = StoreCheckBoxCommand;
+                storeCheckBox.CommandParameter = storeCheckBox;
                 StackPanelCheckBoxesStoresName.Children.Add(storeCheckBox);
             }
             // in order to show in graph only days which the user by on them, we create this checked list of days in week to see in which day the user made an order.
@@ -144,9 +138,9 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
                         lst.Add((i + 1).ToString());
                 Xlabel = lst.ToArray();
             }
+            //MessageBox.Show(string.Join(", ", Xlabel));
+            //MessageBox.Show(string.Join(", ", StoresAmountCollection.Select(s=>s.Title)));
         }
-
-
 
         /// <summary>
         /// event handler for which stores to show in the graph
@@ -158,51 +152,5 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
                 if (item.Title == checkBox.Content as string)
                     item.Visibility = checkBox.IsChecked == true ? Visibility.Visible : Visibility.Hidden;
         }
-
-        //private void AggregationCutChangeChecked(object sender)
-        //{
-        //    RadioButton radioButton = sender as RadioButton;
-        //    switch (radioButton.Content as string)
-        //    {
-        //        case "Year": // user chose to see per year:
-        //            //yearStackPanel.Visibility = Visibility.Collapsed;
-        //            //monthStackPanel.Visibility = Visibility.Collapsed;
-        //            break;
-
-        //        case "Month": // user chose to see per month:
-        //            yearStackPanel.Visibility = Visibility.Visible;
-        //            monthStackPanel.Visibility = Visibility.Collapsed;
-        //            break;
-
-        //        case "Day": // user chose to see per day in month:
-        //            yearStackPanel.Visibility = Visibility.Visible;
-        //            monthStackPanel.Visibility = Visibility.Visible;
-        //            break;
-
-        //        default: // for errors
-        //            yearStackPanel.Visibility = Visibility.Visible;
-        //            monthStackPanel.Visibility = Visibility.Visible;
-        //            break;
-        //    }
-        //    BuildShopCart(); // update the graph
-        //}
-
-        ///// <summary>
-        ///// event handler for user change which month to show in graph
-        ///// </summary>
-        //private void MonthComboBox_SelectionChanged(object sender)
-        //{
-        //    AverageOrderCostModel.selectMonth = monthComboBox.SelectedIndex + 1;
-        //    BuildShopCart(); // update the graph
-        //}
-
-        ///// <summary>
-        ///// event handler for user change which year to show in graph
-        ///// </summary>
-        //private void YearComboBox_SelectionChanged(object sender)
-        //{
-        //    AverageOrderCostModel.selectYear = (int)yearComboBox.SelectedItem;
-        //    BuildShopCart();
-        //}
     }
 }

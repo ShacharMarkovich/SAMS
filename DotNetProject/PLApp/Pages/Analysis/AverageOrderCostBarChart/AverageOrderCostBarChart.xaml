@@ -14,9 +14,9 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-            <RadioButton x:Name="YearCutButton" Width="100" Content="Year"  Command="{Binding AggregationCutChange}" CommandParameter="Year" />
-            <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Command="{Binding AggregationCutChange}" CommandParameter="Month" />
-            <RadioButton x:Name="DayCutButton" Width="100" Content="Day"     Command="{Binding AggregationCutChange}" CommandParameter="Day" />
+            <RadioButton x:Name="YearCutButton" Width="100" Content="Year"  Checked="AggregationCutChangeChecked" />
+            <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked" />
+            <RadioButton x:Name="DayCutButton" Width="100" Content="Day"     Checked="AggregationCutChangeChecked"/>
         </StackPanel>
         <StackPanel x:Name="selectMonthYearPanel" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
             <StackPanel x:Name="monthStackPanel" Visibility="Collapsed" Orientation="Horizontal">
