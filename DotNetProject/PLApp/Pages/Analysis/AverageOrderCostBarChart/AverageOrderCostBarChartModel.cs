@@ -5,6 +5,9 @@ using System.ComponentModel;
 
 namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
 {
+    /// <summary>
+    /// The model of the average order total cost bar chart
+    /// </summary>
     public class AverageOrderCostBarChartModel
     {
         #region time class property
@@ -17,7 +20,6 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
         {
             selectYear = DateTime.Today.Year;
             selectMonth = DateTime.Today.Month;
-            
         }
     }
 }

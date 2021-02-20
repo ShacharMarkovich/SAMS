@@ -11,6 +11,9 @@ using System.Windows.Input;
 
 namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
 {
+    /// <summary>
+    /// The View model of the average order total cost bar chart
+    /// </summary>
     public class AverageOrderCostBarChartViewModel : INotifyPropertyChanged
     {
         #region Implement INotifyPropertyChanged
@@ -59,49 +62,26 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
             StoreCheckBoxCommand = new RelayCommand(new Action<object>(StoreCheckBoxClick));
         }
 
-
         /// <summary>
         /// Build the Shops Average Order Total Cost graph.
         /// thr Graph is depending on time that the user select (year/month/day)
         /// Show in the "Shops Statistics" tab
         /// </summary>
+        /// <param name="yearStackPanelVisibility">selct year's StackPanel visibility</param>
+        /// <param name="monthStackPanelVisibility">selct month's StackPanel visibility</param>
+        /// <param name="StackPanelCheckBoxesStoresName">StackPanel where the stores visibility checkboxes will set</param>
         public void BuildShopCart(Visibility yearStackPanelVisibility, Visibility monthStackPanelVisibility, StackPanel StackPanelCheckBoxesStoresName)
         {
             // {"storename":[$-1,$-2,...,$-31]}, where $i = average cost of order in day i of this month
 
             List<BE.Order> orders = App.db.GetOrders().ToList();
 
-            // check if user want to see the average order cost per year
-            if (yearStackPanelVisibility == Visibility.Collapsed && monthStackPanelVisibility== Visibility.Collapsed)
-            {
-                Xlabel = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
-                XTitle = "Year";
-            }
-            // check if user want to see the average order cost per months in given year
-            else if (yearStackPanelVisibility == Visibility.Visible && monthStackPanelVisibility == Visibility.Collapsed)
-            {
-                orders = orders.Where(order => order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList(); // get order in given year
-                Xlabel = orders.Select(order => order.OrderDate.Month).Select(i => AverageOrderCostModel.months[i - 1]).Distinct().ToArray(); // get months of those orders
-                XTitle = "Month";
-            }
-            else // check if user want to see the average order cost per day in given months and year
-            {
-                orders = orders.Where(order => order.OrderDate.Month == AverageOrderCostModel.selectMonth && order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList();
-                Xlabel = null; // the X axis labales will update in the end...
-                XTitle = "Day in Month";
-            }
+            orders = SetLabalNTitle(yearStackPanelVisibility, monthStackPanelVisibility, orders);
 
             List<string> StoresNames = orders.Select(order => order.StoreName).Distinct().ToList(); // get all stores name
 
-            // create checkboxes to choose which stores to show:
-            StackPanelCheckBoxesStoresName.Children.Clear(); // remove previous stores
-            foreach (var storeName in StoresNames)
-            {
-                CheckBox storeCheckBox = new CheckBox { IsChecked = true, Content = storeName };
-                storeCheckBox.Command = StoreCheckBoxCommand;
-                storeCheckBox.CommandParameter = storeCheckBox;
-                StackPanelCheckBoxesStoresName.Children.Add(storeCheckBox);
-            }
+            CreateStoresCheckboxes(StackPanelCheckBoxesStoresName, StoresNames);
+
             // in order to show in graph only days which the user by on them, we create this checked list of days in week to see in which day the user made an order.
             List<bool> boolDays = Enumerable.Repeat(false, 31).ToList();
             StoresAmountCollection.Clear();
@@ -138,8 +118,55 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
                         lst.Add((i + 1).ToString());
                 Xlabel = lst.ToArray();
             }
-            //MessageBox.Show(string.Join(", ", Xlabel));
-            //MessageBox.Show(string.Join(", ", StoresAmountCollection.Select(s=>s.Title)));
+        }
+
+        /// <summary>
+        /// create checkboxes to choose with funcuallity which stores to show
+        /// </summary>
+        /// <param name="StackPanelCheckBoxesStoresName">StackPanel where the stores visibility checkboxes will set</param>
+        /// <param name="StoresNames">list of exisitng stores name</param>
+        private void CreateStoresCheckboxes(StackPanel StackPanelCheckBoxesStoresName, List<string> StoresNames)
+        {
+            StackPanelCheckBoxesStoresName.Children.Clear(); // remove previous stores
+            foreach (var storeName in StoresNames)
+            {
+                CheckBox storeCheckBox = new CheckBox { IsChecked = true, Content = storeName };
+                storeCheckBox.Command = StoreCheckBoxCommand;
+                storeCheckBox.CommandParameter = storeCheckBox;
+                StackPanelCheckBoxesStoresName.Children.Add(storeCheckBox);
+            }
+        }
+
+        /// <summary>
+        /// Set the Tile and the X axis label of the graph
+        /// </summary>
+        /// <param name="yearStackPanelVisibility">selct year's StackPanel visibility</param>
+        /// <param name="monthStackPanelVisibility">selct month's StackPanel visibility</param>
+        /// <param name="orders"> list of all orders</param>
+        /// <returns></returns>
+        private List<BE.Order> SetLabalNTitle(Visibility yearStackPanelVisibility, Visibility monthStackPanelVisibility, List<BE.Order> orders)
+        {
+            // check if user want to see the average order cost per year
+            if (yearStackPanelVisibility == Visibility.Collapsed && monthStackPanelVisibility == Visibility.Collapsed)
+            {
+                Xlabel = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
+                XTitle = "Year";
+            }
+            // check if user want to see the average order cost per months in given year
+            else if (yearStackPanelVisibility == Visibility.Visible && monthStackPanelVisibility == Visibility.Collapsed)
+            {
+                orders = orders.Where(order => order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList(); // get order in given year
+                Xlabel = orders.Select(order => order.OrderDate.Month).Select(i => AverageOrderCostModel.months[i - 1]).Distinct().ToArray(); // get months of those orders
+                XTitle = "Month";
+            }
+            else // check if user want to see the average order cost per day in given months and year
+            {
+                orders = orders.Where(order => order.OrderDate.Month == AverageOrderCostModel.selectMonth && order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList();
+                Xlabel = null; // the X axis labales will update in the end...
+                XTitle = "Day in Month";
+            }
+
+            return orders;
         }
 
         /// <summary>

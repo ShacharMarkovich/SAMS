@@ -8,6 +8,7 @@ namespace PLApp.Pages.AverageOrderCostBarChart
 {
     /// <summary>
     /// Interaction logic for AverageOrderCostBarChart.xaml
+    /// The View of the average order total cost bar chart
     /// </summary>
     public partial class AverageOrderCostBarChart : UserControl
     {
