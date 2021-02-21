@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:PLApp.Pages.Views"
              xmlns:BE="clr-namespace:BE;assembly=BE" 
                  xmlns:converters="clr-namespace:PLApp.Converters"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Name="userControl" x:Class="PLApp.Pages.Views.OrderView"
              mc:Ignorable="d"
@@ -15,6 +16,12 @@
         <converters:PathToImageConverter x:Key="ImageConverter"/>
         <converters:VisibilityConverter x:Key="VisibilityConverter"/>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="BE:Category"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
 
     <StackPanel Margin="0,0,0,-31">
@@ -87,6 +94,7 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <DataGridComboBoxColumn Header="Category" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"  SelectedItemBinding="{Binding Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding ItemPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTextColumn Header="BarcodeNumber" Binding="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTextColumn Header="Quantity"  Binding="{Binding Quantity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>

@@ -35,7 +35,24 @@ namespace BL
         #region Item functions
         public Item AddItem(Item item) => db.AddItem(item);
 
-        public void UpdateItem(Item item) => db.UpdateItem(item);
+        public void UpdateItem(Item item)
+        {
+            Item prevItem = db.FindItem(item); //seach item by ID
+
+            //update all items with the same Barcode if only the Name or Category
+            if (prevItem.Category== item.Category || prevItem.ItemName == item.ItemName)
+            {
+                var SameBacodeItems = db.Items.Where(i => i.BarcodeNumber == item.BarcodeNumber);
+                foreach (Item i in SameBacodeItems)
+                {
+                    i.ItemName = item.ItemName;
+                    i.Category = item.Category;
+                    //db.UpdateItem(i);
+                }
+
+            }
+            db.UpdateItem(item);
+        }
 
         public Item RemoveItem(Item item) => db.RemoveItem(item);
 
