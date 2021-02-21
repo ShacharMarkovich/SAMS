@@ -9,11 +9,11 @@ namespace PLApp
     public partial class App : Application
     {
         public static BL.DataHandle db;
-
+        static SplashScreen sp;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            SplashScreen sp = new SplashScreen(@"Resources\SplashScreen1.png");
-            sp.Show(false);
+            sp = new SplashScreen(@"Resources\SplashScreen1.png");
+            sp.Show(true);
             db = new BL.DataHandle();
             //load QR from Drive to Items DB, Item without quantity, image.
             //db.loadQRfromDrive();
@@ -30,7 +30,6 @@ namespace PLApp
                     db.AddOrder(o);
                 }
             }
-            sp.Close(new TimeSpan(100));
         }
 }
 }

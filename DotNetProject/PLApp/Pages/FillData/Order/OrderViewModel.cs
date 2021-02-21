@@ -4,7 +4,9 @@ using PLApp.Pages.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
+using System.Windows;
 
 namespace PLApp.Pages.ViewModels
 {
@@ -74,12 +76,11 @@ namespace PLApp.Pages.ViewModels
                 if (openFileDialog.ShowDialog() == true)
                 {
                     string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", barcodeNumber.ToString() + ".jpg");
-                    File.Copy(openFileDialog.FileName, newImagePath);
+                    File.Copy(openFileDialog.FileName, newImagePath,true);
                 }
             }
             catch(Exception e)
             {
-                //Exception
             }
         }
 
