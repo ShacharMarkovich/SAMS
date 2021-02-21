@@ -24,7 +24,7 @@ namespace DAL
     public static class GoogleDriveAPI
     {
         const string QRCodesDirectoryID = "1dffosvvP2Vk5JD3TvOfzXBt0J63SO9Il";
-        const string saveDirectory = @"..\..\..\DAL\QRCodes\";
+        public static readonly string saveDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
         /// <summary>
         /// Path to the client secret json file from Google Developers console.
         /// </summary>
@@ -60,15 +60,15 @@ namespace DAL
                     throw new Exception("credentials json file does not exist.");
 
                 // These are the scopes of permissions you need. It is best to request only what you need and not all of them
-                string[] scopes = new string[] { DriveService.Scope.DriveReadonly };         	//View the files in your Google Drive                                                 
+                string[] scopes = new string[] { DriveService.Scope.Drive}; // View the files in your Google Drive
                 UserCredential credential;
                 using (var stream = new FileStream(credentials, FileMode.Open, FileAccess.Read))
                 {
                     string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                    credPath = Path.Combine(credPath, ".credentials/", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+                    credPath = Path.Combine(credPath, ".credentials/", Assembly.GetExecutingAssembly().GetName().Name);
 
                     // Requesting Authentication or loading previously stored authentication for userName
-                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, scopes, "user name",
+                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, scopes, "user",
                                                                              CancellationToken.None, new FileDataStore(credPath, true)).Result;
                 }
 
@@ -113,9 +113,8 @@ namespace DAL
         /// <param name="file">file to download from google drive</param>
         private static void DownloadFromDrive(DriveService service, Google.Apis.Drive.v3.Data.File file)
         {
-            FileStream s = new FileStream(saveDirectory + file.Name, FileMode.OpenOrCreate);
-            service.Files.Get(file.Id).Download(s);
-            s.Close();
+            using (FileStream fileStream = new FileStream(saveDirectory + file.Name, FileMode.OpenOrCreate))
+                service.Files.Get(file.Id).Download(fileStream);
         }
 
         /// <summary>

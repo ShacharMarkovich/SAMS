@@ -124,9 +124,7 @@ namespace BL
         List<Bitmap> LoadQRBitmaps()
         {
             //Create folder if not exsists TODO
-            string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
-
-            string[] Files = Directory.GetFiles(fullPath);
+            string[] Files = Directory.GetFiles(DAL.GoogleDriveAPI.saveDirectory);
             List<Bitmap> qRCodesBitmapLst = new List<Bitmap>();
             foreach (string file in Files)
             {

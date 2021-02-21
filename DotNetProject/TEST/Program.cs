@@ -9,12 +9,10 @@ namespace DriveQuickstart
     {
         public static void Main()
         {
-            //DAL.GoogleDriveAPI.GetAllData();
             //BL.DataHandle.GenerateQRcodes();
-            // BL.DataHandle.parseBitmapList(BL.DataHandle.loadQRBitmaps());
-            FlushData.FlushAll();
-            Console.WriteLine("press key to exit");
-            Console.ReadLine();
+            //FlushData.FlushAll();
+            //Console.WriteLine("press key to exit");
+            //Console.ReadLine();
         }
     }
 }
