@@ -81,7 +81,7 @@ namespace BL
         public static List<Bitmap> loadQRBitmaps()
         {
             //GenerateQRcodes();
-
+            //Create folder if not exsists TODO
             string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)+ @"\QRCodes\";
 
             string[] Files = Directory.GetFiles(fullPath);
@@ -91,8 +91,6 @@ namespace BL
                 Bitmap tmp = new Bitmap(f);
                 tmp.Tag = Directory.GetCreationTime(f).ToString();
                 b.Add(tmp);
-                tmp.Dispose();
-                File.Delete(f);
             }
             return b;
         }
@@ -124,6 +122,7 @@ namespace BL
                 else
                     orderList.Add(new Order() { OrderDate = i.date, StoreName = i.Store, Items = new List<Item>() { i.item } });
             }
+            clearQRcodesDir();
             return orderList;
         }
         public static void clearQRcodesDir()
