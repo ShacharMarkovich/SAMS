@@ -6,20 +6,30 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BE;
-using DAL;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BL
 {
     public class DataHandle
     {
-        private Database db;
+        #region singleton
+        private DAL.Database db;
+        private static DataHandle _instance = null;
+        public static DataHandle Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new DataHandle();
+                return _instance;
+            }
+        }
 
-        public DataHandle() => db = new Database();
+        private DataHandle() => db = DAL.FactoryDAL.Instance;
+        #endregion
+
         public void ClearAllData() => db.ClearAllData();
 
         #region Item functions
@@ -80,7 +90,7 @@ namespace BL
 
         public static List<Bitmap> loadQRBitmaps()
         {
-            GenerateQRcodes();
+            //GenerateQRcodes();
             //Create folder if not exsists TODO
             string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
 

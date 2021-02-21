@@ -14,7 +14,8 @@ namespace PLApp
         {
             sp = new SplashScreen(@"Resources\SplashScreen1.png");
             sp.Show(true);
-            db = new BL.DataHandle();
+            db = BL.FactoryBL.Instance;
+
             //load QR from Drive to Items DB, Item without quantity, image.
             //db.loadQRfromDrive();
             //if QR exsits, auto add order, by qr struct, then
