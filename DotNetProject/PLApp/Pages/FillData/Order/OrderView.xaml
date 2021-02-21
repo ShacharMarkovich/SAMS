@@ -90,10 +90,10 @@
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="BarcodeNumber" Binding="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridComboBoxColumn Header="Category" ItemsSource="{Binding Source={StaticResource dataFromEnum}}"  SelectedItemBinding="{Binding Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding ItemPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                <DataGridTextColumn Header="BarcodeNumber" Binding="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTextColumn Header="Quantity"  Binding="{Binding Quantity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                 <DataGridTemplateColumn CellTemplate= "{StaticResource ImageDataTemplate}" Width="1*">
                     <DataGridTemplateColumn.CellStyle>

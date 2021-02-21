@@ -21,25 +21,6 @@ namespace PLApp.Pages
         {
             Title = "Shopping Analysis";
             InitializeComponent();
-            PointLabel = chartPoint =>
-                    string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-
-            DataContext = this;
-            object a = tryme.Values[0];
-        }
-
-        public Func<ChartPoint, string> PointLabel { get; set; }
-
-        private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
-        {
-            var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
-
-            //clear selected slice.
-            foreach (PieSeries series in chart.Series)
-                series.PushOut = 0;
-
-            PieSeries selectedSeries = (PieSeries)chartpoint.SeriesView;
-            selectedSeries.PushOut = 8;
         }
     }
 }

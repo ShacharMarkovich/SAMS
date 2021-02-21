@@ -6,22 +6,46 @@
              xmlns:local="clr-namespace:PLApp.Pages.Analysis.CategoryPieChart" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="12*"/>
+
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-            <RadioButton Command=""  x:Name="productsCount" Content="Category Products Count" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
+            <RadioButton x:Name="productsCount" IsChecked="True" Content="Category Products Count" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
             <RadioButton x:Name="totalPriceInCategory" Content="Total Products Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
             <RadioButton x:Name="avgPriceInCategory" Content="Average Product Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
-            <lvc:PieChart  Series="{Binding SeriesCollection_productsCount}"/>
-            <lvc:PieChart  Series="{Binding SeriesCollection_totalPriceInCategory}" />
-            <lvc:PieChart Visibility="{Binding }" Series="{Binding SeriesCollection_avgPriceInCategory}" />
+            <lvc:PieChart Series="{Binding SeriesCollection_productsCount}" Visibility="{Binding IsChecked, ElementName=productsCount, Converter={StaticResource b2v}}" MinHeight="400" LegendLocation="Right">
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
+            <lvc:PieChart Series="{Binding SeriesCollection_totalPriceInCategory}" Visibility="{Binding IsChecked, ElementName=totalPriceInCategory, Converter={StaticResource b2v}}" MinHeight="400" LegendLocation="Right">
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
+            <lvc:PieChart Series="{Binding SeriesCollection_avgPriceInCategory}" Visibility="{Binding IsChecked, ElementName=avgPriceInCategory, Converter={StaticResource b2v}}" MinHeight="400" LegendLocation="Right">
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
         </Grid>
-
     </Grid>
 </UserControl>
