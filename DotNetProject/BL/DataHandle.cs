@@ -30,7 +30,6 @@ namespace BL
         private DataHandle() => db = DAL.FactoryDAL.Instance;
         #endregion
 
-        public void ClearAllData() => db.ClearAllData();
 
         #region Item functions
         public Item AddItem(Item item) => db.AddItem(item);
@@ -53,9 +52,8 @@ namespace BL
         public ICollection<Order> GetOrders() => db.Set<Order>().ToList();
         #endregion
 
-
+        
         #region Items in Orders functions
-
         public void UpdateItemInOrder(Item item, Order order) => AddItemToOrder(item, order, 0);
         public void AddItemToOrder(Item item, Order order) => AddItemToOrder(item, order, 0);
         public void AddItemToOrder(Item item, Order order, int quantity)
@@ -85,35 +83,53 @@ namespace BL
         //    return db.RemoveOrder(order);
         //}
         public List<int> GetOrdersYear() => GetOrders().Select(order => order.OrderDate.Year).Distinct().ToList();
-
         #endregion
 
-        public static List<Bitmap> loadQRBitmaps()
+        
+        #region Load data from Google Drive
+        /// <summary>
+        /// Download the new QRCodes from Google Drive, prase it and add the new data to the data base.
+        /// </summary>
+        public void LoadNewQRCodes()
         {
-            //GenerateQRcodes();
+            //for debuging - GenerateQRcodes();
+            DAL.GoogleDriveAPI.DownloadGoogleDriveAPI();
+            List<Bitmap> bitmapLst = LoadQRBitmaps();
+            if (bitmapLst.Count != 0)
+                foreach (var order in ParseBitmapList(bitmapLst))
+                    db.AddOrder(order);
+        }
+
+        /// <summary>
+        /// Load the new QR Code images
+        /// </summary>
+        /// <returns>Bitmap list of new QR Code items data</returns>
+        List<Bitmap> LoadQRBitmaps()
+        {
             //Create folder if not exsists TODO
-            string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
+            string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
 
             string[] Files = Directory.GetFiles(fullPath);
-            List<Bitmap> b = new List<Bitmap>();
-            foreach (string f in Files)
+            List<Bitmap> qRCodesBitmapLst = new List<Bitmap>();
+            foreach (string file in Files)
             {
-                Bitmap tmp = new Bitmap(f);
-                tmp.Tag = Directory.GetCreationTime(f).ToString();
-                b.Add(tmp);
+                Bitmap qRCodefileBitmap = new Bitmap(file) { Tag = Directory.GetCreationTime(file).ToString() };
+                qRCodesBitmapLst.Add(qRCodefileBitmap);
             }
-            return b;
+            return qRCodesBitmapLst;
         }
+
         /// <summary>
         /// parse bitmaps to Orders array
         /// </summary>
-        /// <param name="b"></param>
+        /// <param name="QRlist">Bitmap list of new QR Code items data</param>
         /// <returns>updated Order</returns>
-        public static List<Order> parseBitmapList(List<Bitmap> QRlist)
+        List<Order> ParseBitmapList(List<Bitmap> QRlist)
         {
             List<QRCode> itemList = new List<QRCode>();
             List<Order> orderList = new List<Order>();
 
+            // Decode & parse the new data of each bitmap
             foreach (Bitmap qr in QRlist)
             {
                 QRCodeDecoder decoder = new QRCodeDecoder();
@@ -124,6 +140,8 @@ namespace BL
                 itemList.Add(qR);
                 qr.Dispose();
             }
+
+            // add the new Item to the fit Order according to store name and purchase date 
             foreach (QRCode itemQRCode in itemList)
             {
                 int index = orderList.FindIndex(item => item.OrderDate == itemQRCode.date && item.StoreName == itemQRCode.Store);
@@ -132,19 +150,26 @@ namespace BL
                 else
                     orderList.Add(new Order() { OrderDate = itemQRCode.date, StoreName = itemQRCode.Store, Items = new List<Item>() { itemQRCode.item } });
             }
+
             ClearQRcodesDir();
             return orderList;
         }
-        public static void ClearQRcodesDir()
+
+        /// <summary>
+        /// Delete loaded QRCodes from directory
+        /// </summary>
+        void ClearQRcodesDir()
         {
-            string fullPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
+            string fullPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\QRCodes\";
             string[] Files = Directory.GetFiles(fullPath);
 
-            foreach (string f in Files)
-            {
-                File.Delete(f);
-            }
+            foreach (string f in Files) File.Delete(f);
         }
+
+
+        /// <summary>
+        /// Function for debuging purpose - generate new orders and items.
+        /// </summary>
         public static void GenerateQRcodes()
         {
             int barcodeNumber = 1;
@@ -218,5 +243,11 @@ namespace BL
                 }
             }
         }
+
+        /// <summary>
+        /// Function for debuging purpose - delete all data from DB
+        /// </summary>
+        public void ClearAllData() => db.ClearAllData();
+        #endregion
     }
 }

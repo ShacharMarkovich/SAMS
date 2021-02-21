@@ -15,10 +15,7 @@ namespace BE
             Category = other.Category;
             Quantity = null;
         }
-        public Item()
-        {
-            Orders = new HashSet<Order>();
-        }
+        public Item() => Orders = new HashSet<Order>();
 
         [Key] // make it the table key
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // make the DB generate it value by itself
@@ -34,12 +31,7 @@ namespace BE
 
         public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {Quantity}";
 
-        public override bool Equals(object obj)
-        {
-            return obj is Item item &&
-                   ItemId == item.ItemId &&
-                   BarcodeNumber == item.BarcodeNumber;
-        }
+        public override bool Equals(object obj) => obj is Item item && ItemId == item.ItemId && BarcodeNumber == item.BarcodeNumber;
 
         public override int GetHashCode()
         {

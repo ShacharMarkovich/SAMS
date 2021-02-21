@@ -11,6 +11,8 @@ using MessagingToolkit.QRCode.Codec.Data;
 using System.Drawing;
 using Newtonsoft.Json.Linq;
 using BE;
+using System.Reflection;
+using Newtonsoft.Json;
 
 namespace DAL
 {
@@ -19,7 +21,7 @@ namespace DAL
     /// Google Drive Connection class.
     /// </summary>
 
-    public class GoogleDriveAPI
+    public static class GoogleDriveAPI
     {
         const string QRCodesDirectoryID = "1dffosvvP2Vk5JD3TvOfzXBt0J63SO9Il";
         const string saveDirectory = @"..\..\..\DAL\QRCodes\";
@@ -28,32 +30,27 @@ namespace DAL
         /// </summary>
         const string credentials = @"..\..\..\DAL\credentials.json";
 
-
         /// <summary>
-        /// Download QR Codes from google drive.
+        /// Download QR Codes from google drive, tgan delete them from google drive
         /// The QR codes images will save at @projectDirectory\QRCodes
         /// </summary>
-        /// <returns>list of new items</returns>
-        public static ICollection<Item> DownloadGoogleDriveAPI()
+        public static void DownloadGoogleDriveAPI()
         {
-            // TODO: download only new QR codes that not in the project directory
-            ICollection<Item> items = new List<Item>();
             DriveService service = AuthenticateOauth();
             IList<Google.Apis.Drive.v3.Data.File> files = GetDriveData(service);
             if (files != null)
                 foreach (var file in files)
-                    using (FileStream fileStream = DownloadFromDrive(service, file))
-                        items.Add(DecodeQRCode(fileStream));
-
-            return items;
+                {
+                    DownloadFromDrive(service, file);
+                    DeleteFileFromGoogleDrive(service, file);
+                }
         }
-
 
         /// <summary>
         /// This method requests Authentcation from a user using Oauth2.  
         /// </summary>
         /// <returns>DriveService used to make requests against the Drive API</returns>
-        static DriveService AuthenticateOauth()
+        private static DriveService AuthenticateOauth()
         {
             try
             {
@@ -94,7 +91,7 @@ namespace DAL
         /// </summary>
         /// <param name="service"> Google drive API service</param>
         /// <returns>list of the files in the `QRCodes` directory</returns>
-        static IList<Google.Apis.Drive.v3.Data.File> GetDriveData(DriveService service)
+        private static IList<Google.Apis.Drive.v3.Data.File> GetDriveData(DriveService service)
         {
             // Define parameters of request:
             FilesResource.ListRequest listRequest = service.Files.List();
@@ -113,41 +110,22 @@ namespace DAL
         /// Download a given file from google drive
         /// </summary>
         /// <param name="service"> Google drive API service</param>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        static FileStream DownloadFromDrive(DriveService service, Google.Apis.Drive.v3.Data.File file)
+        /// <param name="file">file to download from google drive</param>
+        private static void DownloadFromDrive(DriveService service, Google.Apis.Drive.v3.Data.File file)
         {
             FileStream s = new FileStream(saveDirectory + file.Name, FileMode.OpenOrCreate);
             service.Files.Get(file.Id).Download(s);
-            return s;
+            s.Close();
         }
 
         /// <summary>
-        /// Decode all data from downloaded QRCode images.
+        /// Permanently delete the given file from google drive.
         /// </summary>
-        /// <param name="fileStream"> The image file stream</param>
-        public static Item DecodeQRCode(FileStream fileStream)
+        /// <param name="service"> Google drive API service</param>
+        /// <param name="file">file to download from google drive</param>
+        private static void DeleteFileFromGoogleDrive(DriveService service, Google.Apis.Drive.v3.Data.File file)
         {
-            QRCodeDecoder decoder = new QRCodeDecoder();
-            QRCodeBitmapImage qrCodeBitmapImage = new QRCodeBitmapImage(new Bitmap(fileStream));
-            string data = decoder.Decode(qrCodeBitmapImage);
-            return Convert(data);
-        }
-
-        /// <summary>
-        /// Convert Json string to Item
-        /// </summary>
-        /// <param name="data">JSON data string</param>
-        /// <returns></returns>
-        static Item Convert(string data)
-        {
-            JObject jObject = JObject.Parse(data); /* {"BarcodeNumber": 123447, "ItemName": "56' TV", "StoreName": "Tiv TaAm", "ItemPrice": 1222.9 } */
-            return new Item()
-            {
-                BarcodeNumber = (int)jObject["BarcodeNumber"],
-                ItemName = (string)jObject["ItemName"],
-                ItemPrice = (int)jObject["ItemPrice"]
-            };
+            service.Files.Delete(file.Id).Execute();
         }
     }
 }
