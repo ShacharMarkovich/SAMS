@@ -70,7 +70,9 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
         /// <param name="yearStackPanelVisibility">selct year's StackPanel visibility</param>
         /// <param name="monthStackPanelVisibility">selct month's StackPanel visibility</param>
         /// <param name="StackPanelCheckBoxesStoresName">StackPanel where the stores visibility checkboxes will set</param>
-        public void BuildShopCart(Visibility yearStackPanelVisibility, Visibility monthStackPanelVisibility, StackPanel StackPanelCheckBoxesStoresName)
+        public void BuildShopCart(Visibility yearStackPanelVisibility,
+                                  Visibility monthStackPanelVisibility,
+                                  StackPanel StackPanelCheckBoxesStoresName)
         {
             // {"storename":[$-1,$-2,...,$-31]}, where $i = average cost of order in day i of this month
 

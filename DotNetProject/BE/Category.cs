@@ -6,6 +6,10 @@
         Clothes,
         Appliances,
         Furniture,
-        Sport
+        Sport,
+        Other,
+        Spice,
+        Cutlery,
+        Stationery
     }
 }

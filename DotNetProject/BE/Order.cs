@@ -28,6 +28,6 @@ namespace BE
 
         public override int GetHashCode() => 755918762 + OrderId.GetHashCode();
 
-        public override string ToString() => $"Store name: {StoreName}\tOrder Date: {OrderDate.Date}\tCost: {Items.Sum(item => item.ItemPrice * item.Quantity)}";
+        public override string ToString() => $"{OrderId} Store name: {StoreName}\tOrder Date: {OrderDate.Date}\tCost: {Items.Sum(item => item.ItemPrice * item.Quantity)}";
     }
 }
