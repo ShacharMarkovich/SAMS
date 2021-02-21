@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ItemListSumConverter.cs" />
     <Compile Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChart.xaml.cs">
       <DependentUpon>AverageOrderCostBarChart.xaml</DependentUpon>
     </Compile>
@@ -130,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\FillData\Order\OrderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScrollStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
