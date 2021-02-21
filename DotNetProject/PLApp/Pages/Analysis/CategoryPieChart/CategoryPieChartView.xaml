@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="PLApp.Pages.Analysis.CategoryPieChart.CategoryPieChartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PLApp.Pages.Analysis.CategoryPieChart" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="12*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <RadioButton Command=""  x:Name="productsCount" Content="Category Products Count" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
+            <RadioButton x:Name="totalPriceInCategory" Content="Total Products Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
+            <RadioButton x:Name="avgPriceInCategory" Content="Average Product Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <lvc:PieChart  Series="{Binding SeriesCollection_productsCount}"/>
+            <lvc:PieChart  Series="{Binding SeriesCollection_totalPriceInCategory}" />
+            <lvc:PieChart Visibility="{Binding }" Series="{Binding SeriesCollection_avgPriceInCategory}" />
+        </Grid>
+
+    </Grid>
+</UserControl>

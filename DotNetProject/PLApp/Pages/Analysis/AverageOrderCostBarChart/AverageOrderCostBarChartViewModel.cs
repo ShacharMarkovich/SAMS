@@ -76,9 +76,7 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
         {
             // {"storename":[$-1,$-2,...,$-31]}, where $i = average cost of order in day i of this month
 
-            List<BE.Order> orders = App.db.GetOrders().ToList();
-
-            orders = SetLabalNTitle(yearStackPanelVisibility, monthStackPanelVisibility, orders);
+            List<BE.Order> orders = SetLabalNTitle(yearStackPanelVisibility, monthStackPanelVisibility, AverageOrderCostModel.Orders);
 
             List<string> StoresNames = orders.Select(order => order.StoreName).Distinct().ToList(); // get all stores name
 

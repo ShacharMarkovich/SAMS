@@ -7,14 +7,32 @@
              xmlns:local="clr-namespace:PLApp.Pages"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 
-             xmlns:AverageOrderCostBarChart="clr-namespace:PLApp.Pages.AverageOrderCostBarChart" x:Class="PLApp.Pages.ShoppingAnalysis"
+             xmlns:AverageOrderCostBarChart="clr-namespace:PLApp.Pages.AverageOrderCostBarChart" xmlns:CategoryPieChartView="clr-namespace:PLApp.Pages.Analysis.CategoryPieChart" x:Class="PLApp.Pages.ShoppingAnalysis"
 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <mah:MetroAnimatedTabControl>
-            <mah:MetroTabItem Header="Shopping Statistics"/>
-            <mah:MetroTabItem Header="Products Statistics" Margin="10,0,-10,0"/>
+            <mah:MetroTabItem Header="Shopping Statistics">
+                <Grid>
+                    <lvc:PieChart LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" MinWidth="500" MinHeight="400">
+                        <lvc:PieChart.Series>
+                            <lvc:PieSeries x:Name="tryme" Title="Maria" Values="3" DataLabels="True"
+                               LabelPoint="{Binding PointLabel}"/>
+                            <lvc:PieSeries Title="Charles" Values="4" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                            <lvc:PieSeries Title="Frida" Values="6" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                            <lvc:PieSeries Title="Frederic" Values="2" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                        </lvc:PieChart.Series>
+                    </lvc:PieChart>
+                </Grid>
+            </mah:MetroTabItem>
+            <mah:MetroTabItem Header="Products Statistics" Margin="10,0,-10,0">
+                <CategoryPieChartView:CategoryPieChartView/>
+            </mah:MetroTabItem>
+
             <mah:MetroTabItem Header="Shops Statistics" Margin="20,0,-20,0">
                 <AverageOrderCostBarChart:AverageOrderCostBarChart/>
             </mah:MetroTabItem>

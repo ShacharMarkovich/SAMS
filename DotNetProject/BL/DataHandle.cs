@@ -16,6 +16,7 @@ namespace BL
     {
         #region singleton
         private DAL.Database db;
+
         private static DataHandle _instance = null;
         public static DataHandle Instance
         {
@@ -39,7 +40,7 @@ namespace BL
             Item prevItem = db.FindItem(item); //seach item by ID
 
             //update all items with the same Barcode if only the Name or Category
-            if (prevItem.Category== item.Category || prevItem.ItemName == item.ItemName)
+            if (prevItem.Category == item.Category || prevItem.ItemName == item.ItemName)
             {
                 var SameBacodeItems = db.Items.Where(i => i.BarcodeNumber == item.BarcodeNumber);
                 foreach (Item i in SameBacodeItems)
@@ -69,7 +70,7 @@ namespace BL
         public ICollection<Order> GetOrders() => db.Set<Order>().ToList();
         #endregion
 
-        
+
         #region Items in Orders functions
         public void UpdateItemInOrder(Item item, Order order) => AddItemToOrder(item, order, 0);
         public void AddItemToOrder(Item item, Order order) => AddItemToOrder(item, order, 0);
@@ -99,10 +100,12 @@ namespace BL
 
         //    return db.RemoveOrder(order);
         //}
-        public List<int> GetOrdersYear() => GetOrders().Select(order => order.OrderDate.Year).Distinct().ToList();
         #endregion
 
-        
+        public List<int> GetOrdersYear() => GetOrders().Select(order => order.OrderDate.Year).Distinct().ToList();
+
+        public List<string> GetStoresName() => GetOrders().Select(order => order.StoreName).Distinct().ToList();
+
         #region Load data from Google Drive
         /// <summary>
         /// Download the new QRCodes from Google Drive, prase it and add the new data to the data base.
@@ -264,5 +267,7 @@ namespace BL
         /// </summary>
         public void ClearAllData() => db.ClearAllData();
         #endregion
+
+       
     }
 }
