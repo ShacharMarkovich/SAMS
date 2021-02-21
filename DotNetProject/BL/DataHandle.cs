@@ -91,6 +91,8 @@ namespace BL
                 Bitmap tmp = new Bitmap(f);
                 tmp.Tag = Directory.GetCreationTime(f).ToString();
                 b.Add(tmp);
+                tmp.Dispose();
+                File.Delete(f);
             }
             return b;
         }
