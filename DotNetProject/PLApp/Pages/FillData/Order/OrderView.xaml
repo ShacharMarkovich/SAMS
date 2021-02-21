@@ -8,13 +8,16 @@
                  xmlns:converters="clr-namespace:PLApp.Converters"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
 
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Name="userControl" x:Class="PLApp.Pages.Views.OrderView"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:PLApp="clr-namespace:PLApp" x:Name="userControl" x:Class="PLApp.Pages.Views.OrderView"
              mc:Ignorable="d"
+            Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type PLApp:MainWindow}}}"
+                Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type PLApp:MainWindow}}}"
 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:PathToImageConverter x:Key="ImageConverter"/>
         <converters:VisibilityConverter x:Key="VisibilityConverter"/>
+        <converters:ItemListSumConverter x:Key="ItemListSumConverter"/>
         <CollectionViewSource x:Key="orderViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Order}, CreateList=True}"/>
         <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
                             ObjectType="{x:Type System:Enum}">
@@ -22,39 +25,33 @@
                 <x:Type TypeName="BE:Category"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <DataTemplate x:Key="OrderDataTemplate">
+            <DataTemplate.Resources>
+                <ControlTemplate x:Key="SelectedTemplate" TargetType="ListViewItem">
+
+                </ControlTemplate>
+            </DataTemplate.Resources>
+            <StackPanel Background="AliceBlue" Cursor="Hand">
+            <TextBlock Foreground="Black"  Text="{Binding StoreName}" HorizontalAlignment="Right" />
+            <TextBlock Foreground="Black" Text="{Binding OrderDate}" HorizontalAlignment="Right" />
+            <TextBlock Foreground="Black" Text="{Binding Items, Converter={StaticResource ItemListSumConverter}}" HorizontalAlignment="Left" />
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
+    <Grid x:Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="OrderListView" ItemTemplate="{DynamicResource OrderDataTemplate}" VirtualizingPanel.VirtualizationMode="Recycling"  SelectionChanged="OrderListView_SelectionChanged" ScrollViewer.CanContentScroll="True" VerticalAlignment="Stretch" ItemsSource="{Binding Orders}" Grid.Column="0">
+            <ListView.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource ResourceKey=Scroll}">
 
-    <StackPanel Margin="0,0,0,-31">
-        <StackPanel Orientation="Horizontal">
-            <StackPanel x:Name="OrderViewControls" IsEnabled="{Binding ElementName=ListMode, Path=IsOn}" Orientation="Horizontal">
-            <ComboBox x:Name="OrdersComboBox" ItemsSource="{Binding Orders}" HorizontalAlignment="Center" Margin="10,0,10,10" DropDownOpened="OrdersComboBox_OnDropDownOpened" SelectionChanged="ComboBox_SelectionChanged"  VerticalAlignment="Center"   ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="487"/>
-            <Button x:Name="AddOrderbtn" Background="Transparent" Width="48" Height="48" VerticalAlignment="Center" Margin="0,0,0,10" Click="NewOrderBtnClick">
-                <Path Fill="Green" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
-            </Button>
-        </StackPanel>
-            <Label Foreground="{x:Null}">sdasdasdasd</Label>
-            <mah:ToggleSwitch x:Name="ListMode" Header="Orders List Mode" HorizontalAlignment="Center" Height="60" VerticalAlignment="Stretch" Width="121" Toggled="ListMode_Toggled"/>
-
-        </StackPanel>
-        <Grid x:Name="AddOrderGrid"  HorizontalAlignment="Left" DataContext="{Binding SelectedItem, ElementName=OrdersComboBox}"  VerticalAlignment="Top" Width="350" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="90"/>
-                    <ColumnDefinition Width="Auto" MinWidth="147"/>
-                    <ColumnDefinition Width="Auto" MinWidth="113"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Content="Order Date:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" VerticalAlignment="Center" Height="26"/>
-                <DatePicker x:Name="orderDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="0" SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Height="26" Width="120"/>
-                <Button x:Name="Apply" Grid.Column="2" Grid.Row="0" Content="Apply" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="35,2,36,2" VerticalAlignment="Center" MinHeight="0" HorizontalAlignment="Center" Height="28" Width="50" Click="Apply_Click"/>
-                <Label Content="Store Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3,3,0,3" Grid.Row="1" VerticalAlignment="Center" Height="26"/>
-                <TextBox x:Name="storeNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="3,3,0,3" Grid.Row="1" Text="{Binding StoreName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                <Button x:Name="AddOrderBtn" HorizontalAlignment="Center" Content="Add" Click="AddOrderBtn_Click" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" Height="28" Margin="39,2,40,2" Width="50"/>
-            </Grid>
-
-        <DataGrid x:Name="itemListListView" Height="320" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" ItemsSource="{Binding}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OrderView}}}" CanUserAddRows="false">
+                </Style>
+            </ListView.Resources>
+        </ListView>
+        <mah:MetroProgressBar x:Name="metroProgressBar" Visibility="Collapsed" IsIndeterminate="True"  Grid.Column="1" HorizontalAlignment="Left" Height="15" Margin="0,51,0,0" VerticalAlignment="Top" Width="550"/>
+        <DataGrid Grid.Column="1" VirtualizingPanel.VirtualizationMode="Recycling"  x:Name="itemListListView" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" VerticalAlignment="Top" MaxHeight="1080" CanUserAddRows="false">
             <DataGrid.Resources>
                 <DataTemplate x:Key="ImageDataTemplate">
                     <Image Source="{Binding BarcodeNumber, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Width="60" Height="60">
@@ -109,21 +106,6 @@
                 <DataGridTemplateColumn CellTemplate="{StaticResource ImageUpdateDataTemplate}"/>
 
             </DataGrid.Columns>
-
         </DataGrid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="AddItemToOrderBtn" Width="48" Height="48" VerticalAlignment="Bottom" Click="AddItemBtnClick" Margin="5">
-                <Canvas Background="Transparent" Width="24" Height="24">
-                    <Path Fill="Black" Data="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
-                </Canvas>
-            </Button>
-            <Button Width="48" Height="48">
-                <Canvas Width="24" Height="24">
-                    <Path Fill="Black" Data="M4,6H6V18H4V6M7,6H8V18H7V6M9,6H12V18H9V6M13,6H14V18H13V6M16,6H18V18H16V6M19,6H20V18H19V6M2,4V8H0V4A2,2 0 0,1 2,2H6V4H2M22,2A2,2 0 0,1 24,4V8H22V4H18V2H22M2,16V20H6V22H2A2,2 0 0,1 0,20V16H2M22,20V16H24V20A2,2 0 0,1 22,22H18V20H22Z" />
-                </Canvas>
-            </Button>
-        </StackPanel>
-
-    </StackPanel>
-
+    </Grid>
 </UserControl>

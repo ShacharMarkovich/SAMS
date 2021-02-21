@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PLApp.Pages.Views
 {
@@ -30,38 +31,12 @@ namespace PLApp.Pages.Views
         public OrderView()
         {
             InitializeComponent();
-            storeNameTextBox.Text = "Store Name";
-            AddOrderGrid.Visibility = Visibility.Hidden;
             CurrentVM = new OrderViewModel();
             this.DataContext = CurrentVM;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (OrdersComboBox.SelectedIndex > -1)
-            {
-                _currOrder = CurrentVM.Orders[OrdersComboBox.SelectedIndex];
-                itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
-                AddOrderbtn.Visibility = Visibility.Hidden;
-                AddOrderGrid.Visibility = Visibility.Visible;
-                AddItemToOrderBtn.Visibility = Visibility.Visible;
 
-            }
-            else
-            {
-                _currOrder = null;
-                itemListListView.ItemsSource = null;
-                AddOrderGrid.Visibility = Visibility.Hidden;
-                AddOrderbtn.Visibility = Visibility.Visible;
-                AddItemToOrderBtn.Visibility = Visibility.Hidden;
 
-            }
-        }
-
-        private void OrdersComboBox_OnDropDownOpened(object sender, EventArgs e)
-        {
-            OrdersComboBox.SelectedIndex = -1;
-        }
         private void itemListListView_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
             (sender as DataGrid).RowEditEnding -= itemListListView_RowEditEnding;
@@ -73,65 +48,6 @@ namespace PLApp.Pages.Views
             CurrentVM.UpdateItem(i);
         }
 
-        private void AddItemBtnClick(object sender, RoutedEventArgs e)
-        {
-            if (OrdersComboBox.SelectedIndex > -1)
-            {
-                AddItemView addItem = new AddItemView();
-                addItem.ShowDialog();
-                if (addItem.VM.isValid)
-                {
-                    int prevIndex = OrdersComboBox.SelectedIndex;
-                    CurrentVM.AddItemToOrder((Order)OrdersComboBox.SelectedItem, addItem.VM.itemViewSource);
-                    OrdersComboBox.SelectedIndex = prevIndex;
-                }
-            }
-            else MessageBox.Show("Please Select an Order first!", "Please notice", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void NewOrderBtnClick(object sender, RoutedEventArgs e)
-        {
-            switch (AddOrderGrid.Visibility)
-            {
-                case Visibility.Hidden:
-                    AddOrderGrid.Visibility = Visibility.Visible;
-                    break;
-                case Visibility.Visible:
-                default:
-                    AddOrderGrid.Visibility = Visibility.Hidden;
-                    break;
-            }
-        }
-
-        private void AddOrderBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-            {
-                _currOrder = CurrentVM.AddOrder(new Order(storeNameTextBox.Text, (DateTime)orderDateDatePicker.SelectedDate));
-                OrdersComboBox.SelectedItem = _currOrder;
-                itemListListView.ItemsSource = new ObservableCollection<Item>(CurrentVM.Orders[OrdersComboBox.SelectedIndex].Items);
-                AddOrderGrid.Visibility = Visibility.Hidden;
-            }
-            else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        private void Apply_Click(object sender, RoutedEventArgs e)
-        {
-            if (OrdersComboBox.SelectedIndex != -1)
-            {
-                if (storeNameTextBox.Text != "" && orderDateDatePicker.SelectedDate != null)
-                {
-                    _currOrder.OrderDate = (DateTime)orderDateDatePicker.SelectedDate;
-                    _currOrder.StoreName = storeNameTextBox.Text;
-                    CurrentVM.UpdateOrder(_currOrder);
-                    OrdersComboBox.SelectedItem = _currOrder;
-                    AddOrderGrid.Visibility = Visibility.Hidden;
-                }
-                else MessageBox.Show("Please fill the whole data!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else MessageBox.Show("Please Select an existing order first!", "Oops.. Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
-
-        }
         private void UpdateImageByBarcode_BtnClick(object sender, RoutedEventArgs e)
         {
             CurrentVM.LoadImageByBarcode(((Item)itemListListView.SelectedValue).BarcodeNumber);
@@ -143,10 +59,10 @@ namespace PLApp.Pages.Views
                                                       MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                int index = OrdersComboBox.SelectedIndex;
+                int index = OrderListView.SelectedIndex;
                 Item item = itemListListView.SelectedItem as Item;
                 CurrentVM.RemoveItemFromOrder(_currOrder, item);
-                OrdersComboBox.SelectedIndex = index;
+                OrderListView.SelectedIndex = index;
             }
         }
 
@@ -160,6 +76,27 @@ namespace PLApp.Pages.Views
                 else
                     itemListListView.ItemsSource = App.db.GetAllItems();
             }
+        }
+
+        private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            metroProgressBar.Visibility = Visibility.Visible;
+            ICollection<Item> list = ((sender as ListView).SelectedItem as Order).Items;
+            itemListListView.Visibility = Visibility.Hidden;
+            Task.Factory.StartNew(() => LoadItemListFromOrder(list));
+        }
+
+        private void LoadItemListFromOrder(ICollection<Item> list)
+        {
+            ObservableCollection<Item> items = new ObservableCollection<Item>(list);
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                itemListListView.ItemsSource = items;
+                itemListListView.Visibility = Visibility.Visible;
+                metroProgressBar.Visibility = Visibility.Hidden;
+
+
+            }), DispatcherPriority.Background);
         }
     }
 }
