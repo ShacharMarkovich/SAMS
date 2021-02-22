@@ -50,6 +50,11 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
 
         public AverageOrderCostBarChartModel AverageOrderCostModel;
 
+        /// <summary>
+        ///  Encapsulates a function that get an Order and return orderDate's day-in-month/month/year, according to user choise.
+        /// </summary>
+        private Func<BE.Order, string> xAxisVal;
+
         public ICommand StoreCheckBoxCommand { get; set; }
 
         public AverageOrderCostBarChartViewModel()
@@ -78,12 +83,10 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
 
             List<BE.Order> orders = SetLabalNTitle(yearStackPanelVisibility, monthStackPanelVisibility, AverageOrderCostModel.Orders);
 
-            List<string> StoresNames = orders.Select(order => order.StoreName).Distinct().ToList(); // get all stores name
+            List<string> StoresNames = orders.Select(order=>order.StoreName).Distinct().ToList(); // get stores name
 
             CreateStoresCheckboxes(StackPanelCheckBoxesStoresName, StoresNames);
 
-            // in order to show in graph only days which the user by on them, we create this checked list of days in week to see in which day the user made an order.
-            List<bool> boolDays = Enumerable.Repeat(false, 31).ToList();
             StoresAmountCollection.Clear();
             foreach (var storeName in StoresNames)
             {
@@ -92,31 +95,23 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
 
                 // create a list of zerose. for each day of the week.
                 // it is list of list because we maybe have more than 1 order in same day
-                List<List<double>> days = Enumerable.Repeat(0, 31).Select(i => new List<double> { i }).ToList();
-
-                // for each order in that store, culculate the sums of items price that the user buy at a spesific day
+                List<double>[] XaxisVals = Enumerable.Repeat(0, Xlabel.Length).Select(_ => new List<double> { 0 }).ToArray();
+                // for each order in that store, culculate the sums of items price that the user buy at a spesific order date
                 foreach (var order in ordersInCurrStore)
                 {
                     double? cost = order.Items.Sum(item => item.Quantity * item.ItemPrice); // get the total cost of this order
                     if (cost != null && cost > 0)
                     {
-                        boolDays[order.OrderDate.Day - 1] = true;
-                        days[order.OrderDate.Day - 1].Add((double)cost);
+                        int i = Array.IndexOf(Xlabel, xAxisVal(order));
+                        if (XaxisVals[i][0] == 0)
+                            XaxisVals[i][0] = (double)cost;
+                        else
+                            XaxisVals[i].Add((double)cost);
                     }
                 }
                 // calc the average cost in the store in specific day:
-                List<double> avgPriceindays = days.Select(costList => costList.Average()).Where(totalPrice => totalPrice > 0).ToList();
-                StoresAmountCollection.Add(new ColumnSeries { Title = storeName, Values = new ChartValues<double>(avgPriceindays) });
-            }
-
-            if (Xlabel == null) // if the user chose to see the average order cost per day in given months and year:
-            {
-                // create list of days in them the user buy:
-                List<string> lst = new List<string>();
-                for (int i = 0; i < boolDays.Count; i++)
-                    if (boolDays[i])
-                        lst.Add((i + 1).ToString());
-                Xlabel = lst.ToArray();
+                var avgPrices = XaxisVals.Select(costsList => costsList.Average()).ToList();
+                StoresAmountCollection.Add(new ColumnSeries { Title = storeName, Values = new ChartValues<double>(avgPrices) });
             }
         }
 
@@ -149,20 +144,23 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
             // check if user want to see the average order cost per year
             if (yearStackPanelVisibility == Visibility.Collapsed && monthStackPanelVisibility == Visibility.Collapsed)
             {
+                xAxisVal = order => order.OrderDate.Year.ToString();
                 Xlabel = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
                 XTitle = "Year";
             }
             // check if user want to see the average order cost per months in given year
             else if (yearStackPanelVisibility == Visibility.Visible && monthStackPanelVisibility == Visibility.Collapsed)
             {
+                xAxisVal = order => AverageOrderCostModel.months[order.OrderDate.Month - 1];
                 orders = orders.Where(order => order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList(); // get order in given year
                 Xlabel = orders.Select(order => order.OrderDate.Month).Select(i => AverageOrderCostModel.months[i - 1]).Distinct().ToArray(); // get months of those orders
                 XTitle = "Month";
             }
             else // check if user want to see the average order cost per day in given months and year
             {
+                xAxisVal = order => (order.OrderDate.Day).ToString();
                 orders = orders.Where(order => order.OrderDate.Month == AverageOrderCostModel.selectMonth && order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList();
-                Xlabel = null; // the X axis labales will update in the end...
+                Xlabel = Enumerable.Range(1, 31).Select(i => i.ToString()).ToArray(); // the X axis labales will update in the end...
                 XTitle = "Day in Month";
             }
 
