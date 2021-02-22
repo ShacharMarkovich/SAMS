@@ -13,7 +13,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <mah:MetroAnimatedTabControl HorizontalAlignment="Center" VerticalAlignment="Stretch" >
-            <mah:MetroTabItem Header="Shopping Statistics">
+            <mah:MetroTabItem Header="Products Statistics">
 
             </mah:MetroTabItem>
             <mah:MetroTabItem Header="Categories Statistics" Margin="10,0,-10,0">
