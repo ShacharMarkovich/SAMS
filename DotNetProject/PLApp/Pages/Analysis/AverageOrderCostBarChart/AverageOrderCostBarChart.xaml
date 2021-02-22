@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:converters="clr-namespace:PLApp.Converters"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BoolToFontWeightConverter x:Key="b2f"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -14,9 +17,9 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-            <RadioButton x:Name="YearCutButton" Width="100" Content="Year"  Checked="AggregationCutChangeChecked" />
-            <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked" />
-            <RadioButton x:Name="DayCutButton" Width="100" Content="Day"     Checked="AggregationCutChangeChecked"/>
+            <RadioButton x:Name="YearCutButton" Width="100" Content="Year"  Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=YearCutButton, Converter={StaticResource b2f}}"/>
+            <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=MonthCutButton, Converter={StaticResource b2f}}" />
+            <RadioButton x:Name="DayCutButton" Width="100" Content="Day"     Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=DayCutButton, Converter={StaticResource b2f}}" />
         </StackPanel>
         <StackPanel x:Name="selectMonthYearPanel" Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
             <StackPanel x:Name="monthStackPanel" Visibility="Collapsed" Orientation="Horizontal">

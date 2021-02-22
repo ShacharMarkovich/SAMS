@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PLApp.Pages.Analysis.CategoryPieChart" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:PLApp.Pages.Analysis.CategoryPieChart" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:converters="clr-namespace:PLApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="b2v" />
+        <converters:BoolToFontWeightConverter x:Key="b2f"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -16,13 +17,13 @@
 
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-            <RadioButton x:Name="productsCount" IsChecked="True" Content="Category Products Count" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
-            <RadioButton x:Name="totalPriceInCategory" Content="Total Products Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
-            <RadioButton x:Name="avgPriceInCategory" Content="Average Product Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250"/>
+            <RadioButton x:Name="productsCount" IsChecked="True" Content="Category Products Count" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250" FontWeight="{Binding IsChecked, ElementName=productsCount, Converter={StaticResource b2f}}"/>
+            <RadioButton x:Name="totalPriceInCategory" Content="Total Products Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250" FontWeight="{Binding IsChecked, ElementName=totalPriceInCategory, Converter={StaticResource b2f}}"/>
+            <RadioButton x:Name="avgPriceInCategory" Content="Average Product Price" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="250" FontWeight="{Binding IsChecked, ElementName=avgPriceInCategory, Converter={StaticResource b2f}}"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
-            <lvc:PieChart Series="{Binding SeriesCollection_productsCount}" Visibility="{Binding IsChecked, ElementName=productsCount, Converter={StaticResource b2v}}" MinHeight="400" LegendLocation="Right">
+            <lvc:PieChart Series="{Binding SeriesCollection_productsCount}" Visibility="{Binding IsChecked, ElementName=productsCount, Converter={StaticResource b2v}}" MinHeight="400" LegendLocation="Right" >
                 <lvc:PieChart.ChartLegend>
                     <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
                 </lvc:PieChart.ChartLegend>

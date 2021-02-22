@@ -67,6 +67,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\ItemListSumConverter.cs" />
     <Compile Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChart.xaml.cs">
       <DependentUpon>AverageOrderCostBarChart.xaml</DependentUpon>
