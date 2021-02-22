@@ -128,6 +128,7 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
                 CheckBox storeCheckBox = new CheckBox { IsChecked = true, Content = storeName };
                 storeCheckBox.Command = StoreCheckBoxCommand;
                 storeCheckBox.CommandParameter = storeCheckBox;
+                storeCheckBox.Margin = new Thickness(10,0, 10, 0);
                 StackPanelCheckBoxesStoresName.Children.Add(storeCheckBox);
             }
         }
@@ -156,7 +157,7 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
                 Xlabel = orders.Select(order => order.OrderDate.Month).Select(i => AverageOrderCostModel.months[i - 1]).Distinct().ToArray(); // get months of those orders
                 XTitle = "Month";
             }
-            else // check if user want to see the average order cost per day in given months and year
+            else // user want to see the average order cost per day in given months and year
             {
                 xAxisVal = order => (order.OrderDate.Day).ToString();
                 orders = orders.Where(order => order.OrderDate.Month == AverageOrderCostModel.selectMonth && order.OrderDate.Year == AverageOrderCostModel.selectYear).ToList();

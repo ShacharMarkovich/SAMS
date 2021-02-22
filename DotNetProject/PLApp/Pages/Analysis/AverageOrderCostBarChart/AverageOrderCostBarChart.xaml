@@ -16,12 +16,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,10,0,-10">
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0, 10">
             <RadioButton x:Name="YearCutButton" Width="100" Content="Year"  Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=YearCutButton, Converter={StaticResource b2f}}"/>
             <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=MonthCutButton, Converter={StaticResource b2f}}" />
             <RadioButton x:Name="DayCutButton" Width="100" Content="Day"     Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=DayCutButton, Converter={StaticResource b2f}}" />
         </StackPanel>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal"  Margin="0,10,0,-10" VerticalAlignment="Center">
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal"  Margin="0, 10" VerticalAlignment="Center">
             <StackPanel x:Name="monthStackPanel" Visibility="Collapsed" Orientation="Horizontal">
                 <Label FontWeight="Bold" Content="Selct Month:"/>
                 <ComboBox x:Name="monthComboBox" Width="131"/>
@@ -31,7 +31,7 @@
                 <ComboBox x:Name="yearComboBox" Width="131"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel x:Name="StackPanelCheckBoxesStoresName" Grid.Row="2"  Margin="0,10,0,-10" HorizontalAlignment="Center" Orientation="Horizontal"/>
+        <StackPanel x:Name="StackPanelCheckBoxesStoresName" Grid.Row="2" Margin="0, 10" HorizontalAlignment="Center" Orientation="Horizontal"/>
         <lvc:CartesianChart Grid.Row="3" Series="{Binding StoresAmountCollection}" LegendLocation="Left" MinHeight="400">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Labels="{Binding Xlabel}" Title="{Binding XTitle}"/>
