@@ -25,6 +25,8 @@ namespace PLApp.Pages
         public FillData()
         {
             Title = "Fill Data";
+            //App.MainWindow.Title = "Fill Data";
+
             InitializeComponent();
         }
     }
