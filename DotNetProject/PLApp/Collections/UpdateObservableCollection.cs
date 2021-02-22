@@ -24,8 +24,12 @@ namespace PLApp.Collections
     public class ItemsChangeObservableCollection<T> :
            ObservableCollection<T> where T : INotifyPropertyChanged
     {
+        public ItemsChangeObservableCollection(IEnumerable<T> collection) : base(collection)
+        {
+        }
 
         public delegate void ItemChangedEventHandler(object source, EventArgs args);
+
 
         /// <summary>
         /// Event fired when an item of the collection is updated

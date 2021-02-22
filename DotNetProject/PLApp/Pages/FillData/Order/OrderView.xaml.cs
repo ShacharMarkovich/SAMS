@@ -27,7 +27,6 @@ namespace PLApp.Pages.Views
     public partial class OrderView : UserControl
     {
         public OrderViewModel CurrentVM;
-        private Order _currOrder;
         public OrderView()
         {
             InitializeComponent();
@@ -44,8 +43,8 @@ namespace PLApp.Pages.Views
             Item i = e.Row.Item as Item;
             (sender as DataGrid).Items.Refresh();
             (sender as DataGrid).RowEditEnding += itemListListView_RowEditEnding;
-
-            CurrentVM.UpdateItem(i);
+            CurrentVM.UpdateItem(OrderListView.SelectedItem as Order,i);
+            OrderListView.Items.Refresh();
         }
 
         private void UpdateImageByBarcode_BtnClick(object sender, RoutedEventArgs e)
@@ -61,29 +60,19 @@ namespace PLApp.Pages.Views
             {
                 int index = OrderListView.SelectedIndex;
                 Item item = itemListListView.SelectedItem as Item;
-                CurrentVM.RemoveItemFromOrder(_currOrder, item);
+                CurrentVM.RemoveItemFromOrder(OrderListView.SelectedItem as Order, item);
                 OrderListView.SelectedIndex = index;
-            }
-        }
-
-        private void ListMode_Toggled(object sender, RoutedEventArgs e)
-        {
-            ToggleSwitch toggleSwitch = sender as ToggleSwitch;
-            if (toggleSwitch != null)
-            {
-                if (toggleSwitch.IsOn == true)
-                    itemListListView.ItemsSource = null;
-                else
-                    itemListListView.ItemsSource = App.db.GetAllItems();
+                OrderListView.Items.Refresh();
             }
         }
 
         private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            metroProgressBar.Visibility = Visibility.Visible;
-            ICollection<Item> list = ((sender as ListView).SelectedItem as Order).Items;
-            itemListListView.Visibility = Visibility.Hidden;
-            Task.Factory.StartNew(() => LoadItemListFromOrder(list));
+            if (((sender as ListView).SelectedItem as Order != null)){
+                metroProgressBar.Visibility = Visibility.Visible;
+                ICollection<Item> list = ((sender as ListView).SelectedItem as Order).Items;
+                itemListListView.Visibility = Visibility.Hidden;
+                Task.Factory.StartNew(() => LoadItemListFromOrder(list)); }
         }
 
         private void LoadItemListFromOrder(ICollection<Item> list)

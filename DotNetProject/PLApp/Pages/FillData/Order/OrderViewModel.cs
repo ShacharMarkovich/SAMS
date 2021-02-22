@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace PLApp.Pages.ViewModels
@@ -23,7 +24,6 @@ namespace PLApp.Pages.ViewModels
         }
         private void Orders_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-
         }
 
         public Order AddOrder(Order order)
@@ -75,6 +75,7 @@ namespace PLApp.Pages.ViewModels
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 if (openFileDialog.ShowDialog() == true)
                 {
+                    Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Images"));
                     string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", barcodeNumber.ToString() + ".jpg");
                     File.Copy(openFileDialog.FileName, newImagePath,true);
                 }
@@ -84,9 +85,13 @@ namespace PLApp.Pages.ViewModels
             }
         }
 
-        internal void UpdateItem(Item item)
+        internal void UpdateItem(Order order, Item item)
         {
             App.db.UpdateItem(item);
+            Item prevItem = order.Items.FirstOrDefault(i => i.ItemId == item.ItemId);
+            prevItem = item;
+            //Orders.Remove(order);
+            //Orders.Add(order);
         }
     }
 }

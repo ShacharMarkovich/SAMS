@@ -126,7 +126,8 @@ namespace BL
         /// <returns>Bitmap list of new QR Code items data</returns>
         List<Bitmap> LoadQRBitmaps()
         {
-            //Create folder if not exsists TODO
+            //Create folder if not exsists
+            Directory.CreateDirectory(DAL.GoogleDriveAPI.saveDirectory);
             string[] Files = Directory.GetFiles(DAL.GoogleDriveAPI.saveDirectory);
             List<Bitmap> qRCodesBitmapLst = new List<Bitmap>();
             foreach (string file in Files)

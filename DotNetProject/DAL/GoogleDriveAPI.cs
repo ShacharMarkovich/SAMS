@@ -113,6 +113,7 @@ namespace DAL
         /// <param name="file">file to download from google drive</param>
         private static void DownloadFromDrive(DriveService service, Google.Apis.Drive.v3.Data.File file)
         {
+            Directory.CreateDirectory(saveDirectory);
             using (FileStream fileStream = new FileStream(saveDirectory + file.Name, FileMode.OpenOrCreate))
                 service.Files.Get(file.Id).Download(fileStream);
         }
