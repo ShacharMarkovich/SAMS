@@ -39,7 +39,7 @@ namespace BE
             int hashCode = 1130531465;
             hashCode = hashCode * -1521134295 + ItemId.GetHashCode();
             hashCode = hashCode * -1521134295 + BarcodeNumber.GetHashCode();
-            return hashCode;
+            return BarcodeNumber;
         }
 
         public int CompareTo(object obj)
@@ -47,7 +47,7 @@ namespace BE
             if (!(obj is Item) || obj == null)
                 return -1;
             Item other = obj as Item;
-            return ItemId.CompareTo(other.ItemId);
+            return BarcodeNumber.CompareTo(other.BarcodeNumber);
         }
     }
 }

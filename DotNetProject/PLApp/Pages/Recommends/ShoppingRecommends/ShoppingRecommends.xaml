@@ -9,46 +9,34 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Tag="Shopping Recommends" Loaded="UserControl_Loaded">
     <UserControl.Resources>
+        <converters:BarcodeNumberToImageConverter x:Key="BarcodeNumberToImageConverter"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Item}, CreateList=True}"/>
         <converters:QuantityMultiplyNumConverter x:Key="QuantityMultiplyNumConverter"/>
     </UserControl.Resources>
     <Grid DataContext="{StaticResource itemViewSource}">
 
-        <ListView x:Name="itemListView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding}">
+        <ListView x:Name="itemListView" SelectionMode="Single" HorizontalAlignment="Right" VerticalAlignment="Top"  ItemsSource="{Binding}">
+            
             <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="itemNameColumn" Width="80" Header="Item Name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                <TextBlock Margin="-6,-1" Text="{Binding ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="itemPriceColumn" Width="80" Header="Item Price">
+                    <GridViewColumn x:Name="itemBarcodeNumber" Width="80" Header="Barcode">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding ItemPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                <TextBlock Margin="-6,-1" Text="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="quantityColumn" Width="80" Header="Quantity">
+                    <GridViewColumn x:Name="Image" Width="80" Header="Image">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="-6,-1" Text="{Binding Quantity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn x:Name="SumColumn" Width="80" Header="Total">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-6,-1">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource QuantityMultiplyNumConverter}">
-                                            <Binding Path="Quantity" />
-                                            <Binding Path="ItemPrice" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <Image Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}" MaxHeight="50" MaxWidth="50"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -56,12 +44,13 @@
             </ListView.View>
             <ListView.ItemContainerStyle>
                 <Style>
+                    <Setter Property="ListViewItem.Focusable" Value="false"/>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        <Button Content="Export" HorizontalAlignment="Left" Margin="715,413,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Export" HorizontalAlignment="Right" Margin="0 0 20 20" VerticalAlignment="Bottom"  Width="75" Click="Button_Click"/>
 
     </Grid>
 </UserControl>
