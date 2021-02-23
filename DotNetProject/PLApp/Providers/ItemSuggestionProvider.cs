@@ -1,6 +1,5 @@
 ﻿using AutoCompleteTextBox.Editors;
 using BE;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +12,14 @@ namespace PLApp.Providers
         public Item GetExactSuggestion(string filter)
         {
             if (string.IsNullOrWhiteSpace(filter)) return null;
-            return
-                ListOfStates
-                    .FirstOrDefault(i => i.BarcodeNumber.ToString().Contains(filter));
+            return ListOfStates.FirstOrDefault(item => item.BarcodeNumber.ToString().Contains(filter));
         }
 
         public IEnumerable<Item> GetSuggestions(string filter)
         {
             if (string.IsNullOrWhiteSpace(filter)) return null;
             System.Threading.Thread.Sleep(1000);
-            return
-                ListOfStates
-                    .Where(i => i.BarcodeNumber.ToString().Contains(filter))
-                    .ToList();
+            return ListOfStates.Where(item => item.BarcodeNumber.ToString().Contains(filter)).ToList();
         }
 
         IEnumerable ISuggestionProvider.GetSuggestions(string filter)
