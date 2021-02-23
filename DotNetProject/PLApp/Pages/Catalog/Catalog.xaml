@@ -14,32 +14,32 @@
     <UserControl.Resources>
         <Converters:BarcodeNumberToImageConverter x:Key="BarcodeNumberToImageConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+
         <ItemsControl Margin="10"
               x:Name="itemsCardView" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <mah:FlipView x:Name="flipview" MouseHoverBorderEnabled="False"  VerticalAlignment="Top" Initialized="itemsCardView_Initialized" MouseLeftButtonDown="flipview_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="0 5 5 0" Width="200" Height="200" BannerText="{Binding ItemName}">
                         <mah:FlipView.Items>
-                            <Image Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}" Grid.Column="2" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                                <Grid x:Name="grid2" Background="DeepSkyBlue">
+                            <Image Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}" Grid.Column="2" Stretch="UniformToFill"  HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Grid x:Name="grid2" Background="DeepSkyBlue" Width="200" Height="200" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}" Grid.Column="2" MaxHeight="50" MaxWidth="50" Stretch="UniformToFill" HorizontalAlignment="Center"/>
-                                <TextBlock Text="Barcode Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                                <TextBlock  Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                                <TextBlock Text="Category:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                <Image     Grid.Row="0" Grid.Column="2" Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}"  MaxHeight="50" MaxWidth="50" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Barcode Number:" Margin="3"  VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Category:"  Margin="3" />
+                                <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left"  Margin="3"  Text="{Binding Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
                             </Grid>
                         </mah:FlipView.Items>
-
                     </mah:FlipView>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -50,5 +50,5 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-    </Grid>
+    </ScrollViewer>
 </UserControl>
