@@ -10,7 +10,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         TextOptions.TextFormattingMode="Ideal" 
         TextOptions.TextRenderingMode="Auto"        
 
-        Title="Shopping Management and Analysis" Height="640" Width="800" WindowStyle="ThreeDBorderWindow" >
+        Title="Shopping Management and Analysis" Height="700" Width="860" WindowStyle="ThreeDBorderWindow" >
     <mah:MetroWindow.Resources>
         <ContextMenu x:Key="ThreeDotsHeaderContexMenu">
         </ContextMenu>

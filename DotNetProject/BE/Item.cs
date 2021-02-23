@@ -31,7 +31,7 @@ namespace BE
 
         public override string ToString() => $"{ItemId} {BarcodeNumber} {ItemName} {ItemPrice} {Quantity}";
 
-        public override bool Equals(object obj) => obj is Item item && ItemId == item.ItemId && BarcodeNumber == item.BarcodeNumber;
+        public override bool Equals(object obj) => obj is Item item && BarcodeNumber == item.BarcodeNumber;
 
         public override int GetHashCode()
         {

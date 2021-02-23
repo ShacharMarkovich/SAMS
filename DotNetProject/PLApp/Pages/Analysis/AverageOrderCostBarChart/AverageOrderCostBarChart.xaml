@@ -37,7 +37,7 @@
                 <lvc:Axis Labels="{Binding Xlabel}" Title="{Binding XTitle}"/>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Average Order Cost" LabelFormatter="{Binding Formatter}"/>
+                <lvc:Axis Title="Average Order Cost (NIS)" LabelFormatter="{Binding Formatter}"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
     </Grid>

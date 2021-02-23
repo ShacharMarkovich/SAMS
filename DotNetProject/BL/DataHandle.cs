@@ -68,6 +68,13 @@ namespace BL
         public void UpdateOrder(Order order) => db.UpdateOrder(order);
 
         public ICollection<Order> GetOrders() => db.Set<Order>().ToList();
+
+        /// <summary>
+        /// Get all items in a given store
+        /// </summary>
+        /// <param name="storeName"> the store name</param>
+        /// <returns>list of items in the given store</returns>
+        public List<Item> GetAllItemInStore(string storeName) => GetOrders().SelectMany(order => order.Items).ToList();
         #endregion
 
 
