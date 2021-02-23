@@ -29,6 +29,11 @@ namespace BL
         }
 
         private DataHandle() => db = DAL.FactoryDAL.Instance;
+
+        public List<Item> GetAllItemsRemoveDuplicates()
+        {
+            return db.Set<Item>().GroupBy(i=> new { i.BarcodeNumber, i.Category, i.ItemName}).Select(grp => grp.FirstOrDefault()).ToList();
+        }
         #endregion
 
 

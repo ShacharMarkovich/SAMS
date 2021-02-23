@@ -20,19 +20,10 @@ namespace PLApp.Pages.Catalog
     /// </summary>
     public partial class Catalog : UserControl
     {
-        public System.Collections.ObjectModel.ObservableCollection<BE.Item> CatalogItemList { get; set; }
+        public List<BE.Item> CatalogItemList { get; set; }
         public Catalog()
         {
-            CatalogItemList = new System.Collections.ObjectModel.ObservableCollection<BE.Item>
-            {
-                new BE.Item(){ItemName="מוצר1"},
-                new BE.Item(){ItemName="מוצר2"},
-                new BE.Item(){ItemName="מוצר2"},
-                new BE.Item(){ItemName="מוצר2"},
-                new BE.Item(){ItemName="מוצר2"},
-                new BE.Item(){ItemName="מוצר2"}
-
-            };
+            CatalogItemList = App.db.GetAllItemsRemoveDuplicates();
             InitializeComponent();
             itemsCardView.ItemsSource = CatalogItemList;
         }

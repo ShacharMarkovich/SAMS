@@ -18,10 +18,10 @@ namespace PLApp.Converters
         {
             try
             {
-                string filePath = Path.Combine(Environment.CurrentDirectory, "Images", (string)value + ".jpg");
-                return Image.FromStream(new MemoryStream(File.ReadAllBytes(filePath)));
+                string filePath = Path.Combine(Environment.CurrentDirectory, "Images", value.ToString() + ".jpg");
+                return new BitmapImage(new Uri(filePath));
             }
-            catch
+            catch(Exception e)
             {
                 
                 return new BitmapImage(new Uri("pack://application:,,,/PLApp;component/Properties/default.jpg"));
