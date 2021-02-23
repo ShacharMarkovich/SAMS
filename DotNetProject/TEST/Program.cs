@@ -9,7 +9,7 @@ namespace DriveQuickstart
     {
         public static void Main()
         {
-            //BL.DataHandle.GenerateQRcodes();
+            BL.DataHandle.GenerateQRcodes();
             //FlushData.FlushAll();
             //Console.WriteLine("press key to exit");
             //Console.ReadLine();

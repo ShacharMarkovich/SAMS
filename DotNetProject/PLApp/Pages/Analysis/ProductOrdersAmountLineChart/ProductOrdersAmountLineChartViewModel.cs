@@ -20,7 +20,16 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
 
         #region Geared values
         public object Mapper { get; set; }
-        public GearedValues<DateTimePoint> Values { get; set; }
+        GearedValues<DateTimePoint> _values;
+        public GearedValues<DateTimePoint> Values
+        {
+            get { return _values; }
+            set
+            {
+                _values = value;
+                OnPropertyChanged("Values");
+            }
+        }
 
         private Func<double, string> _formatter;
         public Func<double, string> Formatter
@@ -96,24 +105,20 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
         private void UpdateValues(int itemBarcode, string storeName)
         {
             // get all orders in `storeName` store:
-            DateTime first = DateTime.Now, last = DateTime.Now;
             List<Order> ordersInCurrStore = Model.Orders.Where(order => order.StoreName == storeName).ToList();
             List<DateTimePoint> storeValues = new List<DateTimePoint>();
 
             foreach (var order in ordersInCurrStore)
             {
-                var lst = order.Items.Where(item => item.BarcodeNumber == itemBarcode)
+                var lst = order.Items.Where(item => item.BarcodeNumber == itemBarcode && item.Quantity > 0)
                                      .Select(item => new DateTimePoint(order.OrderDate, (double)item.Quantity)).ToList();
                 storeValues.AddRange(lst);
-
-                if (order.OrderDate < first) first = order.OrderDate;
-                if (order.OrderDate > last) last = order.OrderDate;
             }
             Values = storeValues.AsGearedValues().WithQuality(Quality.High);
 
             // update the shown values on axises
-            From = first.Ticks;
-            To = last.Ticks;
+            From = ordersInCurrStore.Max(order=>order.OrderDate).Ticks;
+            To = ordersInCurrStore.Min(order=>order.OrderDate).Ticks;
         }
 
         /// <summary>

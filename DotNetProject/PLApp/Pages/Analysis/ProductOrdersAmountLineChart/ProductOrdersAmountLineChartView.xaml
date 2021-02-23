@@ -44,7 +44,7 @@
                 <lvc:CartesianChart.Series>
                     <geared:GLineSeries StrokeThickness="0" 
                                     Values="{Binding Values}"
-                                    Fill="Transparent"
+                                    Fill="Blue"
                                     AreaLimit="0"
                                     PointGeometry="{x:Null}"/>
                 </lvc:CartesianChart.Series>
@@ -53,6 +53,10 @@
                           MinValue="{Binding From, Mode=TwoWay}" MaxValue="{Binding To, Mode=TwoWay}"
                           Separator="{x:Static lvc:DefaultAxes.CleanSeparator}"/>
                 </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="0" MaxValue="100"/>
+                </lvc:CartesianChart.AxisY>
+
             </lvc:CartesianChart>
 
             <lvc:CartesianChart Grid.Row="2" DisableAnimations="True" 

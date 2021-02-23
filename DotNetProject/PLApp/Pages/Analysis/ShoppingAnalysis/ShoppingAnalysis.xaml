@@ -10,8 +10,7 @@
              xmlns:AverageOrderCostBarChart="clr-namespace:PLApp.Pages.AverageOrderCostBarChart" xmlns:CategoryPieChartView="clr-namespace:PLApp.Pages.Analysis.CategoryPieChart" xmlns:ProductOrdersAmountLineChartView="clr-namespace:PLApp.Pages.Analysis.ProductOrdersAmountLineChart" x:Class="PLApp.Pages.ShoppingAnalysis"
 
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-    Tag="Shopping Analysis">
+             d:DesignHeight="450" d:DesignWidth="800" Tag="Shopping Analysis">
     <Grid>
         <mah:MetroAnimatedTabControl VerticalAlignment="Stretch">
 
