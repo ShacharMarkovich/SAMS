@@ -32,7 +32,7 @@ namespace BL
 
         public List<Item> GetAllItemsRemoveDuplicates()
         {
-            return db.Set<Item>().GroupBy(i=> new { i.BarcodeNumber, i.Category, i.ItemName}).Select(grp => grp.FirstOrDefault()).ToList();
+            return db.Set<Item>().GroupBy(i => new { i.BarcodeNumber, i.Category, i.ItemName }).Select(grp => grp.FirstOrDefault()).ToList();
         }
         #endregion
 
@@ -79,7 +79,7 @@ namespace BL
         /// </summary>
         /// <param name="storeName"> the store name</param>
         /// <returns>list of items in the given store</returns>
-        public List<Item> GetAllItemInStore(string storeName) => GetOrders().SelectMany(order => order.Items).ToList();
+        public List<Item> GetAllItemInStore(string storeName) => GetOrders().Where(order => order.StoreName == storeName).SelectMany(order => order.Items).ToList();
         #endregion
 
 
@@ -124,8 +124,8 @@ namespace BL
         /// </summary>
         public void LoadNewQRCodes()
         {
-            //for debuging - GenerateQRcodes();
             DAL.GoogleDriveAPI.DownloadGoogleDriveAPI();
+            //GenerateQRcodes();
             List<Bitmap> bitmapLst = LoadQRBitmaps();
             if (bitmapLst.Count != 0)
                 foreach (var order in ParseBitmapList(bitmapLst))
@@ -281,6 +281,6 @@ namespace BL
         public void ClearAllData() => db.ClearAllData();
         #endregion
 
-       
+
     }
 }

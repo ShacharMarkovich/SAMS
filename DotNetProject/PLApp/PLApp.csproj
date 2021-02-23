@@ -80,16 +80,12 @@
       <DependentUpon>CategoryPieChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Analysis\CategoryPieChart\CategoryPieChartViewModel.cs" />
-    <Compile Include="Pages\Analysis\ProductOrdersAmountLineChart\ProductOrdersAmountLineChartModel.cs" />
     <Compile Include="Pages\Analysis\ProductOrdersAmountLineChart\ProductOrdersAmountLineChartView.xaml.cs">
       <DependentUpon>ProductOrdersAmountLineChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Analysis\ProductOrdersAmountLineChart\ProductOrdersAmountLineChartViewModel.cs" />
     <Compile Include="Pages\Catalog\Catalog.xaml.cs">
       <DependentUpon>Catalog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\FillData\ItemDataList\ItemDataListView.xaml.cs">
-      <DependentUpon>ItemDataListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Providers\ItemSuggestionProvider.cs" />
     <Page Include="MainWindow.xaml">
@@ -133,27 +129,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\Analysis\ShoppingAnalysis\ShoppingAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Recommends\ShoppingRecommends\ShoppingRecommends.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\TestItemsList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\FillData\AddItem\AddItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\FillData\ItemDataList\ItemDataListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,25 +153,14 @@
     <Compile Include="Pages\FillData\FillData\FillData.xaml.cs">
       <DependentUpon>FillData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FillData\AddItem\AddItemModel.cs" />
     <Compile Include="Pages\FillData\Order\OrderModel.cs" />
-    <Compile Include="Pages\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\Analysis\ShoppingAnalysis\ShoppingAnalysis.xaml.cs">
       <DependentUpon>ShoppingAnalysis.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Recommends\ShoppingRecommends\ShoppingRecommends.xaml.cs">
       <DependentUpon>ShoppingRecommends.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TestItemsList.xaml.cs">
-      <DependentUpon>TestItemsList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\FillData\AddItem\AdditemViewModel.cs" />
     <Compile Include="Pages\FillData\Order\OrderViewModel.cs" />
-    <Compile Include="Pages\FillData\AddItem\AddItemView.xaml.cs">
-      <DependentUpon>AddItemView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\FillData\Order\OrderView.xaml.cs">
       <DependentUpon>OrderView.xaml</DependentUpon>
     </Compile>

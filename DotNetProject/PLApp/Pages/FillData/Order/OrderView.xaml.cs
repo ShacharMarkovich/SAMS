@@ -43,14 +43,18 @@ namespace PLApp.Pages.Views
             Item i = e.Row.Item as Item;
             (sender as DataGrid).Items.Refresh();
             (sender as DataGrid).RowEditEnding += itemListListView_RowEditEnding;
-            CurrentVM.UpdateItem(OrderListView.SelectedItem as Order,i);
+            CurrentVM.UpdateItem(OrderListView.SelectedItem as Order, i);
             OrderListView.Items.Refresh();
         }
 
         private void UpdateImageByBarcode_BtnClick(object sender, RoutedEventArgs e)
         {
             CurrentVM.LoadImageByBarcode(((Item)itemListListView.SelectedValue).BarcodeNumber);
-            itemListListView.Items.Refresh();
+            try
+            {
+                itemListListView.Items.Refresh();
+            }
+            catch (Exception) { }
         }
         private void RemoveItemFromOrder_BtnClick(object sender, RoutedEventArgs e)
         {
@@ -68,11 +72,13 @@ namespace PLApp.Pages.Views
 
         private void OrderListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((sender as ListView).SelectedItem as Order != null)){
+            if (((sender as ListView).SelectedItem as Order != null))
+            {
                 metroProgressBar.Visibility = Visibility.Visible;
                 ICollection<Item> list = ((sender as ListView).SelectedItem as Order).Items;
                 itemListListView.Visibility = Visibility.Hidden;
-                Task.Factory.StartNew(() => LoadItemListFromOrder(list)); }
+                Task.Factory.StartNew(() => LoadItemListFromOrder(list));
+            }
         }
 
         private void LoadItemListFromOrder(ICollection<Item> list)

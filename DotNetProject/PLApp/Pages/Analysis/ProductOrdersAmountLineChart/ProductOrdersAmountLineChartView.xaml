@@ -3,15 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PLApp.Pages.Analysis.ProductOrdersAmountLineChart" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared"
+             xmlns:local="clr-namespace:PLApp.Pages.Analysis.ProductOrdersAmountLineChart" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:geared="clr-namespace:LiveCharts.Geared;assembly=LiveCharts.Geared" xmlns:converters="clr-namespace:PLApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BoolToFontWeightConverter x:Key="b2f"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="12*"/>
         </Grid.RowDefinitions>
-
+        <!-- Select Store and item in store section: -->
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
             <Label Content="Select Store: " FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
             <ComboBox x:Name="storesComboBox" ItemsSource="{Binding StoresName}" Width="200" FontSize="14" SelectionChanged="StoresComboBox_SelectionChanged" VerticalAlignment="Center"/>
@@ -20,77 +25,33 @@
             <ComboBox x:Name="ItemsComboBox" ItemsSource="{Binding ItemsData}" Width="200" FontSize="14" SelectionChanged="ItemsComboBox_SelectionChanged" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="100"></RowDefinition>
-            </Grid.RowDefinitions>
+        <!-- Select time(day/month/year) type to show the data section: -->
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+            <RadioButton x:Name="YearCutButton" Width="100" Content="Year"  Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=YearCutButton, Converter={StaticResource b2f}}"/>
+            <RadioButton x:Name="MonthCutButton" Width="100" Content="Month" Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=MonthCutButton, Converter={StaticResource b2f}}" />
+            <RadioButton x:Name="DayCutButton" Width="100" Content="Day"     Checked="AggregationCutChangeChecked" FontWeight="{Binding IsChecked, ElementName=DayCutButton, Converter={StaticResource b2f}}" />
+        </StackPanel>
 
-            <TextBlock Grid.Row="0"></TextBlock>
+        <!-- Select exactly time(day/month/year) to show the data section: -->
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel x:Name="monthStackPanel" Visibility="Collapsed" Orientation="Horizontal">
+                <Label FontWeight="Bold" Content="Selct Month:"/>
+                <ComboBox x:Name="monthComboBox" Width="131"/>
+            </StackPanel>
+            <StackPanel x:Name="yearStackPanel" Visibility="Collapsed" Orientation="Horizontal">
+                <Label FontWeight="Bold" Content="Selct Year:"/>
+                <ComboBox x:Name="yearComboBox" Width="131"/>
+            </StackPanel>
+        </StackPanel>
 
-            <lvc:CartesianChart Grid.Row="1" Zoom="X"  DisableAnimations="True" Hoverable="False">
-                <lvc:CartesianChart.Resources>
-                    <Style TargetType="lvc:Separator">
-                        <Setter Property="StrokeThickness" Value="2.5"></Setter>
-                        <Setter Property="Stroke" Value="#E7E7E7"></Setter>
-                        <Style.Triggers>
-                            <Trigger Property="AxisOrientation" Value="X">
-                                <Setter Property="IsEnabled" Value="False"></Setter>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </lvc:CartesianChart.Resources>
-                <lvc:CartesianChart.Series>
-                    <geared:GLineSeries StrokeThickness="0" 
-                                    Values="{Binding Values}"
-                                    Fill="Blue"
-                                    AreaLimit="0"
-                                    PointGeometry="{x:Null}"/>
-                </lvc:CartesianChart.Series>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis LabelFormatter="{Binding Formatter}" RangeChanged="Axis_OnRangeChanged" 
-                          MinValue="{Binding From, Mode=TwoWay}" MaxValue="{Binding To, Mode=TwoWay}"
-                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}"/>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis MinValue="0" MaxValue="100"/>
-                </lvc:CartesianChart.AxisY>
-
-            </lvc:CartesianChart>
-
-            <lvc:CartesianChart Grid.Row="2" DisableAnimations="True" 
-                            ScrollMode="X" 
-                            ScrollHorizontalFrom="{Binding From, Mode=TwoWay}"
-                            ScrollHorizontalTo="{Binding To, Mode=TwoWay}"
-                            ScrollBarFill="#25303030"
-                            DataTooltip="{x:Null}"
-                            Hoverable="False"
-                            Margin="20 10">
-                <lvc:CartesianChart.Resources>
-                    <Style TargetType="lvc:Separator">
-                        <Setter Property="IsEnabled" Value="False"></Setter>
-                    </Style>
-                </lvc:CartesianChart.Resources>
-                <lvc:CartesianChart.Series>
-                    <geared:GLineSeries Values="{Binding Values}"
-                                    Fill="Silver"
-                                    StrokeThickness="0"
-                                    PointGeometry="{x:Null}"
-                                    AreaLimit="0"/>
-                </lvc:CartesianChart.Series>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis IsMerged="True" 
-                          LabelFormatter="{Binding Formatter, Mode=OneTime}" 
-                          Foreground="#98000000"
-                          FontSize="22"
-                          FontWeight="UltraBold"/>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis ShowLabels="False" />
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-        </Grid>
-
+        <!-- the graph itself: -->
+        <lvc:CartesianChart Grid.Row="3" Series="{Binding ProductsAmountCollection}" LegendLocation="Left" MinHeight="400">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Labels="{Binding Xlabel}" Title="{Binding XTitle}"/>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Prubuct Order amount" LabelFormatter="{Binding Formatter}"/>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
     </Grid>
 </UserControl>

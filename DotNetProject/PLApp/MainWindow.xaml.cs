@@ -27,7 +27,6 @@ namespace PLApp
         private OrderView FillDataUC;
         private ShoppingAnalysis ShoppingAnalysisUC;
         private ShoppingRecommends ShoppingRecommendsUC;
-        private Settings SettingsUC;
         private About AboutUC;
         private Catalog CatalogUC;
         public MainWindow()
@@ -74,17 +73,6 @@ namespace PLApp
             }
             MainUserControl.Tag = ShoppingRecommendsUC.Tag;
             MainUserControl.Content = ShoppingRecommendsUC;
-
-        }
-        private void Button_Settings_Click(object sender, RoutedEventArgs e)
-        {
-            OpenCloseDrawer();
-            if (!(MainUserControl.Content is Settings))
-            {
-                SettingsUC = new Settings();
-            }
-            MainUserControl.Tag = SettingsUC.Tag;
-            MainUserControl.Content = SettingsUC;
 
         }
         private void Button_About_Click(object sender, RoutedEventArgs e)

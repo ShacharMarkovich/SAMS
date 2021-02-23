@@ -32,6 +32,8 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Rectangle Grid.Row="0" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
                     <Button Grid.Row="1" Content="Fill Data"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -46,12 +48,8 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     <Button Grid.Row="7" Content="Shopping Recommends"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_ShoppingRecommends_Click"/>
 
-                    <Rectangle Grid.Row="8" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
-                    <Button Grid.Row="9" Content="Settings"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Style="{StaticResource ButtonRevealStyle}" Click="Button_Settings_Click"/>
-
-                    <Rectangle Grid.Row="10" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
-                    <Button Grid.Row="11" Content="About" Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    <Rectangle Grid.Row="14" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
+                    <Button Grid.Row="15" Content="About" Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_About_Click"/>
                 </Grid>
             </mah:Flyout>
