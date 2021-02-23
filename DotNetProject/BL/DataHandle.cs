@@ -124,8 +124,9 @@ namespace BL
         /// </summary>
         public void LoadNewQRCodes()
         {
-            //for debuging - GenerateQRcodes();
+
             DAL.GoogleDriveAPI.DownloadGoogleDriveAPI();
+            GenerateQRcodes();
             List<Bitmap> bitmapLst = LoadQRBitmaps();
             if (bitmapLst.Count != 0)
                 foreach (var order in ParseBitmapList(bitmapLst))

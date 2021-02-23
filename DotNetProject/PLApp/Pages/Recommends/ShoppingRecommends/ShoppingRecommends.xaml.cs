@@ -17,6 +17,7 @@ namespace PLApp.Pages
         {
             Title = "Shopping Recommends";
             InitializeComponent();
+            itemListView.ItemsSource = App.db.GetAllItemsRemoveDuplicates().ToList().GetRange(0, 10);
         }
 
         public void foo()
@@ -28,6 +29,16 @@ namespace PLApp.Pages
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            PrintDialog dlg = new PrintDialog();
+            if ((bool)dlg.ShowDialog().GetValueOrDefault())
+            {
+                dlg.PrintTicket.PageMediaSize = new System.Printing.PageMediaSize(itemListView.ActualWidth, itemListView.ActualHeight);
+                dlg.PrintVisual(itemListView, "Recommendations");
+            }
         }
     }
 }
