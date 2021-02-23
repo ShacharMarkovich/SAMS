@@ -48,5 +48,22 @@ namespace PLApp.Pages.Catalog
             // 	myCollectionViewSource.Source = your data
             // }
         }
+
+        private void itemsCardView_Initialized(object sender, EventArgs e)
+        {
+           (sender as MahApps.Metro.Controls.FlipView).HideControlButtons();
+        }
+
+        private void flipview_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if ((sender as MahApps.Metro.Controls.FlipView).SelectedIndex == 0)
+
+                (sender as MahApps.Metro.Controls.FlipView).GoForward();
+            else
+                (sender as MahApps.Metro.Controls.FlipView).GoBack();
+            (sender as MahApps.Metro.Controls.FlipView).HideControlButtons();
+
+
+        }
     }
 }

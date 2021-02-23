@@ -4,45 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PLApp.Pages.Catalog"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLApp.Pages.Catalog.Catalog"
-             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:BE="clr-namespace:BE;assembly=BE" 
   xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:Converters="clr-namespace:PLApp.Converters" x:Class="PLApp.Pages.Catalog.Catalog"
+             mc:Ignorable="d"
     d:DesignHeight="450" d:DesignWidth="800"
              Loaded="UserControl_Loaded"
     Tag="Catalog">
+    <UserControl.Resources>
+        <Converters:BarcodeNumberToImageConverter x:Key="BarcodeNumberToImageConverter"/>
+    </UserControl.Resources>
     <Grid>
         <ItemsControl Margin="10"
               x:Name="itemsCardView" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Black" BorderThickness="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0 5 5 0">
-                        <Grid x:Name="grid1" Background="AliceBlue">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Barcode Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="barcodeNumberTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding Path=BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                            <TextBlock Text="Category:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="categoryTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding Path=Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                            <TextBlock Text="Item Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="itemIdTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding Path=ItemId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                            <TextBlock Text="Item Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="itemNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Path=ItemName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                            <TextBlock Text="Item Price:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="itemPriceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding Path=ItemPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                            <TextBlock Text="Quantity:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="quantityTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="5" Text="{Binding Path=Quantity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
-                        </Grid>
-                    </Border>
+                    <mah:FlipView x:Name="flipview" MouseHoverBorderEnabled="False"  VerticalAlignment="Top" Initialized="itemsCardView_Initialized" MouseLeftButtonDown="flipview_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="0 5 5 0" Width="200" Height="200" BannerText="{Binding ItemName}">
+                        <mah:FlipView.Items>
+                            <Image Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}" Grid.Column="2" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                <Grid x:Name="grid2" Background="DeepSkyBlue">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding BarcodeNumber, Converter={StaticResource BarcodeNumberToImageConverter}}" Grid.Column="2" MaxHeight="50" MaxWidth="50" Stretch="UniformToFill" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Barcode Number:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                                <TextBlock  Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding BarcodeNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                                <TextBlock Text="Category:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                            </Grid>
+                        </mah:FlipView.Items>
+
+                    </mah:FlipView>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
