@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System;
 
 namespace BE
 {
-    public class Item
+    public class Item : IComparable
     {
         public Item(Item other)
         {
@@ -39,6 +40,14 @@ namespace BE
             hashCode = hashCode * -1521134295 + ItemId.GetHashCode();
             hashCode = hashCode * -1521134295 + BarcodeNumber.GetHashCode();
             return hashCode;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (!(obj is Item) || obj == null)
+                return -1;
+            Item other = obj as Item;
+            return ItemId.CompareTo(other.ItemId);
         }
     }
 }
