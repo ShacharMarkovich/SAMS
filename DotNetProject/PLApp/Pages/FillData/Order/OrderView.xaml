@@ -10,10 +10,10 @@
 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:PLApp="clr-namespace:PLApp" x:Name="userControl" x:Class="PLApp.Pages.Views.OrderView"
              mc:Ignorable="d"
-            Height="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type PLApp:MainWindow}}}"
-                Width="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type PLApp:MainWindow}}}"
-
-             d:DesignHeight="450" d:DesignWidth="800">
+Tag="Fill Data"
+             d:DesignHeight="450" d:DesignWidth="800"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
     <UserControl.Resources>
         <converters:PathToImageConverter x:Key="ImageConverter"/>
         <converters:VisibilityConverter x:Key="VisibilityConverter"/>
@@ -51,7 +51,7 @@
             </ListView.Resources>
         </ListView>
         <mah:MetroProgressBar x:Name="metroProgressBar" Visibility="Collapsed" IsIndeterminate="True"  Grid.Column="1" HorizontalAlignment="Left" Height="15" Margin="0,51,0,0" VerticalAlignment="Top" Width="550"/>
-        <DataGrid Grid.Column="1" VirtualizingPanel.VirtualizationMode="Recycling"  x:Name="itemListListView" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" VerticalAlignment="Top" MaxHeight="1080" CanUserAddRows="false">
+        <DataGrid Grid.Column="1" VirtualizingPanel.VirtualizationMode="Recycling"  x:Name="itemListListView" RowEditEnding="itemListListView_RowEditEnding"  AutoGenerateColumns="False" VerticalAlignment="Stretch" MaxHeight="1080" CanUserAddRows="false">
             <DataGrid.Resources>
                 <DataTemplate x:Key="ImageDataTemplate">
                     <Image Source="{Binding BarcodeNumber, Converter={StaticResource ImageConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Width="60" Height="60">

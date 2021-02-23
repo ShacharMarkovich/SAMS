@@ -13,18 +13,28 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PLApp.Pages
+namespace PLApp.Pages.Catalog
 {
     /// <summary>
-    /// Interaction logic for ShoppingRecommends.xaml
+    /// Interaction logic for Catalog.xaml
     /// </summary>
-    public partial class ShoppingRecommends : UserControl
+    public partial class Catalog : UserControl
     {
-        public String Title { get; set; }
-        public ShoppingRecommends()
+        public System.Collections.ObjectModel.ObservableCollection<BE.Item> CatalogItemList { get; set; }
+        public Catalog()
         {
-            Title = "Shopping Recommends";
+            CatalogItemList = new System.Collections.ObjectModel.ObservableCollection<BE.Item>
+            {
+                new BE.Item(){ItemName="מוצר1"},
+                new BE.Item(){ItemName="מוצר2"},
+                new BE.Item(){ItemName="מוצר2"},
+                new BE.Item(){ItemName="מוצר2"},
+                new BE.Item(){ItemName="מוצר2"},
+                new BE.Item(){ItemName="מוצר2"}
+
+            };
             InitializeComponent();
+            itemsCardView.ItemsSource = CatalogItemList;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

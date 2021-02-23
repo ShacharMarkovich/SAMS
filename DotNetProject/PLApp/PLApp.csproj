@@ -69,6 +69,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\ItemListSumConverter.cs" />
+    <Compile Include="Converters\QuantityMultiplyNumConverter.cs" />
     <Compile Include="Pages\Analysis\AverageOrderCostBarChart\AverageOrderCostBarChart.xaml.cs">
       <DependentUpon>AverageOrderCostBarChart.xaml</DependentUpon>
     </Compile>
@@ -79,6 +80,9 @@
       <DependentUpon>CategoryPieChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Analysis\CategoryPieChart\CategoryPieChartViewModel.cs" />
+    <Compile Include="Pages\Catalog\Catalog.xaml.cs">
+      <DependentUpon>Catalog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\FillData\ItemDataList\ItemDataListView.xaml.cs">
       <DependentUpon>ItemDataListView.xaml</DependentUpon>
     </Compile>
@@ -109,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Analysis\CategoryPieChart\CategoryPieChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Catalog\Catalog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,9 +231,6 @@
     <None Include="Resources\defult.png" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Resources\SplashScreen1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AutoCompleteTextBox">
       <Version>1.1.1</Version>
     </PackageReference>
@@ -257,6 +262,8 @@
   <ItemGroup>
     <Resource Include="bin\Debug\Images\default.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SplashScreen Include="Resources\SplashScreen1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
