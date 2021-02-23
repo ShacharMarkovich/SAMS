@@ -1,4 +1,4 @@
-﻿<mah:MetroWindow x:Name="mainWin" x:Class="PLApp.MainWindow"
+<mah:MetroWindow x:Name="metroWindow" x:Class="PLApp.MainWindow"
 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,6 +11,10 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         TextOptions.TextRenderingMode="Auto"        
 
         Title="Shopping Management and Analysis" Height="640" Width="800" WindowStyle="ThreeDBorderWindow" >
+    <mah:MetroWindow.Resources>
+        <ContextMenu x:Key="ThreeDotsHeaderContexMenu">
+        </ContextMenu>
+    </mah:MetroWindow.Resources>
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl>
             <mah:Flyout x:Name="MainFlayout" Header="Settings" Position="Left" Width="250" IsOpenChanged="MainFlayout_IsOpenChanged">
@@ -26,24 +30,28 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Rectangle Grid.Row="0" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
                     <Button Grid.Row="1" Content="Fill Data"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_FillData_Click"/>
-
                     <Rectangle Grid.Row="2" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
-                    <Button Grid.Row="3" Content="Shopping Analysis"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                            Style="{StaticResource ButtonRevealStyle}" Click="Button_ShoppingAnalysis_Click"/>
+                    <Button Grid.Row="3" Content="Catalog"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Style="{StaticResource ButtonRevealStyle}" Click="Button_Catalog_Click"/>
                     <Rectangle Grid.Row="4" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
-                    <Button Grid.Row="5" Content="Shopping Recommends"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    <Button Grid.Row="5" Content="Shopping Analysis"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            Style="{StaticResource ButtonRevealStyle}" Click="Button_ShoppingAnalysis_Click"/>
+                    <Rectangle Grid.Row="6" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
+                    <Button Grid.Row="7" Content="Shopping Recommends"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_ShoppingRecommends_Click"/>
 
-                    <Rectangle Grid.Row="6" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
-                    <Button Grid.Row="7" Content="Settings"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    <Rectangle Grid.Row="8" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
+                    <Button Grid.Row="9" Content="Settings"  Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_Settings_Click"/>
 
-                    <Rectangle Grid.Row="8" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
-                    <Button Grid.Row="9" Content="About" Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    <Rectangle Grid.Row="10" HorizontalAlignment="Stretch" Height="1" Stroke="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" Fill="{x:Static fw:AccentColors.ImmersiveSystemAccentBrush}" />
+                    <Button Grid.Row="11" Content="About" Width="{Binding ElementName=MainFlayout, Path=ActualWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                             Style="{StaticResource ButtonRevealStyle}" Click="Button_About_Click"/>
                 </Grid>
             </mah:Flyout>
@@ -53,18 +61,59 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             </mah:Flyout>
         </mah:FlyoutsControl>
     </mah:MetroWindow.Flyouts>
-    <StackPanel Name="MainStackPanel" Background="Transparent">
-
-        <StackPanel Height="50" Background="LightSkyBlue" Orientation="Horizontal">
+    <Grid Name="MainStackPanel" Background="Transparent" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Column="1"  Height="50" Background="LightSkyBlue" >
             <Viewbox Width="48" Height="48">
                 <Canvas Width="24" Height="24" Background="Transparent" MouseLeftButtonUp="Canvas_MouseLeftButtonUp">
                     <Path Fill="Black" Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
                 </Canvas>
             </Viewbox>
-            <TextBlock VerticalAlignment="Center" Text="{Binding Title, ElementName=mainWin}" FontSize="25" Margin="10,0,0,0"  />
-        </StackPanel>
-        <ProgressBar x:Name="LoadingBar" Minimum="0" Maximum="100" IsIndeterminate="True" Visibility="Collapsed"/>
-        <UserControl  Name="MainUserControl" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        </UserControl>
-    </StackPanel>
+            <TextBlock VerticalAlignment="Center" Text="{Binding ElementName=MainUserControl, Path=Tag}" FontSize="25" Margin="10,0,0,0"  />
+            <Button Background="Transparent"  Width="48" Height="48" HorizontalAlignment="Right" BorderBrush="Transparent" VerticalContentAlignment="Center" ContextMenu="{StaticResource ThreeDotsHeaderContexMenu}" HorizontalContentAlignment="Center" UseLayoutRounding="False" mah:ControlsHelper.FocusBorderBrush="LightGray"  >
+                <Path Fill="Black" Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" Stretch="Fill"  Width="8" Height="32" Canvas.Left="0" Canvas.Top="0" />
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="Button.Click">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </Button.Triggers>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="LightBlue" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#660072B5" TargetName="Border" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </DockPanel>
+        <UserControl Grid.Row="2" Name="MainUserControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Tag="SAMS"/>
+    </Grid>
 </mah:MetroWindow>

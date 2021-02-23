@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using PLApp.Pages;
+using PLApp.Pages.Catalog;
 using PLApp.Pages.Views;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,11 @@ namespace PLApp
     public partial class MainWindow : MetroWindow
     {
         private OrderView FillDataUC;
+        private ShoppingAnalysis ShoppingAnalysisUC;
+        private ShoppingRecommends ShoppingRecommendsUC;
+        private Settings SettingsUC;
+        private About AboutUC;
+        private Catalog CatalogUC;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,35 +41,61 @@ namespace PLApp
             {
                 FillDataUC = new OrderView();
             }
+            MainUserControl.Tag = FillDataUC.Tag;
             MainUserControl.Content = FillDataUC;
+        }
+        private void Button_Catalog_Click(object sender, RoutedEventArgs e)
+        {
+            OpenCloseDrawer();
+            if (!(MainUserControl.Content is Catalog))
+            {
+                CatalogUC = new Catalog();
+            }
+            MainUserControl.Tag = CatalogUC.Tag;
+            MainUserControl.Content = CatalogUC;
         }
         private void Button_ShoppingAnalysis_Click(object sender, RoutedEventArgs e)
         {
-            if (!(MainUserControl.Content is ShoppingAnalysis))
-                MainUserControl.Content = new ShoppingAnalysis();
             OpenCloseDrawer();
+            if (!(MainUserControl.Content is ShoppingAnalysis))
+            {
+                ShoppingAnalysisUC = new ShoppingAnalysis();
+            }
+            MainUserControl.Tag = ShoppingAnalysisUC.Tag;
+            MainUserControl.Content = ShoppingAnalysisUC;
 
         }
         private void Button_ShoppingRecommends_Click(object sender, RoutedEventArgs e)
         {
-            if (!(MainUserControl.Content is ShoppingRecommends))
-                MainUserControl.Content = new ShoppingRecommends();
             OpenCloseDrawer();
+            if (!(MainUserControl.Content is ShoppingRecommends))
+            {
+                ShoppingRecommendsUC = new ShoppingRecommends();
+            }
+            MainUserControl.Tag = ShoppingRecommendsUC.Tag;
+            MainUserControl.Content = ShoppingRecommendsUC;
 
         }
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
-            if (!(MainUserControl.Content is Settings))
-                MainUserControl.Content = new Settings();
             OpenCloseDrawer();
+            if (!(MainUserControl.Content is Settings))
+            {
+                SettingsUC = new Settings();
+            }
+            MainUserControl.Tag = SettingsUC.Tag;
+            MainUserControl.Content = SettingsUC;
 
         }
         private void Button_About_Click(object sender, RoutedEventArgs e)
         {
-            if (!(MainUserControl.Content is About))
-                MainUserControl.Content = new About();
             OpenCloseDrawer();
-
+            if (!(MainUserControl.Content is About))
+            {
+                AboutUC = new About();
+            }
+            MainUserControl.Tag = AboutUC.Tag;
+            MainUserControl.Content = AboutUC;
         }
 
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
