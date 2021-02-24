@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:PLApp.Pages"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:Local="clr-namespace:System;assembly=mscorlib" x:Class="PLApp.Pages.About"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-    Tag="About">
+             d:DesignHeight="450" d:DesignWidth="800" Tag="About">
     <UserControl.Resources>
     </UserControl.Resources>
     <Grid>
