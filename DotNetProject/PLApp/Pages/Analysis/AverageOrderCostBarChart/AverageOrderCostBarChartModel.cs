@@ -22,11 +22,12 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
 
         public List<Order> Orders { get; set; }
         public ICollection<Item> Items { get; private set; }
-
+        public BL.DataHandle db { get; private set; }
         public AverageOrderCostBarChartModel()
         {
-            Items = App.db.GetAllItems();
-            Orders = App.db.GetOrders().ToList();
+            db = new BL.DataHandle();
+            Items = db.GetAllItems();
+            Orders = db.GetOrders().ToList();
 
             selectYear = DateTime.Today.Year;
             selectMonth = DateTime.Today.Month;

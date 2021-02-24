@@ -146,7 +146,7 @@ namespace PLApp.Pages.Analysis.AverageOrderCostBarChart
             if (yearStackPanelVisibility == Visibility.Collapsed && monthStackPanelVisibility == Visibility.Collapsed)
             {
                 xAxisVal = order => order.OrderDate.Year.ToString();
-                Xlabel = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
+                Xlabel = AverageOrderCostModel.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
                 XTitle = "Year";
             }
             // check if user want to see the average order cost per months in given year

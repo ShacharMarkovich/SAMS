@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace PLApp.Pages.ViewModels
 {
-    public class OrderViewModel 
+    public class OrderViewModel
     {
         private OrderModel OModel;
         public ObservableCollection<Order> Orders { get; set; }
@@ -27,12 +27,12 @@ namespace PLApp.Pages.ViewModels
         public Order AddOrder(Order order)
         {
             Orders.Add(order);
-            return App.db.AddOrder(order);
+            return OModel.db.AddOrder(order);
         }
         public void RemoveOrder(Order order)
         {
             Orders.Remove(order);
-            App.db.RemoveOrder(order);
+            OModel.db.RemoveOrder(order);
 
         }
         public void UpdateOrder(Order order)
@@ -40,7 +40,7 @@ namespace PLApp.Pages.ViewModels
             int i = Orders.IndexOf(order);
             if (i >= 0)
             {
-                App.db.UpdateOrder(order);
+                OModel.db.UpdateOrder(order);
                 Orders.Remove(order);
                 Orders.Add(order);
             }
@@ -51,7 +51,7 @@ namespace PLApp.Pages.ViewModels
             if (i >= 0)
             {
                 order.Items.Add(item);
-                App.db.UpdateOrder(order);
+                OModel.db.UpdateOrder(order);
                 Orders[i] = order;
             }
         }
@@ -61,35 +61,27 @@ namespace PLApp.Pages.ViewModels
             if (i >= 0)
             {
                 order.Items.Remove(item);
-                App.db.UpdateOrder(order);
+                OModel.db.UpdateOrder(order);
                 Orders[i] = order;
             }
         }
 
         internal void LoadImageByBarcode(int barcodeNumber)
         {
-            try
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Images"));
-                    string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", barcodeNumber.ToString() + ".jpg");
-                    File.Copy(openFileDialog.FileName, newImagePath,true);
-                }
-            }
-            catch(Exception e)
-            {
+                Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Images"));
+                string newImagePath = Path.Combine(Environment.CurrentDirectory, "Images", barcodeNumber.ToString() + ".jpg");
+                File.Copy(openFileDialog.FileName, newImagePath, true);
             }
         }
 
         internal void UpdateItem(Order order, Item item)
         {
-            App.db.UpdateItem(item);
+            OModel.db.UpdateItem(item);
             Item prevItem = order.Items.FirstOrDefault(i => i.ItemId == item.ItemId);
             prevItem = item;
-            //Orders.Remove(order);
-            //Orders.Add(order);
         }
     }
 }

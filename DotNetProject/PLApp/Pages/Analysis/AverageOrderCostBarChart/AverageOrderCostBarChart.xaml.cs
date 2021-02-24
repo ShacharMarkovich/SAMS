@@ -53,7 +53,7 @@ namespace PLApp.Pages.AverageOrderCostBarChart
 
 
             monthComboBox.ItemsSource = ViewModel.AverageOrderCostModel.months;
-            yearComboBox.ItemsSource = App.db.GetOrdersYear();
+            yearComboBox.ItemsSource = ViewModel.AverageOrderCostModel.db.GetOrdersYear();
 
             monthComboBox.SelectedItem = ViewModel.AverageOrderCostModel.months[DateTime.Today.Month - 1];
             yearComboBox.SelectedItem = DateTime.Today.Year;

@@ -18,7 +18,7 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
             DataContext = ViewModel;
 
             monthComboBox.ItemsSource = ViewModel.Model.months;
-            yearComboBox.ItemsSource = App.db.GetOrdersYear();
+            yearComboBox.ItemsSource = ViewModel.Model.db.GetOrdersYear();
 
             monthComboBox.SelectedItem = ViewModel.Model.months[DateTime.Today.Month - 1];
             yearComboBox.SelectedItem = DateTime.Today.Year;

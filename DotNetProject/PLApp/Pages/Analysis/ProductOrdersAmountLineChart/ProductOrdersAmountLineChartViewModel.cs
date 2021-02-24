@@ -77,7 +77,7 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
         public ProductOrdersAmountLineChartViewModel()
         {
             Model = new AverageOrderCostBarChartModel();
-            StoresName = App.db.GetStoresName();
+            StoresName = Model.db.GetStoresName();
 
             ProductsAmountCollection = new SeriesCollection();
             Formatter = value => value.ToString("N");
@@ -96,7 +96,7 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
             List<Order> orders = Model.Orders.Where(order => order.StoreName == Model.selectedStoreName).ToList();
             orders = SetLabalNTitle(yearStackPanelVisibility, monthStackPanelVisibility, orders);
 
-            var itemsLst2 = App.db.GetAllItemInStore(Model.selectedStoreName)
+            var itemsLst2 = Model.db.GetAllItemInStore(Model.selectedStoreName)
                                 .Where(item => item.Quantity > 0 && item.BarcodeNumber == Model.selectedItem.BarcodeNumber)
                                 .Select(item => item.Quantity).Sum();
             ProductsAmountCollection.Clear();
@@ -137,7 +137,7 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
             if (yearStackPanelVisibility == Visibility.Collapsed && monthStackPanelVisibility == Visibility.Collapsed)
             {
                 xAxisVal = OrderDate => OrderDate.Year.ToString();
-                Xlabel = App.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
+                Xlabel = Model.db.GetOrdersYear().Select(i => i.ToString()).ToArray();
                 XTitle = "Year";
             }
             // check if user want to see the average order cost per months in given year
@@ -177,7 +177,7 @@ namespace PLApp.Pages.Analysis.ProductOrdersAmountLineChart
         internal ObservableCollection<string> UpdateItemsSource(string storeName)
         {
             ProductsAmountCollection.Clear();
-            List<Item> itemsLst = App.db.GetAllItemInStore(storeName);
+            List<Item> itemsLst = Model.db.GetAllItemInStore(storeName);
             ItemsData = new ObservableCollection<string>(itemsLst.Where(item => item.Quantity > 0).Select(item => $"{item.BarcodeNumber} {item.ItemName}").OrderBy(i => i).Distinct());
             return ItemsData;
         }

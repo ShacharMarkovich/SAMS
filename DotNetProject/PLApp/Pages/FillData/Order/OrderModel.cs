@@ -1,4 +1,5 @@
 ﻿using BE;
+using BL;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -6,6 +7,8 @@ namespace PLApp.Pages.Models
 {
     public class OrderModel : INotifyPropertyChanged
     {
+        public DataHandle db { get; private set; }
+
         public List<Order> Orders
         {
             get => _Orders;
@@ -19,7 +22,8 @@ namespace PLApp.Pages.Models
 
         public OrderModel()
         {
-            Orders = (List<Order>)App.db.GetOrders();
+            db = new BL.DataHandle();
+            Orders = (List<Order>)db.GetOrders();
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

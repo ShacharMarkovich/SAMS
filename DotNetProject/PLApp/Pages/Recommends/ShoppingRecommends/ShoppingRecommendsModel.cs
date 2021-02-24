@@ -9,10 +9,12 @@ namespace PLApp.Pages.Recommends.ShoppingRecommends
     {
         public List<Item> RecommendedItems { get; set; }
         public List<Rule> Rules { get; set; }
+        public BL.DataHandle db { get; private set; }
         public ShoppingRecommendsModel()
         {
-            Rules = App.db.GetAssociationRules().Select(r=> new Rule() { X = SortedListToString(r.X), Y = SortedListToString(r.Y), Confidence = r.Confidence }).ToList();
-            RecommendedItems = App.db.RecomendedItems();
+            db = new BL.DataHandle();
+            Rules = db.GetAssociationRules().Select(r=> new Rule() { X = SortedListToString(r.X), Y = SortedListToString(r.Y), Confidence = r.Confidence }).ToList();
+            RecommendedItems = db.RecomendedItems();
         }
         private string SortedListToString(SortedSet<Item> s)
         {

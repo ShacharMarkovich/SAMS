@@ -11,10 +11,12 @@ namespace PLApp.Pages.Catalog
     /// </summary>
     public partial class Catalog : UserControl
     {
+        BL.DataHandle db;
         public List<BE.Item> CatalogItemList { get; set; }
         public Catalog()
         {
-            CatalogItemList = App.db.GetAllItemsRemoveDuplicates();
+            db = new BL.DataHandle();
+            CatalogItemList = db.GetAllItemsRemoveDuplicates();
             InitializeComponent();
             itemsCardView.ItemsSource = CatalogItemList;
         }

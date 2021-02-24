@@ -11,9 +11,10 @@ namespace PLApp.Pages.Analysis.CategoryPieChart
         public SeriesCollection SeriesCollection_productsCount { get; set; }
         public SeriesCollection SeriesCollection_totalPriceInCategory { get; set; }
         public SeriesCollection SeriesCollection_avgPriceInCategory { get; set; }
-
+        public CategoryPieChartModel Model;
         public CategoryPieChartViewModel()
         {
+            Model = new CategoryPieChartModel();
             List<CategoryPieChartModel> categoryPieChartList = GetCategoriesStatistic();
 
             SeriesCollection_productsCount = new SeriesCollection();
@@ -56,7 +57,7 @@ namespace PLApp.Pages.Analysis.CategoryPieChart
         /// <returns>list of those statistic in each category</returns>
         public List<CategoryPieChartModel> GetCategoriesStatistic()
         {
-            return App.db.GetAllItems().GroupBy(item => item.Category)
+            return Model.db.GetAllItems().GroupBy(item => item.Category)
                 .Select(g => new CategoryPieChartModel
                 {
                     category = g.Key,
