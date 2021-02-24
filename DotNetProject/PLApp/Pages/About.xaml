@@ -7,6 +7,72 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:Local="clr-namespace:System;assembly=mscorlib" x:Class="PLApp.Pages.About"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Tag="Welcome!">
+    <UserControl.Resources>
+        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="8" BorderBrush="Transparent" BorderThickness="2">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" 
+                                                        ScaleX="1.5" ScaleY="1.5"/>
+                                                <TranslateTransform X="0.02" Y="0.3"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Offset="1" Color="Transparent"/>
+                                        <GradientStop Offset="0.3" Color="Transparent"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                                                    <TranslateTransform X="0.02" Y="0.3"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <GradientStop Color="#00000000" Offset="1"/>
+                                            <GradientStop Color="#FF303030" Offset="0.3"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF1F575F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.BorderBrush" Value="White"></Setter>
+                    <Setter Property="Button.Background" Value="Transparent"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <UserControl.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <LinearGradientBrush.RelativeTransform>
@@ -26,23 +92,23 @@
         <Label FontSize="30" FontWeight="Bold" Margin="50,90,0,0" HorizontalAlignment="Center">Welcome to the future.</Label>
         <Label FontSize="20" Margin="50,20,0,0">SAMS is an easy way to track &amp; monitor your shoppings</Label>
         <Label FontSize="20" Margin="50,0,0,0">Just take picture of the product's QR code,</Label>
-        <StackPanel Orientation="Horizontal">
-            <Label FontSize="20" Margin="50,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">Apload to here:</Label>
-            <Button x:Name="googleDrive" Height="56" Margin="50,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="GoogleDrive_Click">
+        <Button x:Name="googleDrive" Style="{DynamicResource RoundCorner}" Margin="50,0,0,0" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="GoogleDrive_Click" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
                 <Image Source="/Resources/google drive.png" />
-            </Button>
-        </StackPanel>
+                <TextBlock FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black">Upload to here</TextBlock>
+            </StackPanel>
+        </Button>
         <Label FontSize="20" Margin="50,0,0,0">We will do all the rest.</Label>
         <Label FontSize="20" Margin="50,10,0,0">Please choose the wanted section and lets begin!</Label>
         <StackPanel Orientation="Horizontal">
             <Label FontSize="70"  Margin="50,0,0,0" FontFamily="Kunstler Script" HorizontalAlignment="Left" FontWeight="Bold" VerticalAlignment="Center">Enjoy</Label>
-            <Button x:Name="github" Height="100" Margin="80,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Width="243" Click="Github_Click">
+            <Button x:Name="github" Style="{DynamicResource RoundCorner}" Height="100" Margin="80,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Width="243" Click="Github_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/github.png"/>
                     <TextBlock FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center">Go to github</TextBlock>
                 </StackPanel>
             </Button>
-            <Button x:Name="paypal"  Height="100" Margin="100,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="Paypal_Click">
+            <Button x:Name="paypal" Style="{DynamicResource RoundCorner}" Height="100" Margin="100,0,0,0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Click="Paypal_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/paypal.png" />
                     <TextBlock FontSize="20" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center">Donate!</TextBlock>
