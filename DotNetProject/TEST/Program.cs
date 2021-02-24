@@ -9,7 +9,7 @@ namespace DriveQuickstart
     {
         public static void Main()
         {
-            BL.DataHandle db = BL.DataHandle.Instance;
+            BL.DataHandle db = new BL.DataHandle();
             Item[][] a = db.GetOrders().Select(order => order.Items.ToArray()).ToArray();
             Apriori<Item> ab = new Apriori<Item>(15, 0);
             //var clsfr = ab.Learn(a);

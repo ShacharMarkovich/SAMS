@@ -15,28 +15,14 @@ namespace BL
 {
     public class DataHandle
     {
-        #region singleton
         private DAL.Database db;
 
-        private static DataHandle _instance = null;
-        public static DataHandle Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new DataHandle();
-                return _instance;
-            }
-        }
-
-        private DataHandle() => db = DAL.FactoryDAL.Instance;
+        public DataHandle() => db = new DAL.Database();
 
         public List<Item> GetAllItemsRemoveDuplicates()
         {
             return db.Set<Item>().GroupBy(i => new { i.BarcodeNumber, i.Category, i.ItemName }).Select(grp => grp.FirstOrDefault()).ToList();
         }
-        #endregion
-
 
         #region Item functions
         public Item AddItem(Item item) => db.AddItem(item);

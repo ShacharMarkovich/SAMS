@@ -8,20 +8,7 @@ namespace DAL
 {
     public class Database : DbContext
     {
-        #region singleton
-        private static Database _instance = null;
-        public static Database Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new Database();
-                return _instance;
-            }
-        }
-
-        private Database() : base("SAMS DB") { }
-        #endregion
+        public Database() : base("SAMS DB") { }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Item> Items { get; set; }
