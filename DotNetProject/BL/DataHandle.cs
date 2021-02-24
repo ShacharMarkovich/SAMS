@@ -283,33 +283,24 @@ namespace BL
             SortedSet<Item> items = new SortedSet<Item>();
             foreach (var rule in above50)
             {
-                IEnumerable<SortedSet<Item>> subItems = rules.Where(r => r.X.FirstOrDefault().BarcodeNumber == rule.Y.FirstOrDefault().BarcodeNumber && r.Confidence > 0.4).Select(r=>r.Y);
+                IEnumerable<SortedSet<Item>> subItems = rules.Where(r => r.X.FirstOrDefault().BarcodeNumber == rule.Y.FirstOrDefault().BarcodeNumber && r.Confidence > 0.4).Select(r => r.Y);
                 foreach (SortedSet<Item> set in subItems)
-                {
-                    foreach(Item  i in set)
-                    {
+                    foreach (Item i in set)
                         items.Add(i);
-                    }
-                }
 
             }
             //get the top 10 frequnt items in the above50 list
             List<Item> allitems = new List<Item>();
-           
+
             foreach (AssociationRule<Item> a in above50)
             {
                 allitems.Add(a.X.FirstOrDefault());
                 allitems.Add(a.Y.FirstOrDefault());
             }
-            allitems = allitems.GroupBy(x => x)
-    .OrderByDescending(x => x.Count())
-    .Select(x => x.Key)
-    .ToList();
+            allitems = allitems.GroupBy(x => x).OrderByDescending(x => x.Count()).Select(x => x.Key).ToList();
             List<Item> outputItems = new List<Item>();
-            for (int i = 0; i < 10 && i< items.Count; i++)
-            {
+            for (int i = 0; i < 10 && i < items.Count; i++)
                 outputItems.Add(items.FirstOrDefault(item => item.BarcodeNumber == allitems[i].BarcodeNumber));
-            }
             return outputItems;
         }
         #endregion
