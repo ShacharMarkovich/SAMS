@@ -21,11 +21,11 @@
         </StackPanel>
         <Grid x:Name="DataGrid" Visibility="Hidden">
 
-            <ListView x:Name="MLRulesView" SelectionMode="Single"  HorizontalAlignment="Left" VerticalAlignment="Top"  ItemsSource="{Binding Rules}">
+            <ListView Margin="5 5 0 0" x:Name="MLRulesView" SelectionMode="Single"  HorizontalAlignment="Left" VerticalAlignment="Top"  ItemsSource="{Binding Rules}">
 
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="80" Header="Item X">
+                        <GridViewColumn Width="80" Header="Item X" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Margin="-6,-1" Text="{Binding X, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
@@ -55,8 +55,8 @@
                         <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-            </ListView>
-            <ListView x:Name="itemListView" SelectionMode="Single" HorizontalAlignment="Right" VerticalAlignment="Stretch"  ItemsSource="{Binding RecommendedItems}">
+            </ListView >
+            <ListView Margin="5 5 0 0" x:Name="itemListView" SelectionMode="Single" HorizontalAlignment="Right" VerticalAlignment="Stretch"  ItemsSource="{Binding RecommendedItems}">
                 <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="itemNameColumn" Width="80" Header="Item Name">
