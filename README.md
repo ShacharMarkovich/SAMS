@@ -28,7 +28,7 @@ This is the heart of SAMS - hear you can see plenty of Statistics about yours sh
 See how may profucts you bouth from a store and when.<br />
 See what is the average total purchase cost in each store, at anytime that you choose.<br />
 See how many products you bought in each category,<br /><br />
-![Analysis page](https://github.com/ShacharMarkovich/SAMS/blob/main/DotNetProject/Images/Analysis.mp4)<br /><br />
+![Analysis page](https://github.com/ShacharMarkovich/SAMS/blob/main/DotNetProject/Images/Analysis.gif)<br /><br />
 
 ## Shopping Recommends
 Did you hear about Artificial-Intelligence?<br />
