@@ -307,7 +307,24 @@ namespace BL
                 }
 
             }
-            return items.ToList();
+            //get the top 10 frequnt items in the above50 list
+            List<Item> allitems = new List<Item>();
+           
+            foreach (AssociationRule<Item> a in above50)
+            {
+                allitems.Add(a.X.FirstOrDefault());
+                allitems.Add(a.Y.FirstOrDefault());
+            }
+            allitems = allitems.GroupBy(x => x)
+    .OrderByDescending(x => x.Count())
+    .Select(x => x.Key)
+    .ToList();
+            List<Item> outputItems = new List<Item>();
+            for (int i = 0; i < 10 && i< items.Count; i++)
+            {
+                outputItems.Add(items.FirstOrDefault(item => item.BarcodeNumber == allitems[i].BarcodeNumber));
+            }
+            return outputItems;
         }
         #endregion
 
