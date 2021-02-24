@@ -7,9 +7,9 @@
 Welcom to the future!<br />
 SAMS is the new easy way to track & monitor yours shooping:<br />
 See what, how much and when you had been bought products, in the easiest and the flowentest way!<br />
-All you need to do is take a picture of the product's QR code and upload it to Google drive - we will make the rest job for you!<br /><br />
+All you need to do is take a picture of the product's QR code and upload it to <a href="https://drive.google.com/drive/u/2/folders/1dffosvvP2Vk5JD3TvOfzXBt0J63SO9Il" target="_blank">Google drive</a> - we will make the rest job for you!<br /><br />
 
-Don't forget to donate to the project in order to keep it free without adds!<br />
+Don't forget to <a href="https://www.paypal.com/paypalme/LevSAMS?locale.x=he_IL" target="_blank">donate</a> to the project in order to keep it free without adds!<br /><br />
 ![Welcome page](https://github.com/ShacharMarkovich/SAMS/blob/main/DotNetProject/Images/welcome.png)<br /><br />
 
 ## Fill Data
@@ -23,11 +23,12 @@ You will see here all the imformation about the products which exists in SAMS.<b
 ![Catalog page](https://github.com/ShacharMarkovich/SAMS/blob/main/DotNetProject/Images/Catalog.gif)
 
 ## Shopping Analysis
-This is the heart of SAMS - hear you can see plenty of Statistics about yours shoppings:<br /><br />
+This is the heart of SAMS - hear you can see plenty of Statistics about yours shoppings:<br />
 
-See how may profucts you bouth from a store and when.<br />
-See what is the average total purchase cost in each store, at anytime that you choose.<br />
-See how many products you bought in each category,<br /><br />
+- See how may profucts you bouth from a store and when.<br />
+- See how many products you bought in each category,<br />
+- See what is the average total purchase cost in each store, at anytime that you choose.<br /><br />
+
 ![Analysis page](https://github.com/ShacharMarkovich/SAMS/blob/main/DotNetProject/Images/Analysis.gif)<br /><br />
 
 ## Shopping Recommends
@@ -35,5 +36,5 @@ Did you hear about Artificial-Intelligence?<br />
 So this is our AI! <br />
 SAMS also know to recommend you what products to buy, based on you previouse orders.<br />
 How we did it you ask?<br />
-Very simple! All we need to do is to find your top 10 products which you buy the most.<br />
+Very simple! All we need to do is to find your top 10 products which you buy the most.<br /><br />
 ![Analysis page](https://github.com/ShacharMarkovich/SAMS/blob/main/DotNetProject/Images/Recommends.gif)<br /><br />
