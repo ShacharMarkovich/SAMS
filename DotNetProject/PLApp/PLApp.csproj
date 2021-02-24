@@ -40,6 +40,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SplashScreen.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
@@ -258,6 +261,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\github.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SplashScreen.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
