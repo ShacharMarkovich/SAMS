@@ -1,6 +1,4 @@
-﻿using LiveCharts.Events;
-using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace PLApp.Pages
 {

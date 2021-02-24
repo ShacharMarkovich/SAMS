@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
 using Accord.MachineLearning.Rules;
 using BE;
-using DAL;
-using TEST;
 
 namespace DriveQuickstart
 {

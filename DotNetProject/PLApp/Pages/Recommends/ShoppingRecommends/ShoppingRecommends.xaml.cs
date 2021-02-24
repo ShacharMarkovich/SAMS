@@ -1,8 +1,5 @@
-﻿using Accord.MachineLearning.Rules;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using BE;
 using PLApp.Pages.Recommends.ShoppingRecommends;
 using System.Windows.Threading;
 using System;

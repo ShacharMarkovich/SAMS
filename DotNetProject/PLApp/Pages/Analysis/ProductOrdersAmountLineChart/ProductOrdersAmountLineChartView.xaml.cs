@@ -1,5 +1,4 @@
-﻿using LiveCharts.Events;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 

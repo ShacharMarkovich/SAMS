@@ -6,13 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using MessagingToolkit.QRCode.Codec;
-using MessagingToolkit.QRCode.Codec.Data;
-using System.Drawing;
-using Newtonsoft.Json.Linq;
-using BE;
 using System.Reflection;
-using Newtonsoft.Json;
 
 namespace DAL
 {

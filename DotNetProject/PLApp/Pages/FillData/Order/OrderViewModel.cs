@@ -4,10 +4,8 @@ using PLApp.Pages.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows;
 
 namespace PLApp.Pages.ViewModels
 {

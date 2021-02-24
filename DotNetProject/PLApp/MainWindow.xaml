@@ -11,10 +11,6 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         TextOptions.TextRenderingMode="Auto"        
 
         Title="Shopping Management and Analysis" Height="800" Width="1000" WindowStyle="ThreeDBorderWindow" >
-    <mah:MetroWindow.Resources>
-        <ContextMenu x:Key="ThreeDotsHeaderContexMenu">
-        </ContextMenu>
-    </mah:MetroWindow.Resources>
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl>
             <mah:Flyout x:Name="MainFlayout" Header="Settings" Position="Left" Width="250" IsOpenChanged="MainFlayout_IsOpenChanged">
@@ -71,46 +67,6 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 </Canvas>
             </Viewbox>
             <TextBlock VerticalAlignment="Center" Text="{Binding ElementName=MainUserControl, Path=Tag}" FontSize="25" Margin="10,0,0,0"  />
-            <Button Background="Transparent"  Width="48" Height="48" HorizontalAlignment="Right" BorderBrush="Transparent" VerticalContentAlignment="Center" ContextMenu="{StaticResource ThreeDotsHeaderContexMenu}" HorizontalContentAlignment="Center" UseLayoutRounding="False" mah:ControlsHelper.FocusBorderBrush="LightGray"  >
-                <Path Fill="Black" Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" Stretch="Fill"  Width="8" Height="32" Canvas.Left="0" Canvas.Top="0" />
-                <Button.Triggers>
-                    <EventTrigger RoutedEvent="Button.Click">
-                        <EventTrigger.Actions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
-                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
-                                    </BooleanAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger.Actions>
-                    </EventTrigger>
-                </Button.Triggers>
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="LightBlue" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="Border" Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#660072B5" TargetName="Border" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5" />
-                    </Style>
-                </Button.Resources>
-            </Button>
         </DockPanel>
         <UserControl Grid.Row="2" Name="MainUserControl" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Tag="SAMS"/>
     </Grid>
