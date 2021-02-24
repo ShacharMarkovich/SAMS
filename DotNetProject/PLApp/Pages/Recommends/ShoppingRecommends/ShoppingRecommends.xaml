@@ -7,17 +7,57 @@
              xmlns:BE="clr-namespace:BE;assembly=BE" xmlns:converters="clr-namespace:PLApp.Converters" x:Class="PLApp.Pages.ShoppingRecommends"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Tag="Shopping Recommends" Loaded="UserControl_Loaded">
+             Tag="Shopping Recommends" Loaded="UserControl_Loaded"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <UserControl.Resources>
         <converters:BarcodeNumberToImageConverter x:Key="BarcodeNumberToImageConverter"/>
         <CollectionViewSource x:Key="itemViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Item}, CreateList=True}"/>
         <converters:QuantityMultiplyNumConverter x:Key="QuantityMultiplyNumConverter"/>
     </UserControl.Resources>
-    <Grid DataContext="{StaticResource itemViewSource}">
+    <Grid>
+        <StackPanel x:Name="LoadingPanel" Orientation="Vertical">
+            <mah:MetroProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Center" Height="20" Width="100"/>
+            <TextBlock Text="Loading" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <Grid x:Name="DataGrid" Visibility="Hidden">
 
-        <ListView x:Name="itemListView" SelectionMode="Single" HorizontalAlignment="Right" VerticalAlignment="Top"  ItemsSource="{Binding}">
-            
-            <ListView.View>
+            <ListView x:Name="MLRulesView" SelectionMode="Single"  HorizontalAlignment="Left" VerticalAlignment="Top"  ItemsSource="{Binding Rules}">
+
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="80" Header="Item X">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="-6,-1" Text="{Binding X, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="80" Header="Item Y">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="-6,-1" Text="{Binding Y, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="80" Header="confidence">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="-6,-1" Text="{Binding Confidence, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="ListViewItem.Focusable" Value="false"/>
+                        <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <ListView x:Name="itemListView" SelectionMode="Single" HorizontalAlignment="Right" VerticalAlignment="Stretch"  ItemsSource="{Binding RecommendedItems}">
+                <ListView.View>
                 <GridView>
                     <GridViewColumn x:Name="itemNameColumn" Width="80" Header="Item Name">
                         <GridViewColumn.CellTemplate>
@@ -41,16 +81,16 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
-            </ListView.View>
-            <ListView.ItemContainerStyle>
-                <Style>
-                    <Setter Property="ListViewItem.Focusable" Value="false"/>
-                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
-        <Button Content="Export" HorizontalAlignment="Right" Margin="0 0 20 20" VerticalAlignment="Bottom"  Width="75" Click="Button_Click"/>
-
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="ListViewItem.Focusable" Value="false"/>
+                        <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Button Content="Export" HorizontalAlignment="Right" Margin="0 0 20 20" VerticalAlignment="Bottom"  Width="75" Click="Button_Click"/>
+        </Grid>
     </Grid>
 </UserControl>

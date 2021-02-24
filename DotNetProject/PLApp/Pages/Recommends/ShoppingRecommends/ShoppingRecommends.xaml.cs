@@ -3,6 +3,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using BE;
+using PLApp.Pages.Recommends.ShoppingRecommends;
+using System.Windows.Threading;
+using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace PLApp.Pages
 {
@@ -12,17 +17,12 @@ namespace PLApp.Pages
     public partial class ShoppingRecommends : UserControl
     {
         public string Title { get; set; }
-
+        public ShoppingRecommendsViewModel M;
         public ShoppingRecommends()
         {
             Title = "Shopping Recommends";
             InitializeComponent();
-            itemListView.ItemsSource = App.db.GetAllItemsRemoveDuplicates().ToList().GetRange(0, 10);
-        }
-
-        public void foo()
-        {
-
+            Task.Factory.StartNew(() => LoadDataInThread());
         }
 
 
@@ -39,6 +39,18 @@ namespace PLApp.Pages
                 dlg.PrintTicket.PageMediaSize = new System.Printing.PageMediaSize(itemListView.ActualWidth, itemListView.ActualHeight);
                 dlg.PrintVisual(itemListView, "Recommendations");
             }
+        }
+        private void LoadDataInThread()
+        {
+
+            M = new ShoppingRecommendsViewModel();
+            Thread.Sleep(5000);
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                this.DataContext = M;
+                LoadingPanel.Visibility = Visibility.Collapsed;
+                DataGrid.Visibility = Visibility.Visible;
+            }), DispatcherPriority.Background);
         }
     }
 }

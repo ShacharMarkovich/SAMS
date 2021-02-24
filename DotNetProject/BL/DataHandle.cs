@@ -9,6 +9,7 @@ using BE;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
 using Newtonsoft.Json;
+using Accord.MachineLearning.Rules;
 
 namespace BL
 {
@@ -281,6 +282,34 @@ namespace BL
         public void ClearAllData() => db.ClearAllData();
         #endregion
 
+        #region ML
+        public AssociationRule<Item>[] GetAssociationRules()
+        {
+            Item[][] a = GetOrders().Select(order => order.Items.ToArray()).ToArray();
+            Apriori<Item> ab = new Apriori<Item>(15, 0);
+            rules = ab.Learn(a).Rules;
+            return rules;
+        }
+        private AssociationRule<Item>[] rules;
+        public List<Item> RecomendedItems()
+        {
+            AssociationRule<Item>[] above50 = rules.Where(r => r.Confidence > 0.5).ToArray();
+            SortedSet<Item> items = new SortedSet<Item>();
+            foreach (var rule in above50)
+            {
+                IEnumerable<SortedSet<Item>> subItems = rules.Where(r => r.X.FirstOrDefault().BarcodeNumber == rule.Y.FirstOrDefault().BarcodeNumber && r.Confidence > 0.4).Select(r=>r.Y);
+                foreach (SortedSet<Item> set in subItems)
+                {
+                    foreach(Item  i in set)
+                    {
+                        items.Add(i);
+                    }
+                }
+
+            }
+            return items.ToList();
+        }
+        #endregion
 
     }
 }

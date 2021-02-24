@@ -32,6 +32,9 @@ namespace PLApp
         public MainWindow()
         {
             InitializeComponent();
+            AboutUC = new About();
+            MainUserControl.Tag = AboutUC.Tag;
+            MainUserControl.Content = AboutUC;
         }
         private void Button_FillData_Click(object sender, RoutedEventArgs e)
         {

@@ -88,6 +88,8 @@
     <Compile Include="Pages\Catalog\Catalog.xaml.cs">
       <DependentUpon>Catalog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Recommends\ShoppingRecommends\ShoppingRecommendsModel.cs" />
+    <Compile Include="Pages\Recommends\ShoppingRecommends\ShoppingRecommendsViewModel.cs" />
     <Compile Include="Providers\ItemSuggestionProvider.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
