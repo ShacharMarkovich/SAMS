@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace PLApp.Pages
 {
@@ -25,6 +26,21 @@ namespace PLApp.Pages
         {
             Title = "About";
             InitializeComponent();
+        }
+
+        private void GoogleDrive_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://drive.google.com/drive/u/2/folders/1dffosvvP2Vk5JD3TvOfzXBt0J63SO9Il");
+        }
+
+        private void Github_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/ShacharMarkovich/SAMS");
+        }
+
+        private void Paypal_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://paypal.me/LevSAMS?locale.x=he_IL");
         }
     }
 }

@@ -252,5 +252,12 @@
   <ItemGroup>
     <SplashScreen Include="Resources\SplashScreen1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\github.png" />
+    <Resource Include="Resources\paypal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\google drive.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
